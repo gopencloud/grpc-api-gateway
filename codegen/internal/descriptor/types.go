@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/meshapi/grpc-api-gateway/codegen/internal/casing"
-	"github.com/meshapi/grpc-api-gateway/dotpath"
-	"github.com/meshapi/grpc-api-gateway/pkg/httprule"
-	"github.com/meshapi/grpc-api-gateway/trie"
+	"github.com/gopencloud/grpc-api-gateway/codegen/internal/casing"
+	"github.com/gopencloud/grpc-api-gateway/dotpath"
+	"github.com/gopencloud/grpc-api-gateway/pkg/httprule"
+	"github.com/gopencloud/grpc-api-gateway/trie"
 	"google.golang.org/protobuf/types/descriptorpb"
 	"google.golang.org/protobuf/types/pluginpb"
 )
@@ -353,6 +353,8 @@ type Binding struct {
 	QueryParameters []QueryParameter
 	// StreamConfig holds streaming API configurations.
 	StreamConfig StreamConfig
+	// IsAlias indicates if binding is an alias for another binding (same, but with different path)
+	IsAlias bool
 }
 
 // NeedsWebsocket returns whether or not websocket binding is needed.
@@ -689,7 +691,7 @@ func (p *PathParameterSeparator) Set(value string) error {
 	case "pipes":
 		*p = PathParameterSeparatorPipes
 	default:
-		return fmt.Errorf("unrecognized value: %q. Allowed values are 'cav', 'pipes', 'ssv' and 'tsv'.", value)
+		return fmt.Errorf("unrecognized value: %q. Allowed values are 'cav', 'pipes', 'ssv' and 'tsv'", value)
 	}
 
 	return nil

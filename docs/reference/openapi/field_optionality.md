@@ -7,16 +7,17 @@ In OpenAPI documents and JSON schemas, a field can specify its nullability and r
 In OpenAPI and JSON schemas, a field can specify whether it accepts null values. In OpenAPI v3.1, the correct way to represent this is by using type arrays.
 
 !!! example
-    ```json
-    {
-      "nullable_field": {
-        "type": ["string", "null"]
-      },
-      "string_field": {
-        "type": "string"
-      }
-    }
-    ```
+
+```json
+{
+  "nullable_field": {
+    "type": ["string", "null"]
+  },
+  "string_field": {
+    "type": "string"
+  }
+}
+```
 
 How does this map to proto fields? Let's consider the proto message below:
 
@@ -79,8 +80,8 @@ message User {
   string id = 1;
   string name = 2;
   optional string email_address = 3 [
-    (meshapi.gateway.openapi_field) = {
-		types: [STRING, NULL]
+    (gopencloud.gateway.openapi_field) = {
+      types: [STRING, NULL]
     }
   ];
   optional Address address = 4;
@@ -144,11 +145,12 @@ There are several ways to mark a field as required:
 This approach mirrors how OpenAPI specifies required fields. Each model explicitly lists all properties that are required:
 
 === "Proto Annotations"
+
     ```proto linenums="1" hl_lines="4-6"
-    import "meshapi/gateway/annotations.proto";
+    import "gopencloud/gateway/annotations.proto";
 
     message User {
-      (meshapi.gateway.openapi_schema) = {
+      (gopencloud.gateway.openapi_schema) = {
         required: ["id", "name", "phone_number"] // (1)!
       }
 
@@ -163,6 +165,7 @@ This approach mirrors how OpenAPI specifies required fields. Each model explicit
     1. Indicates that fields `id`, `name` and `phone_number` do not accept null values.
 
 === "Configuration"
+
     ```yaml linenums="1"
     openapi:
       messages:
@@ -179,21 +182,23 @@ This approach mirrors how OpenAPI specifies required fields. Each model explicit
 This approach sets the requiredness at the field.
 
 === "Proto Annotations"
+
     ```proto linenums="1" hl_lines="4 5 9"
-    import "meshapi/gateway/annotations.proto";
+    import "gopencloud/gateway/annotations.proto";
 
     message User {
-      string id = 1 [(meshapi.gateway.openapi_field).config.required=true];
-      string name = 2 [(meshapi.gateway.openapi_field).config.required=true];
+      string id = 1 [(gopencloud.gateway.openapi_field).config.required=true];
+      string name = 2 [(gopencloud.gateway.openapi_field).config.required=true];
       string email_address = 3;
       Address address = 4;
       PhoneNumber phone_number = 5 [
-        (meshapi.gateway.openapi_field).config.required = true
+        (gopencloud.gateway.openapi_field).config.required = true
       ];
     }
     ```
 
 === "Configuration"
+
     ```yaml linenums="1" hl_lines="7 10 13"
     openapi:
       messages:

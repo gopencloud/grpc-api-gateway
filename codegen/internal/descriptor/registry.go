@@ -5,15 +5,16 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"slices"
 	"sort"
 	"strings"
 
-	"github.com/meshapi/grpc-api-gateway/api"
-	"github.com/meshapi/grpc-api-gateway/codegen/internal/configpath"
-	"github.com/meshapi/grpc-api-gateway/codegen/internal/genlog"
-	"github.com/meshapi/grpc-api-gateway/codegen/internal/httpspec"
-	"github.com/meshapi/grpc-api-gateway/dotpath"
-	"github.com/meshapi/grpc-api-gateway/pkg/httprule"
+	"github.com/gopencloud/grpc-api-gateway/api"
+	"github.com/gopencloud/grpc-api-gateway/codegen/internal/configpath"
+	"github.com/gopencloud/grpc-api-gateway/codegen/internal/genlog"
+	"github.com/gopencloud/grpc-api-gateway/codegen/internal/httpspec"
+	"github.com/gopencloud/grpc-api-gateway/dotpath"
+	"github.com/gopencloud/grpc-api-gateway/pkg/httprule"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	statuspb "google.golang.org/genproto/googleapis/rpc/status"
@@ -306,6 +307,7 @@ func (r *Registry) mapBindings(md *Method, spec httpspec.EndpointSpec) ([]*Bindi
 		DisableQueryParamsAutoDiscovery bool
 		QueryParams                     []*api.QueryParameterBinding
 		StreamConfig                    *api.StreamConfig
+		IsAlias                         bool
 	}
 
 	insertBinding := func(input BindingInput) error {
@@ -323,6 +325,7 @@ func (r *Registry) mapBindings(md *Method, spec httpspec.EndpointSpec) ([]*Bindi
 			Index:        input.Index,
 			PathTemplate: tpl,
 			HTTPMethod:   input.Method,
+			IsAlias:      input.IsAlias,
 		}
 
 		for _, segment := range tpl.Segments {
@@ -443,6 +446,7 @@ func (r *Registry) mapBindings(md *Method, spec httpspec.EndpointSpec) ([]*Bindi
 		return nil, err
 	}
 
+	bindingAliases := spec.Binding.GetAliases()
 	for index, additionalBinding := range spec.Binding.GetAdditionalBindings() {
 		method, path, err = parseAdditionalEndpointPattern(additionalBinding)
 		if err != nil {
@@ -458,6 +462,10 @@ func (r *Registry) mapBindings(md *Method, spec httpspec.EndpointSpec) ([]*Bindi
 			DisableQueryParamsAutoDiscovery: additionalBinding.DisableQueryParamDiscovery,
 			QueryParams:                     additionalBinding.GetQueryParams(),
 			StreamConfig:                    additionalBinding.Stream,
+		}
+
+		if slices.Contains(bindingAliases, path) {
+			input.IsAlias = true
 		}
 
 		if err := insertBinding(input); err != nil {
@@ -688,7 +696,7 @@ func (r *Registry) resolveFieldPath(msg *Message, path string, isPathParam bool)
 // parseEndpointPattern returns HTTP method and path.
 func parseEndpointPattern(spec *api.EndpointBinding) (string, string, error) {
 	if spec.Pattern == nil {
-		return "", "", fmt.Errorf("No pattern specified in HTTP rule")
+		return "", "", fmt.Errorf("no pattern specified in HTTP rule")
 	}
 
 	switch pattern := spec.Pattern.(type) {
@@ -705,14 +713,14 @@ func parseEndpointPattern(spec *api.EndpointBinding) (string, string, error) {
 	case *api.EndpointBinding_Delete:
 		return http.MethodDelete, pattern.Delete, nil
 	default:
-		return "", "", fmt.Errorf("No pattern specified in HTTP rule")
+		return "", "", fmt.Errorf("no pattern specified in HTTP rule")
 	}
 }
 
 // parseAdditionalEndpointPattern returns HTTP method and path.
 func parseAdditionalEndpointPattern(spec *api.AdditionalEndpointBinding) (string, string, error) {
 	if spec.Pattern == nil {
-		return "", "", fmt.Errorf("No pattern specified in HTTP rule")
+		return "", "", fmt.Errorf("no pattern specified in HTTP rule")
 	}
 
 	switch pattern := spec.Pattern.(type) {
@@ -729,7 +737,7 @@ func parseAdditionalEndpointPattern(spec *api.AdditionalEndpointBinding) (string
 	case *api.AdditionalEndpointBinding_Delete:
 		return http.MethodDelete, pattern.Delete, nil
 	default:
-		return "", "", fmt.Errorf("No pattern specified in HTTP rule")
+		return "", "", fmt.Errorf("no pattern specified in HTTP rule")
 	}
 }
 

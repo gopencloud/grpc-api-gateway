@@ -10,6 +10,7 @@
 
 # IDEs
 .vscode
+.idea
 .nvimrc
 .vimrc
 
@@ -20,7 +21,7 @@
 *.out
 
 # Dependency directories (remove the comment below to include it)
-# vendor/
+vendor/
 
 # Go workspace file
 go.work
@@ -28,12 +29,6 @@ go.work.sum
 
 # Build Output
 out
-examples/internal/vendor/meshapi/*
-examples/internal/gen/*
-
-# Logs
-log.txt
-tasks.txt
 
 dist/
 grpc_api_gateway_proto.tar.gz

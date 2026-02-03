@@ -1,7 +1,7 @@
 package genopenapi
 
 import (
-	"github.com/meshapi/grpc-api-gateway/codegen/internal/descriptor"
+	"github.com/gopencloud/grpc-api-gateway/codegen/internal/descriptor"
 )
 
 // Options are the options for the code generator.
@@ -104,6 +104,10 @@ type Options struct {
 	// WarnOnBrokenSelectors writes a warning instead of reporting errors when selectors to unmatching proto types is
 	// used in config files.
 	WarnOnBrokenSelectors bool
+
+	// DisableAliases turns off gateway aliases (additional bingings that are copy of parent binding,
+	// but have different path) in the OpenAPI schemas.
+	DisableAliases bool
 }
 
 // DefaultOptions returns the default options.
@@ -138,5 +142,6 @@ func DefaultOptions() Options {
 		FieldNullableMode:              FieldNullableModeOptionalLabel,
 		FieldRequiredMode:              FieldRequiredModeDisabled,
 		LocalPackageMode:               false,
+		DisableAliases:                 false,
 	}
 }

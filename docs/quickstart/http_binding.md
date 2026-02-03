@@ -38,35 +38,33 @@ gateway:
 4. `body` (default: `null`) specifies which fields in the proto request message should be read from the HTTP body. In this case, `*` indicates that all fields in the proto message should be read from the HTTP body.
 
 !!! tip
-    If you choose to work with configuration files, consider installing a YAML or JSON extension for your editor.
+    If you choose to work with configuration files, consider installing a YAML or JSON extension for your editor (for example, Yaml language server).
     Files named according to the pattern `*_gateway.[yml|yaml|json]` utilize the API Gateway's configuration schema,
     providing auto-completion and in-editor documentation features.
+    This project provides [JSON schema](https://raw.githubusercontent.com/gopencloud/grpc-api-gateway/refs/heads/main/api/gopencloud/gateway/config.schema.json) for autocompletions.
 
 ### 2. Using Proto Extensions
 
 To use proto extensions, first download and import the gRPC API Gateway annotations.
 
-=== "Using Buf"
+=== "Using EasyP"
 
-    Create a file named `buf.yaml` with the following content:
+    Create a file named `easyp.yaml` with the following content:
 
-    ```yaml title="buf.yaml" linenums="1"
-    version: v1
+    ```yaml title="easyp.yaml" linenums="1"
     deps:
-      - "buf.build/meshapi/grpc-api-gateway"
+      - "github.com/gopencloud/grpc-api-gateway"
     ```
 
     Download the dependencies using:
 
     ```sh
-    $ buf mod update
+    easyp mod download
     ```
 
 === "Using Protoc"
 
-    Download the proto files from the `api/meshapi` directory in the
-    [gRPC API Gateway git repository](https://github.com/meshapi/grpc-api-gateway/tree/main/api/meshapi/gateway)
-    to a local directory named `meshapi`.
+    Download the proto files from [releases page](https://github.com/gopencloud/grpc-api-gateway/releases).
 
 Modify your existing proto file with the following additions:
 
@@ -75,7 +73,7 @@ syntax = "proto3";
 
 package echo;
 
-import "meshapi/gateway/annotations.proto"; //(1)!
+import "gopencloud/gateway/annotations.proto"; //(1)!
 
 option go_package = "demo/echo";
 
@@ -85,22 +83,22 @@ message EchoRequest {
 }
 
 message EchoResponse {
-    string text = 1;
+  string text = 1;
 }
 
 service EchoService {
-    // Echo returns the received text and makes it louder too!
-    rpc Echo(EchoRequest) returns (EchoResponse) {
-        option (meshapi.gateway.http) = {
-            get: '/echo/{text}' //(2)!
-            additional_bindings: [ //(3)!
-              {
-                post: '/echo',
-                body: '*' //(4)!
-              }
-            ]
-        };
+  // Echo returns the received text and makes it louder too!
+  rpc Echo(EchoRequest) returns (EchoResponse) {
+    option (gopencloud.gateway.http) = {
+      get: '/echo/{text}' //(2)!
+      additional_bindings: [ //(3)!
+        {
+          post: '/echo',
+          body: '*' //(4)!
+        }
+      ]
     };
+  };
 }
 ```
 
@@ -113,28 +111,29 @@ service EchoService {
 
 Now that we have defined HTTP bindings, we need to regenerate the gateway code.
 
-=== "Using Buf"
+=== "Using EasyP"
 
     ```sh
-    $ buf generate
+    easyp g
     ```
 
 === "Using Protoc"
+
     ```sh
-    $ protoc \
-        --go_out=gen \
-        --go-grpc_out=gen \
-        --grpc-api-gateway_out=gen \
-        --openapiv3_out=gen \
-        echo_service.proto
+    protoc \
+      --go_out=gen \
+      --go-grpc_out=gen \
+      --grpc-api-gateway_out=gen \
+      --openapiv3_out=gen \
+      echo_service.proto
     ```
 
 Using either method, you should now see a new file named `echo_service.pb.rgw.go`.
 
-Next, get the `meshapi/grpc-api-gateway` module as it contains necessary types for our HTTP server:
+Next, get the `gopencloud/grpc-api-gateway` module as it contains necessary types for our HTTP server:
 
 ```sh
-$ go get github.com/meshapi/grpc-api-gateway
+go get github.com/gopencloud/grpc-api-gateway
 ```
 
 Finally, update `main.go` to add the HTTP server:
@@ -143,45 +142,46 @@ Finally, update `main.go` to add the HTTP server:
 package main
 
 import (
-	"context"
-	"demo/gen/demo/echo"
-	"log"
-	"net"
-	"strings"
+    "context"
+    "demo/gen/demo/echo"
+    "log"
+    "net"
+    "strings"
 
-	"github.com/meshapi/grpc-api-gateway/gateway"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
+    "github.com/gopencloud/grpc-api-gateway/gateway"
+    "google.golang.org/grpc"
+    "google.golang.org/grpc/credentials/insecure"
 )
 
 // ... removed service implementation for brevity.
 
 func main() {
-	listener, err := net.Listen("tcp", ":40000")
-	if err != nil {
-		log.Fatalf("failed to listen: %s", err)
-	}
+    listener, err := net.Listen("tcp", ":40000")
+    if err != nil {
+        log.Fatalf("failed to listen: %s", err)
+    }
 
-	gateway := gateway.NewServeMux()
+    gateway := gateway.NewServeMux()
 
-	connection, err := grpc.NewClient( //(1)!
+    connection, err := grpc.NewClient( //(1)!
         ":40000",
-        grpc.WithTransportCredentials(insecure.NewCredentials()))
-	if err != nil {
-		log.Fatalf("could not dial gRPC server: %v", err)
-	}
+        grpc.WithTransportCredentials(insecure.NewCredentials()),
+    )
+    if err != nil {
+        log.Fatalf("could not dial gRPC server: %v", err)
+    }
 
-	server := grpc.NewServer()
-	echo.RegisterEchoServiceServer(server, Service{})
-	echo.RegisterEchoServiceHandler(context.Background(), gateway, connection) //(2)!
+    server := grpc.NewServer()
+    echo.RegisterEchoServiceServer(server, Service{})
+    echo.RegisterEchoServiceHandler(context.Background(), gateway, connection) //(2)!
 
-	go func() {
-		log.Fatalln(http.ListenAndServe("0.0.0.0:4000", gateway))
-	}()
+    go func() {
+        log.Fatalln(http.ListenAndServe("0.0.0.0:4000", gateway))
+    }()
 
-	if err := server.Serve(listener); err != nil {
-		log.Fatalf("gRPC server failed: %v", err)
-	}
+    if err := server.Serve(listener); err != nil {
+        log.Fatalf("gRPC server failed: %v", err)
+    }
 }
 ```
 
@@ -194,13 +194,13 @@ this connection to communicate with our gRPC services.
 Time to run the code and see it work:
 
 ```sh
-$ go run .
+go run .
 ```
 
 You should be able to send an HTTP request and get a response back:
 
 ```sh
-$ curl http://localhost:4000/echo/greetings
+curl http://localhost:4000/echo/greetings
 ```
 
 You should get the following response back:

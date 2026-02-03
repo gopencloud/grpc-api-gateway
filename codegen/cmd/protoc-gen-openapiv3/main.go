@@ -15,9 +15,9 @@ import (
 	"os"
 	"strings"
 
-	"github.com/meshapi/grpc-api-gateway/codegen/internal/descriptor"
-	"github.com/meshapi/grpc-api-gateway/codegen/internal/genlog"
-	"github.com/meshapi/grpc-api-gateway/codegen/internal/genopenapi"
+	"github.com/gopencloud/grpc-api-gateway/codegen/internal/descriptor"
+	"github.com/gopencloud/grpc-api-gateway/codegen/internal/genlog"
+	"github.com/gopencloud/grpc-api-gateway/codegen/internal/genopenapi"
 	"google.golang.org/protobuf/compiler/protogen"
 	"google.golang.org/protobuf/types/pluginpb"
 )

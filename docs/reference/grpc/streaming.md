@@ -58,6 +58,7 @@ gateway.NewServeMux(gateway.WithSSEConfig(gateway.SSEConfig{EndOfStreamMessage: 
 ```
 
 !!! example
+
     ```javascript
     const notificationsSource = new EventSource("/notifications");
 
@@ -84,7 +85,7 @@ As a result, all messages will be received using the `onmessage` handler when us
 const eventSource = new EventSource("/path/to/endpoint");
 
 eventSource.onmessage = (event) => {
-  // event.message
+// event.message
 };
 ```
 
@@ -96,7 +97,6 @@ eventSource.onmessage = (event) => {
     This issue has been marked as "Won't fix" in both Chrome and Firefox. The limit is per browser and domain, meaning you can open 6 SSE connections across all tabs to www.example1.com and another 6 SSE connections to www.example2.com.
 
     When using HTTP/2, the maximum number of simultaneous HTTP streams is negotiated between the server and the client, with a default of 100.
-
 
 #### Error Handling
 
@@ -148,7 +148,7 @@ By default, the gateway does not include a WebSocket handler. You must supply a 
     To use this wrapper:
 
     ```sh
-    go get github.com/meshapi/grpc-api-gateway/websocket/wrapper/gorillawrapper
+    go get github.com/gopencloud/grpc-api-gateway/websocket/wrapper/gorillawrapper
     ```
 
 To enable WebSockets in your gateway, use `WithWebSocketUpgrader` option:
@@ -166,22 +166,22 @@ The upgrader function has the following signature:
 
     ```go linenums="1"
     import (
-      ws "github.com/meshapi/grpc-api-gateway/websocket"
-      "github.com/meshapi/grpc-api-gateway/websocket/wrapper/gorillawrapper"
-	  "github.com/meshapi/grpc-api-gateway/gateway"
+        ws "github.com/gopencloud/grpc-api-gateway/websocket"
+        "github.com/gopencloud/grpc-api-gateway/websocket/wrapper/gorillawrapper"
+        "github.com/gopencloud/grpc-api-gateway/gateway"
 
-	  "github.com/gorilla/websocket"
+        "github.com/gorilla/websocket"
     )
 
     // ...
 
-	upgrader := websocket.Upgrader{
-		CheckOrigin: func(r *http.Request) bool {
-			return true // NB: not ideal for production code.
-		},
-	}
+    upgrader := websocket.Upgrader{
+        CheckOrigin: func(r *http.Request) bool {
+            return true // NB: not ideal for production code.
+        },
+    }
 
-	websocketUpgradeFunc := gateway.WebsocketUpgradeFunc(
+    websocketUpgradeFunc := gateway.WebsocketUpgradeFunc(
         func(w http.ResponseWriter, r *http.Request) (ws.Connection, error) {
             connection, err := upgrader.Upgrade(w, r, nil) //(1)!
             if err != nil {
@@ -192,7 +192,7 @@ The upgrader function has the following signature:
             return gorillawrapper.New(connection), nil //(2)!
         })
 
-	grpcGateway := gateway.NewServeMux(gateway.WithWebsocketUpgrader(websocketUpgradeFunc))
+    grpcGateway := gateway.NewServeMux(gateway.WithWebsocketUpgrader(websocketUpgradeFunc))
     ```
 
     1. WebSocket connection is prepared here using the WebSocket library of choice.
@@ -230,9 +230,11 @@ WebSockets can only be utilized on endpoints with the `GET` method, and you must
 To disable a specific streaming mode for an endpoint binding, use the [Stream](/grpc-api-gateway/reference/grpc/config#stream) configuration.
 
 !!! example
+
     Imagine an endpoint for a chat application. This method supports bidirectional streaming and _can_ technically accept _Chunked-Transfer_ encoding or _Server-sent events_. However, using these modes is impractical because Chunked-Transfer does not support long-lived connections, and SSE does not allow the client to send messages to the server.
 
     === "Configuration"
+
         ```yaml title="chat_gateway.yaml"
         gateway:
           endpoints:
@@ -244,10 +246,11 @@ To disable a specific streaming mode for an endpoint binding, use the [Stream](/
         ```
 
     === "Proto Annotations"
+
         ```proto title="service.proto"
         service ChatService {
             rpc StartChat(ChatRequest) returns (ChatResponse) {
-                option (meshapi.gateway.http) = {
+                option (gopencloud.gateway.http) = {
                     get: "/chat",
                     stream: {
                       disable_sse: true,

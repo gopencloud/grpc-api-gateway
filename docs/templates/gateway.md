@@ -48,6 +48,7 @@ EndpointBinding represents an HTTP endpoint(s) to gRPC method binding.
 | `additional_bindings` | [ [AdditionalEndpointBinding](#additionalendpointbinding) ]  | additional_bindings holds additional bindings for the same gRPC service method. |
 | `disable_query_param_discovery` |  bool   | disable_query_param_discovery can be used to avoid auto binding query parameters.<br><br>Default: `false` |
 | `stream` |  [StreamConfig](#streamconfig)   | stream holds configurations for streaming methods. |
+| `aliases` |  repeated string   | aliases are additional routes for this endpoint binding. |
 # --8<-- [end:EndpointBinding]
 # --8<-- [start:GatewaySpec]
 ### GatewaySpec

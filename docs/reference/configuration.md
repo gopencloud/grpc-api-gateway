@@ -8,64 +8,55 @@ Throughout this documentation, you will find examples provided in both proto ann
 
 ## Mix and Match
 
-You can mix and match these two methods, setting some configurations in `proto` files and using separate configuration files. However, there are some rules to consider:
+You can mix and match these two methods, setting some configurations in `proto` files and using separate configuration files. However, there are some rules to consider.
 
-!!! note
-    When both proto files and configuration files set an option:
+When both proto files and configuration files set an option:
 
-    * __If the value is an _object_ or an _array_ type, the result is a merge of both settings.__
+* __If the value is an _object_ or an _array_ type, the result is a merge of both settings.__
 
-        ??? example
-            If `schema.description` is set in a proto file for a message type and `schema.summary` is set in a configuration file for the same message, the result would contain both `summary` and `description`.
-    
-    * __If the value is a simple type such as _string_, _boolean_ or _number_ the configuration file takes precedence.__
+    ??? example
+        If `schema.description` is set in a proto file for a message type and `schema.summary` is set in a configuration file for the same message, the result would contain both `summary` and `description`.
 
-        ??? example
-            _For instance_: if `schema.description` is set in a proto file for a message type and a configuration file also sets `schema.description` for the same message, the value from the configuration file is used.
+* __If the value is a simple type such as _string_, _boolean_ or _number_ the configuration file takes precedence.__
+
+    ??? example
+        _For instance_: if `schema.description` is set in a proto file for a message type and a configuration file also sets `schema.description` for the same message, the value from the configuration file is used.
 
 ## Using proto annotations
 
 When using proto annotations, you will need to import the proto annotations and types for the `gRPC API Gateway`.
 
-[Buf](https://buf.build/) is a tool that simplifies the development and consumption of the Protobuf APIs.
-It manages dependencies and builds proto files efficiently.
+### EasyP
 
-All proto files and annotations are available on [buf.build](https://buf.build/meshapi/grpc-api-gateway).
+If you decide to use EasyP, follow the instructions below or you can visit the `protoc` tab for instructions on using protoc.
 
-If you decide to use Buf, follow the instructions below or you can visit the `protoc` tab for
-instructions on using protoc.
+=== "Using EasyP"
 
-=== "Using Buf"
-
-    Let's create a `buf.gen.yaml` file if you do not already have one
-    with the following content or add `buf.build/meshapi/grpc-api-gateway` in your dependencies if you have an existing one:
+    Let's create a `easyp.yaml` file if you do not already have one
+    with the following content and add `github.com/gopencloud/grpc-api-gateway` in your dependencies:
 
     ```yaml title="buf.yaml" linenums="1"
-    version: v1
     deps:
-      - "buf.build/meshapi/grpc-api-gateway"
+      - github.com/gopencloud/grpc-api-gateway
     ``` 
 
     Update mods to download the proto files:
 
     ```sh
-    $ buf mod update
+    easyp mod download
     ```
 
 === "Using protoc"
 
     You will first need to download the proto files for `gRPC API Gateway`.
-    File named `grpc_api_gateway_proto.tar.gz` in the [Releases](https://github.com/meshapi/grpc-api-gateway/releases) page contains all the necessary proto files.
 
     From now on, use the `-I` or `--proto-path` option to include these proto files if they reside outside of the proto search path.
-
 
 In any proto file you wish to use annotations, use the import line below when wanting to use gateway or openapi options:
 
 ```proto
-import "meshapi/gateway/annotations.proto";
+import "gopencloud/gateway/annotations.proto";
 ```
-
 
 ## Using configuration files
 
@@ -77,6 +68,9 @@ If a file exists, the configuration file gets loaded and the search ends.
 !!! note
     Both proto annotations and configurations files offer the same options in different formats. Thus there is no option
     that can be set using one method that cannot be set with the other.
+
+!!! note
+    A [JSON schema](https://raw.githubusercontent.com/gopencloud/grpc-api-gateway/refs/heads/main/api/gopencloud/gateway/config.schema.json) exists for YAML/JSON files so you benefit from autocompletion if you have installed the proper YAML/JSON extension.
 
 ### Search Path
 
@@ -146,10 +140,5 @@ The value column shows the value for an example proto file `proto/myservice/v1/m
     file pattern is customized (e.g. using `{{.Dir}}` expression).
 
 It is truly a matter of personal preference which method you would like to use to customize
-the gateway and/or the OpenAPI objects. It might be worth noting the following:
-
-* A [JSON schema](https://json.schemastore.org/grpc-api-gateway.json) exists for YAML/JSON files so you benefit from autocompletion
-if you have installed the proper YAML/JSON extension.
-
-* With many customization, proto files can get bloated. Separating the proto definitions from the gateway and OpenAPI configurations
-can help with the organization of files.
+the gateway and/or the OpenAPI objects.
+With many customization, proto files can get bloated. Separating the proto definitions from the gateway and OpenAPI configurations can help with the organization of files.

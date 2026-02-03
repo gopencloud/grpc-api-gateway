@@ -1,0 +1,48 @@
+# https://taskfile.dev
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+
+version: '3'
+
+vars:
+  TOOL: 'easyp'
+  DOCKER_IMAGE: 'grpc-api-gateway/proto'
+
+tasks:
+  gen:
+    desc: Generate proto files
+    deps:
+      - task: docker-run
+        vars: { TARGET: gen }
+
+  lint:
+    desc: Lint proto files
+    deps:
+      - task: docker-run
+        vars: { TARGET: lint }
+
+  docker-run:
+    internal: true
+    deps:
+      - task: docker-build
+        vars: { TARGET: '{{.TARGET}}' }
+    cmds:
+      - |-
+        docker run \
+          --rm \
+          --pull=never \
+          -v "$(pwd):/grpc-api-gateway/api" \
+          -v "$(cd ..; pwd)/easyp.yaml:/grpc-api-gateway/easyp.yaml" \
+          -w /grpc-api-gateway \
+          {{.DOCKER_IMAGE}}:{{.TARGET}}
+
+  docker-build:
+    internal: true
+    cmds:
+      - |-
+        docker build \
+          --build-arg UID=$(id -u) \
+          --build-arg GID=$(id -g) \
+          --target {{.TARGET}} \
+          -t {{.DOCKER_IMAGE}}:{{.TARGET}} \
+          -f $(cd ..; pwd)/docker/proto.Dockerfile \
+          $(cd ..; pwd)

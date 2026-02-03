@@ -3,7 +3,7 @@ package protoconvert_test
 import (
 	"testing"
 
-	"github.com/meshapi/grpc-api-gateway/protoconvert"
+	"github.com/gopencloud/grpc-api-gateway/protoconvert"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/known/durationpb"
 	"google.golang.org/protobuf/types/known/timestamppb"

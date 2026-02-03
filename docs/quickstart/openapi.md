@@ -26,7 +26,7 @@ files or use configuration files.
           methods:
             Echo: #(3)!
               external_docs:
-                url: 'http://meshapi.github.com/grpc-api-gateway'
+                url: 'http://gopencloud.github.com/grpc-api-gateway'
                 description: 'Even more documentation!'
 
       messages:
@@ -54,10 +54,10 @@ files or use configuration files.
 
     package echo;
 
-    import "meshapi/gateway/annotations.proto";
+    import "gopencloud/gateway/annotations.proto";
 
     option go_package = "demo/echo";
-    option (meshapi.gateway.openapi_doc) = { //(1)!
+    option (gopencloud.gateway.openapi_doc) = { //(1)!
         info: {
             title: 'Echo Service',
             version: 'v0.0.1-alpha1'
@@ -66,7 +66,7 @@ files or use configuration files.
 
     message EchoRequest {
         string text = 1 [
-            (meshapi.gateway.openapi_field) = { //(2)!
+            (gopencloud.gateway.openapi_field) = { //(2)!
                 description: 'Text is the input text',
                 max_length: '24'
             }
@@ -81,7 +81,7 @@ files or use configuration files.
     service EchoService {
         // Echo returns the received text and make it louder too!
         rpc Echo(EchoRequest) returns (EchoResponse) {
-            option (meshapi.gateway.http) = {
+            option (gopencloud.gateway.http) = {
                 get: '/echo/{text}'
                 additional_bindings: [
                   {
@@ -91,9 +91,9 @@ files or use configuration files.
                 ]
             };
 
-            option (meshapi.gateway.openapi_operation) = { //(3)!
+            option (gopencloud.gateway.openapi_operation) = { //(3)!
                 external_docs: {
-                    url: 'http://meshapi.github.com/grpc-api-gateway',
+                    url: 'http://gopencloud.github.com/grpc-api-gateway',
                     description: 'Even more documentation!'
                 }
             };
@@ -109,6 +109,4 @@ files or use configuration files.
         Here, defining `external_docs` in the OpenAPI document only for the HTTP endpoints that are
         bound to the `Echo` gRPC method.
 
-Now you can re-generate using either `Buf` or `protoc` directly and notice the changes in the generated OpenAPI file.
-
-That's it for our quick guide!
+Now you can re-generate using either `EasyP` or `protoc` directly and notice the changes in the generated OpenAPI file.

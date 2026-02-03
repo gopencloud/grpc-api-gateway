@@ -22,7 +22,7 @@ Gateway configuration files should include the following object
 
 --8<-- "templates/gateway.md:EndpointBinding"
 
-#### HTTP Method & Route
+## HTTP Method & Route
 
 Each [EndpointBinding](#endpointbinding) object can define multiple HTTP bindings to a single gRPC method using
 the `additional_bindings` property. You must specify exactly one of the following fields to define the HTTP method:
@@ -38,7 +38,9 @@ When using the `custom` field, the value must be a [CustomPattern](#custompatter
 For other fields, the value should be a [RoutePattern](#routepattern).
 
 !!! example
+
     === "Configuration"
+
         ```yaml title="sound_gateway.yaml" linenums="1" hl_lines="3"
         gateway:
           endpoints:
@@ -50,14 +52,14 @@ For other fields, the value should be a [RoutePattern](#routepattern).
         ```proto title="sound.proto" linenums="1" hl_lines="3-5"
         service SoundService {
             rpc Echo(EchoRequest) returns (EchoResponse) {
-                option (meshapi.gateway.http) = {
+                option (gopencloud.gateway.http) = {
                     post: "/echo"
                 };
             }
         }
         ```
 
-#### RoutePattern
+## RoutePattern
 
 This is a string pattern that can contain parameters bound to the proto request fields. Message field selectors enclosed in curly braces get bound to the request message payload.
 
@@ -65,7 +67,9 @@ For instance:
 `/path/{path.to.field}`
 
 !!! example
+
     Consider the following request message:
+
     ```proto linenums="1"
     message NestedMessage {
         string field = 1;
@@ -81,7 +85,7 @@ For instance:
 
     Nested fields are supported so `/path/{name}/{nested.field}` is valid.
 
-#### Wildcard
+## Wildcard
 
 If you want a field to contain all segments, including slashes, you can use the `{<selector>=*}` pattern.
 
@@ -100,7 +104,9 @@ If you want a field to contain all segments, including slashes, you can use the 
 This object is similar to [EndpointBinding](#endpointbinding) excluding the `additional_bindings` key.
 
 !!! example
+
     === "Configuration"
+
         ```yaml title="sound_gateway.yaml" linenums="1" hl_lines="5-11"
         gateway:
           endpoints:
@@ -116,10 +122,11 @@ This object is similar to [EndpointBinding](#endpointbinding) excluding the `add
         ```
 
     === "Proto Annotations"
+
         ```proto title="sound.proto" linenums="1" hl_lines="5-11"
         service SoundService {
             rpc Echo(EchoRequest) returns (EchoResponse) {
-                option (meshapi.gateway.http) = {
+                option (gopencloud.gateway.http) = {
                     get: "/echo",
                     additional_endpoints: [
                       {get: "/another-route"},
@@ -136,7 +143,9 @@ This object is similar to [EndpointBinding](#endpointbinding) excluding the `add
 --8<-- "templates/gateway.md:CustomPattern"
 
 !!! example
+
     === "Configuration"
+
         ```yaml title="sound_gateway.yaml" linenums="1" hl_lines="3-5"
         gateway:
           endpoints:
@@ -147,10 +156,11 @@ This object is similar to [EndpointBinding](#endpointbinding) excluding the `add
         ```
 
     === "Proto Annotations"
+
         ```proto title="sound.proto" linenums="1" hl_lines="4-7"
         service SoundService {
             rpc Echo(EchoRequest) returns (EchoResponse) {
-                option (meshapi.gateway.http) = {
+                option (gopencloud.gateway.http) = {
                     custom: {
                         method: "TRACE",
                         path: "/echo"
@@ -171,7 +181,9 @@ By default, any field in the request proto message that is not bound to the HTTP
 You can explicitly bind one or more fields to query parameters by specifying the proto message selector and the desired query parameter name. Alternatively, you can use `ignore` to exclude specific fields from being bound to query parameters.
 
 !!! example
+
     Consider the following request message:
+
     ```proto linenums="1"
     message EchoOptions {
         int32 delay = 1;
@@ -185,6 +197,7 @@ You can explicitly bind one or more fields to query parameters by specifying the
     ```
 
     === "Configuration"
+
         ```yaml title="sound_gateway.yaml" linenums="1" hl_lines="5-11"
         gateway:
           endpoints:
@@ -203,10 +216,11 @@ You can explicitly bind one or more fields to query parameters by specifying the
         2. Setting `ignore` to true prevents the `options.delay` proto field from being bound to any query parameter.
 
     === "Proto Annotations"
+
         ```proto title="sound.proto" linenums="1" hl_lines="5-9"
         service SoundService {
             rpc Echo(EchoRequest) returns (EchoResponse) {
-                option (meshapi.gateway.http) = {
+                option (gopencloud.gateway.http) = {
                     post: "/echo",
                     query_parameters: [
                         {selector: "message", name: "msg"},
@@ -232,7 +246,9 @@ You can explicitly bind one or more fields to query parameters by specifying the
 
 !!! example
     Imagine an event streaming endpoint that continuously sends events to the client. Using chunked transfer for this is not ideal due to timeout constraints. However, using *SSE* (Server-Sent Events) or *WebSockets* is perfectly valid and recommended.
+
     === "Configuration"
+
         ```yaml title="notification_gateway.yaml" linenums="1" hl_lines="5-6"
         gateway:
           endpoints:
@@ -243,10 +259,11 @@ You can explicitly bind one or more fields to query parameters by specifying the
         ```
 
     === "Proto Annotations"
+
         ```proto title="notification.proto" linenums="1" hl_lines="5-7"
         service NotificationService {
             rpc Notify(NotifyRequest) returns (stream NotifyResponse) {
-                option (meshapi.gateway.http) = {
+                option (gopencloud.gateway.http) = {
                     get: "/events",
                     stream: {
                         disable_chunked_transfer: true

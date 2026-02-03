@@ -27,4 +27,11 @@ type OperationCore struct {
 	Deprecated   bool                      `json:"deprecated,omitempty" yaml:"deprecated,omitempty"`
 	Security     []map[string][]string     `json:"security,omitempty" yaml:"security,omitempty"`
 	Servers      []*Server                 `json:"servers,omitempty" yaml:"servers,omitempty"`
+	Config       *OperationConfiguration   `json:"config,omitempty" yaml:"config,omitempty"`
+}
+
+type OperationConfiguration struct {
+	DefaultResponseCode         string `json:"defaultResponseCode,omitempty" yaml:"defaultResponseCode,omitempty"`
+	DisableDefaultResponse      bool   `json:"disableDefaultResponse,omitempty" yaml:"disableDefaultResponse,omitempty"`
+	DisableDefaultErrorResponse bool   `json:"disableDefaultErrorResponse,omitempty" yaml:"disableDefaultErrorResponse,omitempty"`
 }

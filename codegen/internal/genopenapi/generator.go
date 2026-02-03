@@ -5,14 +5,14 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/meshapi/grpc-api-gateway/api"
-	"github.com/meshapi/grpc-api-gateway/api/openapi"
-	"github.com/meshapi/grpc-api-gateway/codegen/internal/configpath"
-	"github.com/meshapi/grpc-api-gateway/codegen/internal/descriptor"
-	"github.com/meshapi/grpc-api-gateway/codegen/internal/genopenapi/internal"
-	"github.com/meshapi/grpc-api-gateway/codegen/internal/genopenapi/openapimap"
-	"github.com/meshapi/grpc-api-gateway/codegen/internal/openapiv3"
-	"github.com/meshapi/grpc-api-gateway/codegen/internal/protocomment"
+	"github.com/gopencloud/grpc-api-gateway/api"
+	"github.com/gopencloud/grpc-api-gateway/api/openapi"
+	"github.com/gopencloud/grpc-api-gateway/codegen/internal/configpath"
+	"github.com/gopencloud/grpc-api-gateway/codegen/internal/descriptor"
+	"github.com/gopencloud/grpc-api-gateway/codegen/internal/genopenapi/internal"
+	"github.com/gopencloud/grpc-api-gateway/codegen/internal/genopenapi/openapimap"
+	"github.com/gopencloud/grpc-api-gateway/codegen/internal/openapiv3"
+	"github.com/gopencloud/grpc-api-gateway/codegen/internal/protocomment"
 	"google.golang.org/protobuf/proto"
 )
 
@@ -364,6 +364,10 @@ func (s *Session) addService(service *descriptor.Service) error {
 				continue
 			}
 
+			if binding.IsAlias && s.DisableAliases {
+				continue
+			}
+
 			pathParamAliasMap = s.updatePathParameterAliasesMap(pathParamAliasMap, binding)
 
 			path := renderPath(binding, pathParamAliasMap)
@@ -402,7 +406,12 @@ func (s *Session) addService(service *descriptor.Service) error {
 				s.Document.Object.Paths[path] = pathObject
 			}
 
-			operation, err := s.renderOperation(binding, operationResponses)
+			customizedOperationConfig := openapiv3.OperationConfiguration{}
+			if customizedOperation != nil && customizedOperation.Object.Config != nil {
+				customizedOperationConfig = *customizedOperation.Object.Config
+			}
+
+			operation, err := s.renderOperation(binding, operationResponses, customizedOperationConfig)
 			if err != nil {
 				return fmt.Errorf("failed to render method %q: %w", method.FQMN(), err)
 			}
@@ -430,7 +439,6 @@ func (s *Session) addService(service *descriptor.Service) error {
 			}
 
 			*operationPtr = operation
-
 		}
 	}
 

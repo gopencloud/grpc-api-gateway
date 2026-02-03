@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 
-	"github.com/meshapi/grpc-api-gateway/codegen/internal/genopenapi"
+	"github.com/gopencloud/grpc-api-gateway/codegen/internal/genopenapi"
 )
 
 // prepareOptions prepares a gen gateway options and adds necessary flags.
@@ -140,6 +140,12 @@ func prepareOptions() *genopenapi.Options {
 	flag.BoolVar(
 		&generatorOptions.WarnOnBrokenSelectors, "warn_on_broken_selectors", generatorOptions.WarnOnBrokenSelectors,
 		"if enabled, lowers the severity of unrecognized selectors in config files to logging at warning level.")
+
+	flag.BoolVar(
+		&generatorOptions.DisableAliases, "disable_aliases", generatorOptions.DisableAliases,
+		"when this option is enabled, aliases are not generated. Alias is additional binding with the same options" +
+		"as in parent binding, but has different path.",
+	)
 
 	return &generatorOptions
 }

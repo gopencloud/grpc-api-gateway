@@ -3,9 +3,9 @@ package internal
 import (
 	"fmt"
 
-	"github.com/meshapi/grpc-api-gateway/api/openapi"
-	"github.com/meshapi/grpc-api-gateway/codegen/internal/genopenapi/openapimap"
-	"github.com/meshapi/grpc-api-gateway/codegen/internal/openapiv3"
+	"github.com/gopencloud/grpc-api-gateway/api/openapi"
+	"github.com/gopencloud/grpc-api-gateway/codegen/internal/genopenapi/openapimap"
+	"github.com/gopencloud/grpc-api-gateway/codegen/internal/openapiv3"
 )
 
 type DefaultResponse struct {

@@ -13,6 +13,7 @@ Note that there are some overlaps between gRPC options and OpenAPI options. To e
 | allow_patch_feature | Enables the use of the PATCH feature with update masks (`google.protobuf.FieldMask`). | `true` |
 | disable_default_errors | When enabled, the default error response is not generated. This is useful if you are using a custom error structure. | `false` |
 | disable_default_responses | When enabled, the default success response is not generated. This is particularly useful when you need to specify non-200 status codes. | `false` |
+| disable_aliases | When enabled, aliases, which are additional bindings inherited from parent binding with different path, are not generated in OpenAPI spec. | `false` |
 | disable_service_tags | When enabled, prevents the generation of service tags in operations. This helps to avoid exposing backend gRPC service names. | `false` |
 | field_name_mode | Controls the naming convention of fields in the OpenAPI schemas. Allowed values are `proto` for using the original proto field names and `json` for using camelCase JSON names. | `json` |
 | field_nullable_mode | Configures the generation of nullable OpenAPI fields for scalar types using `anyOf` or type array. Options include: `disabled` (no nullable fields generated), `optional` (nullable fields generated when the proto3 optional label is used), and `not_required` (nullable fields generated when a field is not explicitly marked as required and can be null). | `optional` |

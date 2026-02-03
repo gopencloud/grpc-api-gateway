@@ -2,11 +2,11 @@
 
 Understanding how query parameters are processed by the gRPC Gateway is crucial for customizing your API to meet specific needs.
 
-### Default Behavior
+## Default Behavior
 
 In each [EndpointConfig](/grpc-api-gateway/reference/grpc/config), any proto field from the request message that is not already bound to path parameters or the HTTP body is automatically bound to query parameters.
 
-#### Naming
+### Naming
 
 By default, the names of these query parameters are derived from the proto field names. For nested fields, the name is constructed by concatenating the parent field name with the nested field name, separated by a dot.
 
@@ -28,7 +28,6 @@ By default, the names of these query parameters are derived from the proto field
     query parameters `some_input` and `options.case_sensitive` will be
     bound to the corresponding fields in the proto message.
 
-
 ### Customization
 
 There are a number of customizations available.
@@ -37,8 +36,8 @@ There are a number of customizations available.
 
 In [EndpointConfig](/grpc-api-gateway/reference/grpc/config), you have the option to disable the automatic discovery and binding of query parameters. When this feature is disabled for a specific endpoint, only the query parameter bindings that are explicitly defined will be considered.
 
-
 === "Configuration"
+
     ```yaml title="service_gateway.yaml" linenums="1" hl_lines="5"
     gateway:
       endpoints:
@@ -48,10 +47,11 @@ In [EndpointConfig](/grpc-api-gateway/reference/grpc/config), you have the optio
     ```
 
 === "Proto Annotations"
+
     ```proto title="service.proto" linenums="1" hl_lines="5"
     service MyService {
         rpc MyMethod(Request) returns (Response) {
-            option (meshapi.gateway.http) = {
+            option (gopencloud.gateway.http) = {
                 post: "/my-endpoint",
                 disable_query_param_discovery: true
             };
@@ -64,7 +64,6 @@ Some practical uses of this setting include:
 * Assigning custom names to all query parameters.
 * Restricting the exposure of certain parts of the proto message to the HTTP request.
 
-
 #### Additional Query Parameter Binding and Aliases
 
 To use custom names for query parameters or to allow multiple names (aliases) for the same message field, you can explicitly define the query parameter to request proto message field binding.
@@ -72,7 +71,9 @@ To use custom names for query parameters or to allow multiple names (aliases) fo
 By utilizing `query_params` in [EndpointConfig](/grpc-api-gateway/reference/grpc/config), you can add multiple [QueryParameterBinding](/grpc-api-gateway/reference/grpc/config/#queryparameterbinding) objects.
 
 !!! example
+
     Consider request proto message below:
+
     ```proto
     message PageOptions {
         uint32 per_page = 1;
@@ -90,6 +91,7 @@ By utilizing `query_params` in [EndpointConfig](/grpc-api-gateway/reference/grpc
     2. Use `per_page` as the query parameter name instead of the default `pagination.per_page`.
 
     === "Configuration"
+
         ```yaml title="query_gateway.yaml" linenums="1" hl_lines="5-11"
         gateway:
           endpoints:
@@ -105,10 +107,11 @@ By utilizing `query_params` in [EndpointConfig](/grpc-api-gateway/reference/grpc
         ```
 
     === "Proto Annotations"
+
         ```proto title="query.proto" linenums="1" hl_lines="5-9"
         service QueryService {
             rpc Query(QueryRequest) returns (QueryResponse) {
-                option (meshapi.gateway.http) = {
+                option (gopencloud.gateway.http) = {
                     get: "/query",
                     query_params: [
                         {selector: 'language', name: 'lang'},
@@ -144,6 +147,7 @@ You may want to exclude certain proto fields from being bound to any query param
 !!! example
 
     === "Configuration"
+
         ```yaml title="query_gateway.yaml" linenums="1" hl_lines="7"
         gateway:
           endpoints:
@@ -155,10 +159,11 @@ You may want to exclude certain proto fields from being bound to any query param
         ```
 
     === "Proto Annotations"
+
         ```proto title="query.proto" linenums="1" hl_lines="6"
         service QueryService {
             rpc Query(QueryRequest) returns (QueryResponse) {
-                option (meshapi.gateway.http) = {
+                option (gopencloud.gateway.http) = {
                     get: "/query",
                     query_params: [
                         {selector: 'language', ignore: true},
@@ -181,6 +186,7 @@ Throughout this section, references to _scalar types_ include all numerical type
 Repeated fields can hold multiple values. Query parameters support repeated fields only for scalar types.
 
 !!! example
+
     ```proto
     message Request {
         repeated string names = 1;
@@ -199,6 +205,7 @@ Repeated fields can hold multiple values. Query parameters support repeated fiel
 Map types are also supported if both the key and the value are scalar types. The HTTP query parameter format is `field_name[key]=value`.
 
 !!! example
+
     ```proto
     message Request {
         map<string, string> metadata = 1;

@@ -6,7 +6,7 @@ This feature is not enabled by default. To enable it, use the plug-in option `us
 
 Additionally, you can define custom values and use them in your templates by utilizing the `go_template_args` option.
 
-### Where Can You Use Templates?
+## Where Can You Use Templates?
 
 You can incorporate Go Templates into various sections of your OpenAPI documentation:
 
@@ -23,62 +23,61 @@ You can define these templates in different contexts:
 * Enum
 * Method
 
-
-### Template Arguments
+## Template Arguments
 
 To effectively use templates, you need to understand the available arguments and how to incorporate them into your templates.
 
-#### Functions
+### Functions
 
 There are some functions you can use in your Go Template.
 
-##### Import
+#### Import
 
 You can import another file and bring it in your documentation.
 
-```proto linenums="1" hl_lines="2"
-// Some existing text here.
-// {{ import "user.tpl" }}
-message User {
-  string name = 1;
-}
-```
+    ```proto linenums="1" hl_lines="2"
+    // Some existing text here.
+    // {{ import "user.tpl" }}
+    message User {
+      string name = 1;
+    }
+    ```
 
 This function reads and evaluates the specified file as a Go template, replacing the second line with the resulting content.
 
-##### Field Comments
+#### Field Comments
 
 Field Comments can look up the documentation for a field.
 
-```proto linenums="1" hl_lines="3"
-// Some existing text here.
-// Name:
-//   * {{ fieldcomments index(.Fields 0) }}
-message User {
-  string name = 1;
-}
-```
+    ```proto linenums="1" hl_lines="3"
+    // Some existing text here.
+    // Name:
+    //   * {{ fieldcomments index(.Fields 0) }}
+    message User {
+      string name = 1;
+    }
+    ```
 
-##### Arg
+#### Arg
 
 This function allows you to retrieve an argument provided via `go_template_args`.
 
 For instance, assuming we have used `go_template_args` with value `url=http://mydomain.com/`
 
-```proto linenums="1" hl_lines="3"
-// Some existing text here.
-//
-// Read more about this type at {{ arg "url" }}/ref?name=User
-message User {
-  string name = 1;
-}
-```
+    ```proto linenums="1" hl_lines="3"
+    // Some existing text here.
+    //
+    // Read more about this type at {{ arg "url" }}/ref?name=User
+    message User {
+      string name = 1;
+    }
+    ```
 
-#### Contexts
+### Contexts
 
 Go Templates can be used in different contexts. In each context, the variables are different and relevant to the context.
 
-##### Enum
+#### Enum
 
 Go template for enum will have the following fields:
 
@@ -86,9 +85,9 @@ Go template for enum will have the following fields:
 | --- | --- | --- |
 | File | `File` | The proto file that contains this enum.  |
 | Name | `string` | Name of the enum.  |
-| Value | list of [EnumVariant](#enum-variant) | Slice of enum variants. |
+| Value | list of EnumVariant | Slice of enum variants. |
 
-###### EnumVariant ######
+##### EnumVariant
 
 | Name | Type | Description |
 | --- | --- | --- |
@@ -96,6 +95,7 @@ Go template for enum will have the following fields:
 | Number | `int32` | Number of this enum value. |
 
 !!! example
+
     ```proto
     // Subscription type holds multiple values:
     //
@@ -118,9 +118,10 @@ Go template for message will have the following fields:
 | --- | --- | --- |
 | File | `File` | The proto file that contains this message.  |
 | Name | `string` | Name of the message.  |
-| Fields | list of [Field](#field) | Slice of fields. |
+| Fields | list of Field | Slice of fields. |
 
 !!! example
+
     ```proto
     // User is the user in the system.
     //
@@ -167,6 +168,7 @@ Bindings are unique compared to other contexts because they are not native conce
 Thus, you can use the comment for each method, The Go Template however will have the [Binding](#binding) as its argument.
 
 !!! example
+
     ```proto
     service BookService {
       // Accepts: {{ .Method.RequestType.Name }}
@@ -178,7 +180,7 @@ Thus, you can use the comment for each method, The Go Template however will have
       //   - {{ .FieldPath }}
       // {{ end }}
       rpc UpdateBook(UpdateBookRequest) returns (UpdateBookResponse) {
-        option (meshapi.gateway.http) = {
+        option (gopencloud.gateway.http) = {
           put: "/books/{id}",
           body: "*",
           additional_bindings: [

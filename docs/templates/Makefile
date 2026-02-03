@@ -6,4 +6,4 @@ gateway.md: template.md.tpl
 		--doc_out=. \
 		--doc_opt=template.md.tpl,gateway.md \
 		-I ../../api \
-		meshapi/gateway/gateway.proto
+		gopencloud/gateway/gateway.proto

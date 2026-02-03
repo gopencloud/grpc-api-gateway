@@ -7,7 +7,7 @@ import (
 	"google.golang.org/genproto/googleapis/api/httpbody"
 	"google.golang.org/protobuf/encoding/protojson"
 
-	"github.com/meshapi/grpc-api-gateway/protomarshal"
+	"github.com/gopencloud/grpc-api-gateway/protomarshal"
 )
 
 func TestHTTPBodyContentType(t *testing.T) {

@@ -1,22 +1,22 @@
-## Introduction
+# Introduction
 
 The gRPC API Gateway patch feature allows you to update resources using HTTP PATCH requests. This is particularly useful for making partial updates to a resource without needing to send the entire resource representation. The PATCH feature can automatically generate a field mask that includes all the fields present in the request body.
 
-#### Why is using an update mask necessary?
+## Why is using an update mask necessary?
 
 Without an update mask, null fields in the request body could either indicate that the API user wants to unset them or that they should remain unchanged. Using an update mask clarifies this ambiguity.
 
-#### How does the PATCH feature help with this?
+## How does the PATCH feature help with this?
 
 The PATCH feature simplifies the update process by automatically generating a field mask based on the fields present in the request body. This ensures that only the specified fields are updated, reducing ambiguity and making partial updates more efficient.
 
 ## How to Use
 
-#### 1. Define Update Mask
+### 1. Define Update Mask
 
 In your proto request type, include a field named `update_mask` of type `google.protobuf.FieldMask`. This is crucial because the gateway requires this exact field name and type to populate them automatically.
 
-#### 2. Define PATCH Method Binding
+### 2. Define PATCH Method Binding
 
 Only the `PATCH` HTTP method will trigger the automatic mapping of the field mask. Define the `PATCH` method in your Protobuf file or gateway configuration. While you can have additional bindings using other HTTP methods, the automatic mapping of the field mask will not occur with those methods.
 
@@ -28,7 +28,7 @@ You must select the field subfield that contains the updates.
 Below is an illustrative example demonstrating the use of the PATCH feature.
 
 ```proto title="service.proto" linenums="1" hl_lines="11 20"
-import "meshapi/gateway/annotations.proto";
+import "gopencloud/gateway/annotations.proto";
 import "google/protobuf/field_mask.proto";
 
 message Entity {
@@ -45,7 +45,7 @@ message Response {}
 
 service MyService {
     rpc MyMethod(Request) returns (Response) {
-        option (meshapi.gateway.http) = {
+        option (gopencloud.gateway.http) = {
             patch: "/my-endpoint/{entity.id}",
             body: "entity" // (2)!
         };
@@ -56,7 +56,7 @@ service MyService {
 1. The update mask must be named `update_mask` to be recognized by the gateway.
 2. To enable automatic population of the `update_mask`, use the subfield that contains the partial updates, in this case, `entity`.
 
-**Test the PATCH Endpoint**
+### Test the PATCH Endpoint
 
 Once you generate and implement your method, you can test the PATCH endpoint using tools like `curl` or Postman. Here is an example using `curl`.
 
@@ -71,7 +71,6 @@ Notice that the `update_mask` is automatically set to `["name"]`, indicating tha
 
 !!! note
     Only the values bound to the body annotation will appear in the update mask. For example, in the example above, the entity ID would not be included in the list.
-
 
 ## Best Practices
 

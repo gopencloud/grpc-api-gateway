@@ -7,9 +7,10 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
+	"slices"
 	"strings"
 
-	"github.com/meshapi/grpc-api-gateway/api"
+	"github.com/gopencloud/grpc-api-gateway/api"
 	"google.golang.org/protobuf/encoding/protojson"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/descriptorpb"
@@ -89,6 +90,7 @@ func (r *Registry) LoadFromService(filePath, protoPackage string, service *descr
 			AdditionalBindings:         embeddedBinding.GetAdditionalBindings(),
 			DisableQueryParamDiscovery: embeddedBinding.DisableQueryParamDiscovery,
 			Stream:                     embeddedBinding.Stream,
+			Aliases:                    embeddedBinding.GetAliases(),
 		}
 		setPatternFromProtoDefinition(embeddedBinding.Pattern, endpointBinding)
 		config.Gateway.Endpoints = append(config.Gateway.Endpoints, endpointBinding)
@@ -161,6 +163,16 @@ func (r *Registry) processConfig(config *api.Config, src SourceInfo) error {
 			endpoint.Selector = src.ProtoPackage + endpoint.Selector[1:]
 		}
 
+		endpoint.Aliases = filterAliases(
+			endpoint.GetAdditionalBindings(),
+			endpoint.GetAliases(),
+		)
+
+		endpoint.AdditionalBindings = append(
+			endpoint.AdditionalBindings,
+			aliasesToAdditionalBindings(endpoint)...,
+		)
+
 		if err := validateBinding(endpoint); err != nil {
 			return err
 		}
@@ -207,4 +219,117 @@ func validateBinding(endpoint *api.EndpointBinding) error {
 	}
 
 	return nil
+}
+
+func aliasesToAdditionalBindings(e *api.EndpointBinding) []*api.AdditionalEndpointBinding {
+	pattern := e.GetPattern()
+	if pattern == nil {
+		return nil
+	}
+
+	aliases := e.GetAliases()
+	if len(aliases) == 0 {
+		return nil
+	}
+
+	newBindings := make([]*api.AdditionalEndpointBinding, 0, len(aliases))
+	for _, alias := range aliases {
+		newBinding := &api.AdditionalEndpointBinding{}
+
+		switch p := pattern.(type) {
+		case *api.EndpointBinding_Get:
+			newBinding.Pattern = &api.AdditionalEndpointBinding_Get{
+				Get: alias,
+			}
+		case *api.EndpointBinding_Put:
+			newBinding.Pattern = &api.AdditionalEndpointBinding_Put{
+				Put: alias,
+			}
+		case *api.EndpointBinding_Post:
+			newBinding.Pattern = &api.AdditionalEndpointBinding_Post{
+				Post: alias,
+			}
+		case *api.EndpointBinding_Delete:
+			newBinding.Pattern = &api.AdditionalEndpointBinding_Delete{
+				Delete: alias,
+			}
+		case *api.EndpointBinding_Patch:
+			newBinding.Pattern = &api.AdditionalEndpointBinding_Patch{
+				Patch: alias,
+			}
+		case *api.EndpointBinding_Custom:
+			newBinding.Pattern = &api.AdditionalEndpointBinding_Custom{
+				Custom: &api.CustomPattern{
+					Method: p.Custom.Method,
+					Path:   alias,
+				},
+			}
+		default:
+			return nil
+		}
+
+		newBinding.Body = e.Body
+		newBinding.ResponseBody = e.ResponseBody
+		newBinding.QueryParams = e.QueryParams
+		newBinding.DisableQueryParamDiscovery = e.DisableQueryParamDiscovery
+		newBinding.Stream = e.Stream
+
+		newBindings = append(newBindings, newBinding)
+	}
+
+	return newBindings
+}
+
+func filterAliases(abs []*api.AdditionalEndpointBinding, aliases []string) []string {
+	if len(aliases) == 0 {
+		return nil
+	}
+
+	if len(abs) == 0 {
+		return aliases
+	}
+
+	existingPaths := make([]string, 0)
+	for _, ab := range abs {
+		abPattern := ab.GetPattern()
+		if abPattern == nil {
+			continue
+		}
+
+		path := ""
+		switch p := abPattern.(type) {
+		case *api.AdditionalEndpointBinding_Get:
+			path = p.Get
+		case *api.AdditionalEndpointBinding_Put:
+			path = p.Put
+		case *api.AdditionalEndpointBinding_Post:
+			path = p.Post
+		case *api.AdditionalEndpointBinding_Delete:
+			path = p.Delete
+		case *api.AdditionalEndpointBinding_Patch:
+			path = p.Patch
+		case *api.AdditionalEndpointBinding_Custom:
+			path = p.Custom.Path
+		}
+		if path == "" {
+			continue
+		}
+
+		if slices.Contains(aliases, path) {
+			existingPaths = append(existingPaths, path)
+		}
+	}
+
+	if len(existingPaths) == 0 {
+		return aliases
+	}
+
+	newAliases := make([]string, 0, len(aliases))
+	for _, alias := range aliases {
+		if !slices.Contains(existingPaths, alias) {
+			newAliases = append(newAliases, alias)
+		}
+	}
+
+	return newAliases
 }

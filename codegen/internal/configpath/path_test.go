@@ -3,7 +3,7 @@ package configpath_test
 import (
 	"testing"
 
-	"github.com/meshapi/grpc-api-gateway/codegen/internal/configpath"
+	"github.com/gopencloud/grpc-api-gateway/codegen/internal/configpath"
 )
 
 func TestBuild(t *testing.T) {

@@ -4,9 +4,9 @@ import (
 	"net/url"
 	"testing"
 
-	"github.com/meshapi/grpc-api-gateway/gateway"
-	"github.com/meshapi/grpc-api-gateway/internal/examplepb"
-	"github.com/meshapi/grpc-api-gateway/trie"
+	"github.com/gopencloud/grpc-api-gateway/gateway"
+	"github.com/gopencloud/grpc-api-gateway/internal/testpb"
+	"github.com/gopencloud/grpc-api-gateway/trie"
 )
 
 func FuzzPopulateQueryParameters(f *testing.F) {
@@ -21,7 +21,7 @@ func FuzzPopulateQueryParameters(f *testing.F) {
 	f.Add("nested_oneof_value_one.int64Value=-1&nested_oneof_value_one.string_value=foo")
 	defaultQueryParser := &gateway.DefaultQueryParser{}
 	f.Fuzz(func(t *testing.T, query string) {
-		in := &examplepb.ABitOfEverything{}
+		in := &testpb.ABitOfEverything{}
 		values, err := url.ParseQuery(query)
 		if err != nil {
 			return
