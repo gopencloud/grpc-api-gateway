@@ -11,13 +11,14 @@ jobs:
   build:
     name: Deploy docs
     runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      pages: write
     steps:
       - name: Checkout main
         uses: actions/checkout@v4
 
       - name: Deploy docs
         uses: mhausenblas/mkdocs-deploy-gh-pages@master
-        with:
-          token: ${{ secrets.MKDOCS }}
         env:
           CONFIG_FILE: mkdocs.yml
