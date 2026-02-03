@@ -4,7 +4,7 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/meshapi/grpc-api-gateway/trie"
+	"github.com/gopencloud/grpc-api-gateway/trie"
 )
 
 func TestTrie(t *testing.T) {

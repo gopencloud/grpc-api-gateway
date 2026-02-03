@@ -8,10 +8,10 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/meshapi/grpc-api-gateway/codegen/internal/casing"
-	"github.com/meshapi/grpc-api-gateway/codegen/internal/descriptor"
-	"github.com/meshapi/grpc-api-gateway/pkg/httprule"
-	"github.com/meshapi/grpc-api-gateway/trie"
+	"github.com/gopencloud/grpc-api-gateway/codegen/internal/casing"
+	"github.com/gopencloud/grpc-api-gateway/codegen/internal/descriptor"
+	"github.com/gopencloud/grpc-api-gateway/pkg/httprule"
+	"github.com/gopencloud/grpc-api-gateway/trie"
 )
 
 type param struct {

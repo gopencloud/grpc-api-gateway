@@ -1,0 +1,10 @@
+generate:
+  inputs:
+  - directory: .
+  plugins:
+  - remote: api.beta.easyp.tech/protocolbuffers/go
+    out: .
+    opts:
+      paths: source_relative
+breaking:
+  against_git_ref: master

@@ -6,7 +6,7 @@
 package trie
 
 import (
-	"github.com/meshapi/grpc-api-gateway/dotpath"
+	"github.com/gopencloud/grpc-api-gateway/dotpath"
 )
 
 type Node struct {

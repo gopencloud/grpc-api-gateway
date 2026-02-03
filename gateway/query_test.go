@@ -8,9 +8,9 @@ import (
 	"time"
 
 	"github.com/google/go-cmp/cmp"
-	"github.com/meshapi/grpc-api-gateway/gateway"
-	"github.com/meshapi/grpc-api-gateway/internal/examplepb"
-	"github.com/meshapi/grpc-api-gateway/trie"
+	"github.com/gopencloud/grpc-api-gateway/gateway"
+	"github.com/gopencloud/grpc-api-gateway/internal/testpb"
+	"github.com/gopencloud/grpc-api-gateway/trie"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/testing/protocmp"
 	"google.golang.org/protobuf/types/known/durationpb"
@@ -29,7 +29,7 @@ func BenchmarkPopulateQueryParameters(b *testing.B) {
 
 	fieldmaskStr := "float_value,double_value"
 
-	msg := &examplepb.Proto3Message{}
+	msg := &testpb.Proto3Message{}
 	values := url.Values{
 		"float_value":            {"1.5"},
 		"double_value":           {"2.5"},
@@ -175,7 +175,7 @@ func TestPopulateParameters(t *testing.T) {
 				"struct_value":           {structJsonStrings[0]},
 			},
 			filter: trie.New(),
-			want: &examplepb.Proto3Message{
+			want: &testpb.Proto3Message{
 				FloatValue:         1.5,
 				DoubleValue:        2.5,
 				Int64Value:         -1,
@@ -187,8 +187,8 @@ func TestPopulateParameters(t *testing.T) {
 				BytesValue:         []byte("abc123!?$*&()'-=@~"),
 				RepeatedValue:      []string{"a", "b", "c"},
 				RepeatedMessage:    []*wrapperspb.UInt64Value{{Value: 1}, {Value: 2}, {Value: 3}},
-				EnumValue:          examplepb.EnumValue_Y,
-				RepeatedEnum:       []examplepb.EnumValue{examplepb.EnumValue_Y, examplepb.EnumValue_Z, examplepb.EnumValue_X},
+				EnumValue:          testpb.EnumValue_Y,
+				RepeatedEnum:       []testpb.EnumValue{testpb.EnumValue_Y, testpb.EnumValue_Z, testpb.EnumValue_X},
 				TimestampValue:     timePb,
 				DurationValue:      durationPb,
 				FieldmaskValue:     fieldmaskPb,
@@ -255,7 +255,7 @@ func TestPopulateParameters(t *testing.T) {
 				"struct_value":       {structJsonStrings[1]},
 			},
 			filter: trie.New(),
-			want: &examplepb.Proto3Message{
+			want: &testpb.Proto3Message{
 				FloatValue:         1.5,
 				DoubleValue:        2.5,
 				Int64Value:         -1,
@@ -266,8 +266,8 @@ func TestPopulateParameters(t *testing.T) {
 				StringValue:        "str",
 				BytesValue:         []byte("bytes"),
 				RepeatedValue:      []string{"a", "b", "c"},
-				EnumValue:          examplepb.EnumValue_Y,
-				RepeatedEnum:       []examplepb.EnumValue{examplepb.EnumValue_Y, examplepb.EnumValue_Z, examplepb.EnumValue_X},
+				EnumValue:          testpb.EnumValue_Y,
+				RepeatedEnum:       []testpb.EnumValue{testpb.EnumValue_Y, testpb.EnumValue_Z, testpb.EnumValue_X},
 				TimestampValue:     timePb,
 				DurationValue:      durationPb,
 				FieldmaskValue:     fieldmaskPb,
@@ -292,9 +292,9 @@ func TestPopulateParameters(t *testing.T) {
 				"struct_value":       {structJsonStrings[2]},
 			},
 			filter: trie.New(),
-			want: &examplepb.Proto3Message{
-				EnumValue:        examplepb.EnumValue_Z,
-				RepeatedEnum:     []examplepb.EnumValue{examplepb.EnumValue_X, examplepb.EnumValue_Z, examplepb.EnumValue_X},
+			want: &testpb.Proto3Message{
+				EnumValue:        testpb.EnumValue_Z,
+				RepeatedEnum:     []testpb.EnumValue{testpb.EnumValue_X, testpb.EnumValue_Z, testpb.EnumValue_X},
 				StructValueValue: structValueValues[2],
 				StructValue:      structValues[2],
 			},
@@ -304,7 +304,7 @@ func TestPopulateParameters(t *testing.T) {
 				"struct_value_value": {structValueJsonStrings[3]},
 			},
 			filter: trie.New(),
-			want: &examplepb.Proto3Message{
+			want: &testpb.Proto3Message{
 				StructValueValue: structValueValues[3],
 			},
 		},
@@ -313,7 +313,7 @@ func TestPopulateParameters(t *testing.T) {
 				"struct_value_value": {structValueJsonStrings[4]},
 			},
 			filter: trie.New(),
-			want: &examplepb.Proto3Message{
+			want: &testpb.Proto3Message{
 				StructValueValue: structValueValues[4],
 			},
 		},
@@ -322,7 +322,7 @@ func TestPopulateParameters(t *testing.T) {
 				"struct_value_value": {structValueJsonStrings[5]},
 			},
 			filter: trie.New(),
-			want: &examplepb.Proto3Message{
+			want: &testpb.Proto3Message{
 				StructValueValue: structValueValues[5],
 			},
 		},
@@ -339,7 +339,7 @@ func TestPopulateParameters(t *testing.T) {
 				"repeated_value": {"a", "b", "c"},
 			},
 			filter: trie.New(),
-			want: &examplepb.Proto2Message{
+			want: &testpb.Proto2Message{
 				FloatValue:    proto.Float32(1.5),
 				DoubleValue:   proto.Float64(2.5),
 				Int64Value:    proto.Int64(-1),
@@ -364,7 +364,7 @@ func TestPopulateParameters(t *testing.T) {
 				"repeatedValue": {"a", "b", "c"},
 			},
 			filter: trie.New(),
-			want: &examplepb.Proto2Message{
+			want: &testpb.Proto2Message{
 				FloatValue:    proto.Float32(1.5),
 				DoubleValue:   proto.Float64(2.5),
 				Int64Value:    proto.Int64(-1),
@@ -386,14 +386,14 @@ func TestPopulateParameters(t *testing.T) {
 				"nested.nested.map_value[second]":     {"bar"},
 			},
 			filter: trie.New(),
-			want: &examplepb.Proto3Message{
-				Nested: &examplepb.Proto3Message{
-					Nested: &examplepb.Proto3Message{
+			want: &testpb.Proto3Message{
+				Nested: &testpb.Proto3Message{
+					Nested: &testpb.Proto3Message{
 						MapValue: map[string]string{
 							"first":  "foo",
 							"second": "bar",
 						},
-						Nested: &examplepb.Proto3Message{
+						Nested: &testpb.Proto3Message{
 							RepeatedValue: []string{"a", "b", "c"},
 							StringValue:   "s",
 						},
@@ -408,8 +408,8 @@ func TestPopulateParameters(t *testing.T) {
 				"oneof_string_value": {"foobar"},
 			},
 			filter: trie.New(),
-			want: &examplepb.Proto3Message{
-				OneofValue: &examplepb.Proto3Message_OneofStringValue{
+			want: &testpb.Proto3Message{
+				OneofValue: &testpb.Proto3Message_OneofStringValue{
 					OneofStringValue: "foobar",
 				},
 			},
@@ -419,8 +419,8 @@ func TestPopulateParameters(t *testing.T) {
 				"oneofStringValue": {"foobar"},
 			},
 			filter: trie.New(),
-			want: &examplepb.Proto3Message{
-				OneofValue: &examplepb.Proto3Message_OneofStringValue{
+			want: &testpb.Proto3Message{
+				OneofValue: &testpb.Proto3Message_OneofStringValue{
 					OneofStringValue: "foobar",
 				},
 			},
@@ -430,8 +430,8 @@ func TestPopulateParameters(t *testing.T) {
 				"oneof_bool_value": {"true"},
 			},
 			filter: trie.New(),
-			want: &examplepb.Proto3Message{
-				OneofValue: &examplepb.Proto3Message_OneofBoolValue{
+			want: &testpb.Proto3Message{
+				OneofValue: &testpb.Proto3Message_OneofBoolValue{
 					OneofBoolValue: true,
 				},
 			},
@@ -442,9 +442,9 @@ func TestPopulateParameters(t *testing.T) {
 				"nested_oneof_value_one.string_value": {"foo"},
 			},
 			filter: trie.New(),
-			want: &examplepb.Proto3Message{
-				NestedOneofValue: &examplepb.Proto3Message_NestedOneofValueOne{
-					NestedOneofValueOne: &examplepb.Proto3Message{
+			want: &testpb.Proto3Message{
+				NestedOneofValue: &testpb.Proto3Message_NestedOneofValueOne{
+					NestedOneofValueOne: &testpb.Proto3Message{
 						Int64Value:  -1,
 						StringValue: "foo",
 					},
@@ -457,7 +457,7 @@ func TestPopulateParameters(t *testing.T) {
 				"timestampValue": {"null"},
 			},
 			filter:  trie.New(),
-			want:    &examplepb.Proto3Message{},
+			want:    &testpb.Proto3Message{},
 			wanterr: errors.New(`parsing field "timestamp_value": parsing time "null" as "2006-01-02T15:04:05.999999999Z07:00": cannot parse "null" as "2006"`),
 		},
 		{
@@ -466,7 +466,7 @@ func TestPopulateParameters(t *testing.T) {
 				"durationValue": {"null"},
 			},
 			filter:  trie.New(),
-			want:    &examplepb.Proto3Message{},
+			want:    &testpb.Proto3Message{},
 			wanterr: errors.New(`parsing field "duration_value": time: invalid duration "null"`),
 		},
 		{
@@ -476,7 +476,7 @@ func TestPopulateParameters(t *testing.T) {
 				"oneof_string_value": {"foobar"},
 			},
 			filter:  trie.New(),
-			want:    &examplepb.Proto3Message{},
+			want:    &testpb.Proto3Message{},
 			wanterr: errors.New("field already set for oneof \"oneof_value\""),
 		},
 		{
@@ -485,7 +485,7 @@ func TestPopulateParameters(t *testing.T) {
 				"uint64_value": {"1", "2"},
 			},
 			filter:  trie.New(),
-			want:    &examplepb.Proto3Message{},
+			want:    &testpb.Proto3Message{},
 			wanterr: errors.New("too many values for field \"uint64_value\": 1, 2"),
 		},
 		{
@@ -494,7 +494,7 @@ func TestPopulateParameters(t *testing.T) {
 				"repeated_message.value": {"1"},
 			},
 			filter:  trie.New(),
-			want:    &examplepb.Proto3Message{},
+			want:    &testpb.Proto3Message{},
 			wanterr: errors.New("invalid path: \"repeated_message\" is not a message"),
 		},
 	} {
@@ -533,7 +533,7 @@ func TestPopulateParametersWithFilters(t *testing.T) {
 				"repeated_value": {"a", "b", "c"},
 			},
 			filter: trie.New("bool_value", "repeated_value"),
-			want: &examplepb.Proto3Message{
+			want: &testpb.Proto3Message{
 				StringValue: "str",
 			},
 		},
@@ -545,7 +545,7 @@ func TestPopulateParametersWithFilters(t *testing.T) {
 				"string_value":               {"str"},
 			},
 			filter: trie.New("nested"),
-			want: &examplepb.Proto3Message{
+			want: &testpb.Proto3Message{
 				StringValue: "str",
 			},
 		},
@@ -557,8 +557,8 @@ func TestPopulateParametersWithFilters(t *testing.T) {
 				"string_value":               {"str"},
 			},
 			filter: trie.New("nested.nested"),
-			want: &examplepb.Proto3Message{
-				Nested: &examplepb.Proto3Message{
+			want: &testpb.Proto3Message{
+				Nested: &testpb.Proto3Message{
 					StringValue: "str",
 				},
 				StringValue: "str",
@@ -572,10 +572,10 @@ func TestPopulateParametersWithFilters(t *testing.T) {
 				"string_value":               {"str"},
 			},
 			filter: trie.New("nested.nested.string_value"),
-			want: &examplepb.Proto3Message{
-				Nested: &examplepb.Proto3Message{
+			want: &testpb.Proto3Message{
+				Nested: &testpb.Proto3Message{
 					StringValue: "str",
-					Nested: &examplepb.Proto3Message{
+					Nested: &testpb.Proto3Message{
 						BoolValue: true,
 					},
 				},
@@ -603,84 +603,84 @@ func TestPopulateQueryParametersWithInvalidNestedParameters(t *testing.T) {
 		filter *trie.Node
 	}{
 		{
-			msg: &examplepb.Proto3Message{},
+			msg: &testpb.Proto3Message{},
 			values: url.Values{
 				"float_value.nested": {"test"},
 			},
 			filter: trie.New(),
 		},
 		{
-			msg: &examplepb.Proto3Message{},
+			msg: &testpb.Proto3Message{},
 			values: url.Values{
 				"double_value.nested": {"test"},
 			},
 			filter: trie.New(),
 		},
 		{
-			msg: &examplepb.Proto3Message{},
+			msg: &testpb.Proto3Message{},
 			values: url.Values{
 				"int64_value.nested": {"test"},
 			},
 			filter: trie.New(),
 		},
 		{
-			msg: &examplepb.Proto3Message{},
+			msg: &testpb.Proto3Message{},
 			values: url.Values{
 				"int32_value.nested": {"test"},
 			},
 			filter: trie.New(),
 		},
 		{
-			msg: &examplepb.Proto3Message{},
+			msg: &testpb.Proto3Message{},
 			values: url.Values{
 				"uint64_value.nested": {"test"},
 			},
 			filter: trie.New(),
 		},
 		{
-			msg: &examplepb.Proto3Message{},
+			msg: &testpb.Proto3Message{},
 			values: url.Values{
 				"uint32_value.nested": {"test"},
 			},
 			filter: trie.New(),
 		},
 		{
-			msg: &examplepb.Proto3Message{},
+			msg: &testpb.Proto3Message{},
 			values: url.Values{
 				"bool_value.nested": {"test"},
 			},
 			filter: trie.New(),
 		},
 		{
-			msg: &examplepb.Proto3Message{},
+			msg: &testpb.Proto3Message{},
 			values: url.Values{
 				"string_value.nested": {"test"},
 			},
 			filter: trie.New(),
 		},
 		{
-			msg: &examplepb.Proto3Message{},
+			msg: &testpb.Proto3Message{},
 			values: url.Values{
 				"repeated_value.nested": {"test"},
 			},
 			filter: trie.New(),
 		},
 		{
-			msg: &examplepb.Proto3Message{},
+			msg: &testpb.Proto3Message{},
 			values: url.Values{
 				"enum_value.nested": {"test"},
 			},
 			filter: trie.New(),
 		},
 		{
-			msg: &examplepb.Proto3Message{},
+			msg: &testpb.Proto3Message{},
 			values: url.Values{
 				"enum_value.nested": {"test"},
 			},
 			filter: trie.New(),
 		},
 		{
-			msg: &examplepb.Proto3Message{},
+			msg: &testpb.Proto3Message{},
 			values: url.Values{
 				"repeated_enum.nested": {"test"},
 			},

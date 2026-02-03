@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/meshapi/grpc-api-gateway/dotpath"
+	"github.com/gopencloud/grpc-api-gateway/dotpath"
 )
 
 func TestFQN(t *testing.T) {

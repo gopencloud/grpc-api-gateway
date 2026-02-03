@@ -50,7 +50,7 @@ For other fields, the value should be a [RoutePattern](#routepattern).
         ```proto title="sound.proto" linenums="1" hl_lines="3-5"
         service SoundService {
             rpc Echo(EchoRequest) returns (EchoResponse) {
-                option (meshapi.gateway.http) = {
+                option (gopencloud.gateway.http) = {
                     post: "/echo"
                 };
             }
@@ -119,7 +119,7 @@ This object is similar to [EndpointBinding](#endpointbinding) excluding the `add
         ```proto title="sound.proto" linenums="1" hl_lines="5-11"
         service SoundService {
             rpc Echo(EchoRequest) returns (EchoResponse) {
-                option (meshapi.gateway.http) = {
+                option (gopencloud.gateway.http) = {
                     get: "/echo",
                     additional_endpoints: [
                       {get: "/another-route"},
@@ -150,7 +150,7 @@ This object is similar to [EndpointBinding](#endpointbinding) excluding the `add
         ```proto title="sound.proto" linenums="1" hl_lines="4-7"
         service SoundService {
             rpc Echo(EchoRequest) returns (EchoResponse) {
-                option (meshapi.gateway.http) = {
+                option (gopencloud.gateway.http) = {
                     custom: {
                         method: "TRACE",
                         path: "/echo"
@@ -206,7 +206,7 @@ You can explicitly bind one or more fields to query parameters by specifying the
         ```proto title="sound.proto" linenums="1" hl_lines="5-9"
         service SoundService {
             rpc Echo(EchoRequest) returns (EchoResponse) {
-                option (meshapi.gateway.http) = {
+                option (gopencloud.gateway.http) = {
                     post: "/echo",
                     query_parameters: [
                         {selector: "message", name: "msg"},
@@ -246,7 +246,7 @@ You can explicitly bind one or more fields to query parameters by specifying the
         ```proto title="notification.proto" linenums="1" hl_lines="5-7"
         service NotificationService {
             rpc Notify(NotifyRequest) returns (stream NotifyResponse) {
-                option (meshapi.gateway.http) = {
+                option (gopencloud.gateway.http) = {
                     get: "/events",
                     stream: {
                         disable_chunked_transfer: true

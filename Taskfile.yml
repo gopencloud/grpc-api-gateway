@@ -1,0 +1,21 @@
+# https://taskfile.dev
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+
+version: '3'
+
+silent: true
+
+includes:
+  api:
+    taskfile: ./api/Taskfile.yml
+    dir: ./api
+
+tasks:
+  docs-run:
+    desc: Run docs server
+    cmds:
+      - docker run --rm -it -p 8000:8000 -v $(pwd):/docs squidfunk/mkdocs-material:9.5
+
+  default:
+    cmds:
+      - task --list

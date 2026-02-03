@@ -12,13 +12,13 @@ import (
 	"google.golang.org/protobuf/proto"
 	"gopkg.in/yaml.v3"
 
-	"github.com/meshapi/grpc-api-gateway/api"
-	"github.com/meshapi/grpc-api-gateway/api/openapi"
-	"github.com/meshapi/grpc-api-gateway/codegen/internal/descriptor"
-	"github.com/meshapi/grpc-api-gateway/codegen/internal/genlog"
-	"github.com/meshapi/grpc-api-gateway/codegen/internal/genopenapi/internal"
-	"github.com/meshapi/grpc-api-gateway/codegen/internal/genopenapi/openapimap"
-	"github.com/meshapi/grpc-api-gateway/codegen/internal/openapiv3"
+	"github.com/gopencloud/grpc-api-gateway/api"
+	"github.com/gopencloud/grpc-api-gateway/api/openapi"
+	"github.com/gopencloud/grpc-api-gateway/codegen/internal/descriptor"
+	"github.com/gopencloud/grpc-api-gateway/codegen/internal/genlog"
+	"github.com/gopencloud/grpc-api-gateway/codegen/internal/genopenapi/internal"
+	"github.com/gopencloud/grpc-api-gateway/codegen/internal/genopenapi/openapimap"
+	"github.com/gopencloud/grpc-api-gateway/codegen/internal/openapiv3"
 )
 
 func (g *Generator) readOpenAPISeedFile() (map[string]any, error) {

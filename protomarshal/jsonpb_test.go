@@ -8,8 +8,8 @@ import (
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
-	"github.com/meshapi/grpc-api-gateway/internal/examplepb"
-	"github.com/meshapi/grpc-api-gateway/protomarshal"
+	"github.com/gopencloud/grpc-api-gateway/internal/testpb"
+	"github.com/gopencloud/grpc-api-gateway/protomarshal"
 	"google.golang.org/protobuf/encoding/protojson"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/testing/protocmp"
@@ -21,34 +21,34 @@ import (
 )
 
 func TestJSONPbMarshal(t *testing.T) {
-	msg := examplepb.ABitOfEverything{
-		SingleNested:        &examplepb.ABitOfEverything_Nested{},
+	msg := testpb.ABitOfEverything{
+		SingleNested:        &testpb.ABitOfEverything_Nested{},
 		RepeatedStringValue: []string{},
 		MappedStringValue:   map[string]string{},
-		MappedNestedValue:   map[string]*examplepb.ABitOfEverything_Nested{},
-		RepeatedEnumValue:   []examplepb.NumericEnum{},
+		MappedNestedValue:   map[string]*testpb.ABitOfEverything_Nested{},
+		RepeatedEnumValue:   []testpb.NumericEnum{},
 		TimestampValue:      &timestamppb.Timestamp{},
 		Uuid:                "6EC2446F-7E89-4127-B3E6-5C05E6BECBA7",
-		Nested: []*examplepb.ABitOfEverything_Nested{
+		Nested: []*testpb.ABitOfEverything_Nested{
 			{
 				Name:   "foo",
 				Amount: 12345,
 			},
 		},
 		Uint64Value: 0xFFFFFFFFFFFFFFFF,
-		EnumValue:   examplepb.NumericEnum_ONE,
-		OneofValue: &examplepb.ABitOfEverything_OneofString{
+		EnumValue:   testpb.NumericEnum_ONE,
+		OneofValue: &testpb.ABitOfEverything_OneofString{
 			OneofString: "bar",
 		},
-		MapValue: map[string]examplepb.NumericEnum{
-			"a": examplepb.NumericEnum_ONE,
-			"b": examplepb.NumericEnum_ZERO,
+		MapValue: map[string]testpb.NumericEnum{
+			"a": testpb.NumericEnum_ONE,
+			"b": testpb.NumericEnum_ZERO,
 		},
-		RepeatedEnumAnnotation:   []examplepb.NumericEnum{},
-		EnumValueAnnotation:      examplepb.NumericEnum_ONE,
+		RepeatedEnumAnnotation:   []testpb.NumericEnum{},
+		EnumValueAnnotation:      testpb.NumericEnum_ONE,
 		RepeatedStringAnnotation: []string{},
-		RepeatedNestedAnnotation: []*examplepb.ABitOfEverything_Nested{},
-		NestedAnnotation:         &examplepb.ABitOfEverything_Nested{},
+		RepeatedNestedAnnotation: []*testpb.ABitOfEverything_Nested{},
+		NestedAnnotation:         &testpb.ABitOfEverything_Nested{},
 	}
 
 	for i, spec := range []struct {
@@ -114,7 +114,7 @@ func TestJSONPbMarshal(t *testing.T) {
 				t.Errorf("m.Marshal(%v) failed with %v; want success; spec=%v", &msg, err, spec)
 			}
 
-			var got examplepb.ABitOfEverything
+			var got testpb.ABitOfEverything
 			unmarshaler := &protojson.UnmarshalOptions{}
 			if err = unmarshaler.Unmarshal(buf, &got); err != nil {
 				t.Errorf("jsonpb.UnmarshalString(%q, &got) failed with %v; want success; spec=%v", string(buf), err, spec)
@@ -142,7 +142,7 @@ func TestJSONPbMarshalFields(t *testing.T) {
 		}
 	}
 
-	nums := []examplepb.NumericEnum{examplepb.NumericEnum_ZERO, examplepb.NumericEnum_ONE}
+	nums := []testpb.NumericEnum{testpb.NumericEnum_ZERO, testpb.NumericEnum_ONE}
 
 	buf, err := m.Marshal(nums)
 	if err != nil {
@@ -153,12 +153,12 @@ func TestJSONPbMarshalFields(t *testing.T) {
 	}
 
 	m.UseEnumNumbers = false
-	buf, err = m.Marshal(examplepb.NumericEnum_ONE)
+	buf, err = m.Marshal(testpb.NumericEnum_ONE)
 	if err != nil {
-		t.Errorf("m.Marshal(%#v) failed with %v; want success", examplepb.NumericEnum_ONE, err)
+		t.Errorf("m.Marshal(%#v) failed with %v; want success", testpb.NumericEnum_ONE, err)
 	}
 	if got, want := string(buf), `"ONE"`; got != want {
-		t.Errorf("m.Marshal(%#v) = %q; want %q", examplepb.NumericEnum_ONE, got, want)
+		t.Errorf("m.Marshal(%#v) = %q; want %q", testpb.NumericEnum_ONE, got, want)
 	}
 
 	buf, err = m.Marshal(nums)
@@ -173,7 +173,7 @@ func TestJSONPbMarshalFields(t *testing.T) {
 func TestJSONPbUnmarshal(t *testing.T) {
 	var (
 		m   protomarshal.JSONPb
-		got examplepb.ABitOfEverything
+		got testpb.ABitOfEverything
 	)
 	for i, data := range []string{
 		`{
@@ -220,22 +220,22 @@ func TestJSONPbUnmarshal(t *testing.T) {
 			t.Errorf("case %d: m.Unmarshal(%q, &got) failed with %v; want success", i, data, err)
 		}
 
-		want := examplepb.ABitOfEverything{
+		want := testpb.ABitOfEverything{
 			Uuid: "6EC2446F-7E89-4127-B3E6-5C05E6BECBA7",
-			Nested: []*examplepb.ABitOfEverything_Nested{
+			Nested: []*testpb.ABitOfEverything_Nested{
 				{
 					Name:   "foo",
 					Amount: 12345,
 				},
 			},
 			Uint64Value: 0xFFFFFFFFFFFFFFFF,
-			EnumValue:   examplepb.NumericEnum_ONE,
-			OneofValue: &examplepb.ABitOfEverything_OneofString{
+			EnumValue:   testpb.NumericEnum_ONE,
+			OneofValue: &testpb.ABitOfEverything_OneofString{
 				OneofString: "bar",
 			},
-			MapValue: map[string]examplepb.NumericEnum{
-				"a": examplepb.NumericEnum_ONE,
-				"b": examplepb.NumericEnum_ZERO,
+			MapValue: map[string]testpb.NumericEnum{
+				"a": testpb.NumericEnum_ONE,
+				"b": testpb.NumericEnum_ZERO,
 			},
 		}
 
@@ -263,33 +263,33 @@ func TestJSONPbUnmarshalFields(t *testing.T) {
 }
 
 func TestJSONPbEncoder(t *testing.T) {
-	msg := examplepb.ABitOfEverything{
-		SingleNested:        &examplepb.ABitOfEverything_Nested{},
+	msg := testpb.ABitOfEverything{
+		SingleNested:        &testpb.ABitOfEverything_Nested{},
 		RepeatedStringValue: []string{},
 		MappedStringValue:   map[string]string{},
-		MappedNestedValue:   map[string]*examplepb.ABitOfEverything_Nested{},
-		RepeatedEnumValue:   []examplepb.NumericEnum{},
+		MappedNestedValue:   map[string]*testpb.ABitOfEverything_Nested{},
+		RepeatedEnumValue:   []testpb.NumericEnum{},
 		TimestampValue:      &timestamppb.Timestamp{},
 		Uuid:                "6EC2446F-7E89-4127-B3E6-5C05E6BECBA7",
-		Nested: []*examplepb.ABitOfEverything_Nested{
+		Nested: []*testpb.ABitOfEverything_Nested{
 			{
 				Name:   "foo",
 				Amount: 12345,
 			},
 		},
 		Uint64Value: 0xFFFFFFFFFFFFFFFF,
-		OneofValue: &examplepb.ABitOfEverything_OneofString{
+		OneofValue: &testpb.ABitOfEverything_OneofString{
 			OneofString: "bar",
 		},
-		MapValue: map[string]examplepb.NumericEnum{
-			"a": examplepb.NumericEnum_ONE,
-			"b": examplepb.NumericEnum_ZERO,
+		MapValue: map[string]testpb.NumericEnum{
+			"a": testpb.NumericEnum_ONE,
+			"b": testpb.NumericEnum_ZERO,
 		},
-		RepeatedEnumAnnotation:   []examplepb.NumericEnum{},
-		EnumValueAnnotation:      examplepb.NumericEnum_ONE,
+		RepeatedEnumAnnotation:   []testpb.NumericEnum{},
+		EnumValueAnnotation:      testpb.NumericEnum_ONE,
 		RepeatedStringAnnotation: []string{},
-		RepeatedNestedAnnotation: []*examplepb.ABitOfEverything_Nested{},
-		NestedAnnotation:         &examplepb.ABitOfEverything_Nested{},
+		RepeatedNestedAnnotation: []*testpb.ABitOfEverything_Nested{},
+		NestedAnnotation:         &testpb.ABitOfEverything_Nested{},
 	}
 
 	for i, spec := range []struct {
@@ -356,7 +356,7 @@ func TestJSONPbEncoder(t *testing.T) {
 			t.Errorf("enc.Encode(%v) failed with %v; want success; spec=%v", &msg, err, spec)
 		}
 
-		var got examplepb.ABitOfEverything
+		var got testpb.ABitOfEverything
 		unmarshaler := &protojson.UnmarshalOptions{}
 		if err := unmarshaler.Unmarshal(buf.Bytes(), &got); err != nil {
 			t.Errorf("jsonpb.UnmarshalString(%q, &got) failed with %v; want success; spec=%v", buf.String(), err, spec)
@@ -384,19 +384,19 @@ func TestJSONPbEncoderFields(t *testing.T) {
 	}
 
 	m.UseEnumNumbers = true
-	buf, err := m.Marshal(examplepb.NumericEnum_ONE)
+	buf, err := m.Marshal(testpb.NumericEnum_ONE)
 	if err != nil {
-		t.Errorf("m.Marshal(%#v) failed with %v; want success", examplepb.NumericEnum_ONE, err)
+		t.Errorf("m.Marshal(%#v) failed with %v; want success", testpb.NumericEnum_ONE, err)
 	}
 	if got, want := string(buf), "1"; got != want {
-		t.Errorf("m.Marshal(%#v) = %q; want %q", examplepb.NumericEnum_ONE, got, want)
+		t.Errorf("m.Marshal(%#v) = %q; want %q", testpb.NumericEnum_ONE, got, want)
 	}
 }
 
 func TestJSONPbDecoder(t *testing.T) {
 	var (
 		m   protomarshal.JSONPb
-		got examplepb.ABitOfEverything
+		got testpb.ABitOfEverything
 	)
 	for _, data := range []string{
 		`{
@@ -445,22 +445,22 @@ func TestJSONPbDecoder(t *testing.T) {
 			t.Errorf("m.Unmarshal(&got) failed with %v; want success; data=%q", err, data)
 		}
 
-		want := examplepb.ABitOfEverything{
+		want := testpb.ABitOfEverything{
 			Uuid: "6EC2446F-7E89-4127-B3E6-5C05E6BECBA7",
-			Nested: []*examplepb.ABitOfEverything_Nested{
+			Nested: []*testpb.ABitOfEverything_Nested{
 				{
 					Name:   "foo",
 					Amount: 12345,
 				},
 			},
 			Uint64Value: 0xFFFFFFFFFFFFFFFF,
-			EnumValue:   examplepb.NumericEnum_ONE,
-			OneofValue: &examplepb.ABitOfEverything_OneofString{
+			EnumValue:   testpb.NumericEnum_ONE,
+			OneofValue: &testpb.ABitOfEverything_OneofString{
 				OneofString: "bar",
 			},
-			MapValue: map[string]examplepb.NumericEnum{
-				"a": examplepb.NumericEnum_ONE,
-				"b": examplepb.NumericEnum_ZERO,
+			MapValue: map[string]testpb.NumericEnum{
+				"a": testpb.NumericEnum_ONE,
+				"b": testpb.NumericEnum_ZERO,
 			},
 		}
 		if diff := cmp.Diff(&got, &want, protocmp.Transform()); diff != "" {
@@ -494,7 +494,7 @@ func TestJSONPbDecoderUnknownField(t *testing.T) {
 				DiscardUnknown: false,
 			},
 		}
-		got examplepb.ABitOfEverything
+		got testpb.ABitOfEverything
 	)
 	data := `{
 		"uuid": "6EC2446F-7E89-4127-B3E6-5C05E6BECBA7",
@@ -534,13 +534,13 @@ var (
 		{data: false, json: "false"},
 		{data: (*string)(nil), json: "null"},
 		{
-			data: examplepb.NumericEnum_ONE,
+			data: testpb.NumericEnum_ONE,
 			json: `"ONE"`,
 			// TODO(yugui) support unmarshaling of symbolic enum
 			skipUnmarshal: true,
 		},
 		{
-			data: (*examplepb.NumericEnum)(proto.Int32(int32(examplepb.NumericEnum_ONE))),
+			data: (*testpb.NumericEnum)(proto.Int32(int32(testpb.NumericEnum_ONE))),
 			json: `"ONE"`,
 			// TODO(yugui) support unmarshaling of symbolic enum
 			skipUnmarshal: true,
@@ -553,19 +553,19 @@ var (
 			json: `{"foo":1}`,
 		},
 		{
-			data: map[string]*examplepb.SimpleMessage{
+			data: map[string]*testpb.SimpleMessage{
 				"foo": {Id: "bar"},
 			},
 			json: `{"foo":{"id":"bar"}}`,
 		},
 		{
-			data: map[int32]*examplepb.SimpleMessage{
+			data: map[int32]*testpb.SimpleMessage{
 				1: {Id: "foo"},
 			},
 			json: `{"1":{"id":"foo"}}`,
 		},
 		{
-			data: map[bool]*examplepb.SimpleMessage{
+			data: map[bool]*testpb.SimpleMessage{
 				true: {Id: "foo"},
 			},
 			json: `{"true":{"id":"foo"}}`,
@@ -694,11 +694,11 @@ func TestJSONPbMarshalResponseBodies(t *testing.T) {
 		verifier        func(*testing.T, interface{}, []byte)
 	}{
 		{
-			input: &examplepb.ResponseBodyOut{
-				Response: &examplepb.ResponseBodyOut_Response{Data: "abcdef"},
+			input: &testpb.ResponseBodyOut{
+				Response: &testpb.ResponseBodyOut_Response{Data: "abcdef"},
 			},
 			verifier: func(t *testing.T, input interface{}, json []byte) {
-				var out examplepb.ResponseBodyOut
+				var out testpb.ResponseBodyOut
 				err := marshaler.Unmarshal(json, &out)
 				if err != nil {
 					t.Fatalf("unexpected error: %v", err)
@@ -711,9 +711,9 @@ func TestJSONPbMarshalResponseBodies(t *testing.T) {
 		},
 		{
 			emitUnpopulated: true,
-			input:           &examplepb.ResponseBodyOut{},
+			input:           &testpb.ResponseBodyOut{},
 			verifier: func(t *testing.T, input interface{}, json []byte) {
-				var out examplepb.ResponseBodyOut
+				var out testpb.ResponseBodyOut
 				err := marshaler.Unmarshal(json, &out)
 				if err != nil {
 					t.Fatalf("unexpected error: %v", err)
@@ -725,9 +725,9 @@ func TestJSONPbMarshalResponseBodies(t *testing.T) {
 			},
 		},
 		{
-			input: &examplepb.RepeatedResponseBodyOut_Response{},
+			input: &testpb.RepeatedResponseBodyOut_Response{},
 			verifier: func(t *testing.T, input interface{}, json []byte) {
-				var out examplepb.RepeatedResponseBodyOut_Response
+				var out testpb.RepeatedResponseBodyOut_Response
 				err := marshaler.Unmarshal(json, &out)
 				if err != nil {
 					t.Fatalf("unexpected error: %v", err)
@@ -740,9 +740,9 @@ func TestJSONPbMarshalResponseBodies(t *testing.T) {
 		},
 		{
 			emitUnpopulated: true,
-			input:           &examplepb.RepeatedResponseBodyOut_Response{},
+			input:           &testpb.RepeatedResponseBodyOut_Response{},
 			verifier: func(t *testing.T, input interface{}, json []byte) {
-				var out examplepb.RepeatedResponseBodyOut_Response
+				var out testpb.RepeatedResponseBodyOut_Response
 				err := marshaler.Unmarshal(json, &out)
 				if err != nil {
 					t.Fatalf("unexpected error: %v", err)
@@ -754,9 +754,9 @@ func TestJSONPbMarshalResponseBodies(t *testing.T) {
 			},
 		},
 		{
-			input: ([]*examplepb.RepeatedResponseBodyOut_Response)(nil),
+			input: ([]*testpb.RepeatedResponseBodyOut_Response)(nil),
 			verifier: func(t *testing.T, input interface{}, json []byte) {
-				var out []*examplepb.RepeatedResponseBodyOut_Response
+				var out []*testpb.RepeatedResponseBodyOut_Response
 				err := marshaler.Unmarshal(json, &out)
 				if err != nil {
 					t.Fatalf("unexpected error: %v", err)
@@ -769,23 +769,23 @@ func TestJSONPbMarshalResponseBodies(t *testing.T) {
 		},
 		{
 			emitUnpopulated: true,
-			input:           ([]*examplepb.RepeatedResponseBodyOut_Response)(nil),
+			input:           ([]*testpb.RepeatedResponseBodyOut_Response)(nil),
 			verifier: func(t *testing.T, _ interface{}, json []byte) {
-				var out []*examplepb.RepeatedResponseBodyOut_Response
+				var out []*testpb.RepeatedResponseBodyOut_Response
 				err := marshaler.Unmarshal(json, &out)
 				if err != nil {
 					t.Fatalf("unexpected error: %v", err)
 				}
-				diff := cmp.Diff([]*examplepb.RepeatedResponseBodyOut_Response{}, out, protocmp.Transform())
+				diff := cmp.Diff([]*testpb.RepeatedResponseBodyOut_Response{}, out, protocmp.Transform())
 				if diff != "" {
 					t.Errorf("json not equal:\n%s", diff)
 				}
 			},
 		},
 		{
-			input: []*examplepb.RepeatedResponseBodyOut_Response{},
+			input: []*testpb.RepeatedResponseBodyOut_Response{},
 			verifier: func(t *testing.T, input interface{}, json []byte) {
-				var out []*examplepb.RepeatedResponseBodyOut_Response
+				var out []*testpb.RepeatedResponseBodyOut_Response
 				err := marshaler.Unmarshal(json, &out)
 				if err != nil {
 					t.Fatalf("unexpected error: %v", err)
@@ -854,15 +854,15 @@ func TestJSONPbMarshalResponseBodies(t *testing.T) {
 			},
 		},
 		{
-			input: []*examplepb.RepeatedResponseBodyOut_Response{
+			input: []*testpb.RepeatedResponseBodyOut_Response{
 				{},
 				{
 					Data: "abc",
-					Type: examplepb.RepeatedResponseBodyOut_Response_A,
+					Type: testpb.RepeatedResponseBodyOut_Response_A,
 				},
 			},
 			verifier: func(t *testing.T, input interface{}, json []byte) {
-				var out []*examplepb.RepeatedResponseBodyOut_Response
+				var out []*testpb.RepeatedResponseBodyOut_Response
 				err := marshaler.Unmarshal(json, &out)
 				if err != nil {
 					t.Fatalf("unexpected error: %v", err)
@@ -875,15 +875,15 @@ func TestJSONPbMarshalResponseBodies(t *testing.T) {
 		},
 		{
 			emitUnpopulated: true,
-			input: []*examplepb.RepeatedResponseBodyOut_Response{
+			input: []*testpb.RepeatedResponseBodyOut_Response{
 				{},
 				{
 					Data: "abc",
-					Type: examplepb.RepeatedResponseBodyOut_Response_B,
+					Type: testpb.RepeatedResponseBodyOut_Response_B,
 				},
 			},
 			verifier: func(t *testing.T, input interface{}, json []byte) {
-				var out []*examplepb.RepeatedResponseBodyOut_Response
+				var out []*testpb.RepeatedResponseBodyOut_Response
 				err := marshaler.Unmarshal(json, &out)
 				if err != nil {
 					t.Fatalf("unexpected error: %v", err)

@@ -1,0 +1,40 @@
+# https://easyp.tech/docs/guide/cli/configuration/configuration
+
+lint:
+  use:
+    - DEFAULT
+  ignore:
+    - "vendor/"
+  except: []
+  allow_comment_ignores: false
+  ignore_only: {}
+deps: []
+generate:
+  inputs:
+  - directory:
+      path: .
+      root: api
+  plugins:
+  # For local gen, use 'name: go' instead of 'remote: ...'
+  - remote: ${PROTO_PLUGIN_GO:-api.beta.easyp.tech/protocolbuffers/go}
+    out: api
+    opts:
+      module: github.com/gopencloud/grpc-api-gateway/api
+  # For local gen, use 'name: go-grpc' instead of 'remote: ...'
+  - remote: ${PROTO_PLUGIN_GRPC:-api.beta.easyp.tech/grpc/go}
+    out: api
+    opts:
+      module: github.com/gopencloud/grpc-api-gateway/api
+      require_unimplemented_servers: false
+  # For local gen, use 'name: jsonschema' instead of 'remote: ...'
+  - name: jsonschema
+    out: api
+    opts:
+      pretty_json_output: false
+      entrypoint_message: Config
+      preserve_proto_field_names: true
+      additional_properties: AlwaysFalse
+breaking:
+  ignore:
+    - "vendor/"
+  against_git_ref: master

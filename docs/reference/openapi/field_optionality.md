@@ -79,8 +79,8 @@ message User {
   string id = 1;
   string name = 2;
   optional string email_address = 3 [
-    (meshapi.gateway.openapi_field) = {
-		types: [STRING, NULL]
+    (gopencloud.gateway.openapi_field) = {
+      types: [STRING, NULL]
     }
   ];
   optional Address address = 4;
@@ -145,10 +145,10 @@ This approach mirrors how OpenAPI specifies required fields. Each model explicit
 
 === "Proto Annotations"
     ```proto linenums="1" hl_lines="4-6"
-    import "meshapi/gateway/annotations.proto";
+    import "gopencloud/gateway/annotations.proto";
 
     message User {
-      (meshapi.gateway.openapi_schema) = {
+      (gopencloud.gateway.openapi_schema) = {
         required: ["id", "name", "phone_number"] // (1)!
       }
 
@@ -180,15 +180,15 @@ This approach sets the requiredness at the field.
 
 === "Proto Annotations"
     ```proto linenums="1" hl_lines="4 5 9"
-    import "meshapi/gateway/annotations.proto";
+    import "gopencloud/gateway/annotations.proto";
 
     message User {
-      string id = 1 [(meshapi.gateway.openapi_field).config.required=true];
-      string name = 2 [(meshapi.gateway.openapi_field).config.required=true];
+      string id = 1 [(gopencloud.gateway.openapi_field).config.required=true];
+      string name = 2 [(gopencloud.gateway.openapi_field).config.required=true];
       string email_address = 3;
       Address address = 4;
       PhoneNumber phone_number = 5 [
-        (meshapi.gateway.openapi_field).config.required = true
+        (gopencloud.gateway.openapi_field).config.required = true
       ];
     }
     ```

@@ -8,8 +8,8 @@ import (
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
-	"github.com/meshapi/grpc-api-gateway/internal/examplepb"
-	"github.com/meshapi/grpc-api-gateway/protomarshal"
+	"github.com/gopencloud/grpc-api-gateway/internal/testpb"
+	"github.com/gopencloud/grpc-api-gateway/protomarshal"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/testing/protocmp"
 	"google.golang.org/protobuf/types/known/emptypb"
@@ -19,7 +19,7 @@ import (
 
 func TestJSONBuiltinMarshal(t *testing.T) {
 	var m protomarshal.JSONBuiltin
-	msg := &examplepb.SimpleMessage{
+	msg := &testpb.SimpleMessage{
 		Id: "foo",
 	}
 
@@ -28,7 +28,7 @@ func TestJSONBuiltinMarshal(t *testing.T) {
 		t.Errorf("m.Marshal(%v) failed with %v; want success", msg, err)
 	}
 
-	got := new(examplepb.SimpleMessage)
+	got := new(testpb.SimpleMessage)
 	if err := json.Unmarshal(buf, got); err != nil {
 		t.Errorf("json.Unmarshal(%q, got) failed with %v; want success", buf, err)
 	}
@@ -66,7 +66,7 @@ func TestJSONBuiltinMarshalFieldKnownErrors(t *testing.T) {
 func TestJSONBuiltinsnmarshal(t *testing.T) {
 	var (
 		m   protomarshal.JSONBuiltin
-		got = new(examplepb.SimpleMessage)
+		got = new(testpb.SimpleMessage)
 
 		data = []byte(`{"id": "foo"}`)
 	)
@@ -74,7 +74,7 @@ func TestJSONBuiltinsnmarshal(t *testing.T) {
 		t.Errorf("m.Unmarshal(%q, got) failed with %v; want success", data, err)
 	}
 
-	want := &examplepb.SimpleMessage{
+	want := &testpb.SimpleMessage{
 		Id: "foo",
 	}
 	if diff := cmp.Diff(got, want, protocmp.Transform()); diff != "" {
@@ -116,7 +116,7 @@ func TestJSONBuiltinUnmarshalFieldKnownErrors(t *testing.T) {
 
 func TestJSONBuiltinEncoder(t *testing.T) {
 	var m protomarshal.JSONBuiltin
-	msg := &examplepb.SimpleMessage{
+	msg := &testpb.SimpleMessage{
 		Id: "foo",
 	}
 
@@ -126,7 +126,7 @@ func TestJSONBuiltinEncoder(t *testing.T) {
 		t.Errorf("enc.Encode(%v) failed with %v; want success", msg, err)
 	}
 
-	got := new(examplepb.SimpleMessage)
+	got := new(testpb.SimpleMessage)
 	if err := json.Unmarshal(buf.Bytes(), got); err != nil {
 		t.Errorf("json.Unmarshal(%q, got) failed with %v; want success", buf.String(), err)
 	}
@@ -153,7 +153,7 @@ func TestJSONBuiltinEncoderFields(t *testing.T) {
 func TestJSONBuiltinDecoder(t *testing.T) {
 	var (
 		m   protomarshal.JSONBuiltin
-		got = new(examplepb.SimpleMessage)
+		got = new(testpb.SimpleMessage)
 
 		data = `{"id": "foo"}`
 	)
@@ -163,7 +163,7 @@ func TestJSONBuiltinDecoder(t *testing.T) {
 		t.Errorf("m.Unmarshal(got) failed with %v; want success", err)
 	}
 
-	want := &examplepb.SimpleMessage{
+	want := &testpb.SimpleMessage{
 		Id: "foo",
 	}
 	if diff := cmp.Diff(got, want, protocmp.Transform()); diff != "" {
@@ -215,7 +215,7 @@ var (
 		{data: proto.Bool(true), json: "true"},
 		{data: (*string)(nil), json: "null"},
 		{data: new(emptypb.Empty), json: "{}"},
-		{data: examplepb.NumericEnum_ONE, json: "1"},
+		{data: testpb.NumericEnum_ONE, json: "1"},
 		{data: nil, json: "null"},
 		{data: (*string)(nil), json: "null"},
 		{data: []interface{}{nil, "foo", -1.0, 1.234, true}, json: `[null,"foo",-1,1.234,true]`},
@@ -224,7 +224,7 @@ var (
 			json: `{"bar":null,"baz":-1,"fiz":1.234,"foo":true}`,
 		},
 		{
-			data: (*examplepb.NumericEnum)(proto.Int32(int32(examplepb.NumericEnum_ONE))),
+			data: (*testpb.NumericEnum)(proto.Int32(int32(testpb.NumericEnum_ONE))),
 			json: "1",
 		},
 	}
@@ -232,13 +232,13 @@ var (
 		data interface{}
 		json string
 	}{
-		{data: examplepb.NumericEnum_ONE, json: "ONE"},
+		{data: testpb.NumericEnum_ONE, json: "ONE"},
 		{
-			data: (*examplepb.NumericEnum)(proto.Int32(int32(examplepb.NumericEnum_ONE))),
+			data: (*testpb.NumericEnum)(proto.Int32(int32(testpb.NumericEnum_ONE))),
 			json: "ONE",
 		},
 		{
-			data: &examplepb.ABitOfEverything_OneofString{OneofString: "abc"},
+			data: &testpb.ABitOfEverything_OneofString{OneofString: "abc"},
 			json: `"abc"`,
 		},
 		{

@@ -4,9 +4,9 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/meshapi/grpc-api-gateway/dotpath"
-	"github.com/meshapi/grpc-api-gateway/protopath"
-	"github.com/meshapi/grpc-api-gateway/trie"
+	"github.com/gopencloud/grpc-api-gateway/dotpath"
+	"github.com/gopencloud/grpc-api-gateway/protopath"
+	"github.com/gopencloud/grpc-api-gateway/trie"
 	"google.golang.org/protobuf/proto"
 )
 

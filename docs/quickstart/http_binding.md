@@ -48,25 +48,22 @@ To use proto extensions, first download and import the gRPC API Gateway annotati
 
 === "Using Buf"
 
-    Create a file named `buf.yaml` with the following content:
+    Create a file named `easyp.yaml` with the following content:
 
-    ```yaml title="buf.yaml" linenums="1"
-    version: v1
+    ```yaml title="easyp.yaml" linenums="1"
     deps:
-      - "buf.build/meshapi/grpc-api-gateway"
+      - "github.com/gopencloud/grpc-api-gateway"
     ```
 
     Download the dependencies using:
 
     ```sh
-    $ buf mod update
+    easyp mod download
     ```
 
 === "Using Protoc"
 
-    Download the proto files from the `api/meshapi` directory in the
-    [gRPC API Gateway git repository](https://github.com/meshapi/grpc-api-gateway/tree/main/api/meshapi/gateway)
-    to a local directory named `meshapi`.
+    Download the proto files from source repo.
 
 Modify your existing proto file with the following additions:
 
@@ -75,7 +72,7 @@ syntax = "proto3";
 
 package echo;
 
-import "meshapi/gateway/annotations.proto"; //(1)!
+import "gopencloud/gateway/annotations.proto"; //(1)!
 
 option go_package = "demo/echo";
 
@@ -91,7 +88,7 @@ message EchoResponse {
 service EchoService {
     // Echo returns the received text and makes it louder too!
     rpc Echo(EchoRequest) returns (EchoResponse) {
-        option (meshapi.gateway.http) = {
+        option (gopencloud.gateway.http) = {
             get: '/echo/{text}' //(2)!
             additional_bindings: [ //(3)!
               {
@@ -113,10 +110,10 @@ service EchoService {
 
 Now that we have defined HTTP bindings, we need to regenerate the gateway code.
 
-=== "Using Buf"
+=== "Using EasyP"
 
     ```sh
-    $ buf generate
+    easup g
     ```
 
 === "Using Protoc"
@@ -131,10 +128,10 @@ Now that we have defined HTTP bindings, we need to regenerate the gateway code.
 
 Using either method, you should now see a new file named `echo_service.pb.rgw.go`.
 
-Next, get the `meshapi/grpc-api-gateway` module as it contains necessary types for our HTTP server:
+Next, get the `gopencloud/grpc-api-gateway` module as it contains necessary types for our HTTP server:
 
 ```sh
-$ go get github.com/meshapi/grpc-api-gateway
+go get github.com/gopencloud/grpc-api-gateway
 ```
 
 Finally, update `main.go` to add the HTTP server:
@@ -149,7 +146,7 @@ import (
 	"net"
 	"strings"
 
-	"github.com/meshapi/grpc-api-gateway/gateway"
+	"github.com/gopencloud/grpc-api-gateway/gateway"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )
@@ -194,13 +191,13 @@ this connection to communicate with our gRPC services.
 Time to run the code and see it work:
 
 ```sh
-$ go run .
+go run .
 ```
 
 You should be able to send an HTTP request and get a response back:
 
 ```sh
-$ curl http://localhost:4000/echo/greetings
+curl http://localhost:4000/echo/greetings
 ```
 
 You should get the following response back:

@@ -1,7 +1,6 @@
-module github.com/meshapi/grpc-api-gateway
+module github.com/gopencloud/grpc-api-gateway
 
-go 1.19
-toolchain go1.24.1
+go 1.25.2
 
 require (
 	github.com/google/go-cmp v0.6.0

@@ -14,11 +14,11 @@ Similar to many other configurations, you can use configuration files or directl
 
 === "Proto Annotations"
     ```proto linenums="1" hl_lines="6"
-    import "meshapi/gateway/annotations.proto";
+    import "gopencloud/gateway/annotations.proto";
 
     service EchoService {
       rpc Echo(EchoRequest) returns (EchoResponse) {
-        option (meshapi.gateway.openapi_operation) = {
+        option (gopencloud.gateway.openapi_operation) = {
           operation_id: "custom_operation_id"
         };
       };
@@ -39,13 +39,13 @@ Similar to many other configurations, you can use configuration files or directl
 
 You can utilize the `operation_id_mode` plug-in option to define the format of the operation IDs.
 
-For instance, if you have a method named `Echo` within a service called `EchoService` in the package `meshapi.examples.echo.v1`, the following formats can be generated:
+For instance, if you have a method named `Echo` within a service called `EchoService`, the following formats can be generated:
 
 | Operation ID Mode | Operation Name |
 | --- | --- |
 | `service+method` | `EchoService_Echo` |
 | `method` | `Echo` |
-| `fqn` | `meshapi.examples.echo.v1.EchoService.Echo` |
+| `fqn` | `gopencloud.examples.echo.v1.EchoService.Echo` |
 
 !!! info
     Multiple HTTP endpoints (operations) can be associated with a single gRPC method. In such cases, the additional bindings are appended with an incremental numerical suffix to distinguish them.
@@ -59,11 +59,11 @@ By default, each operation is tagged with the service name, providing a clear an
 
 === "Proto Annotations"
     ```proto linenums="1" hl_lines="6"
-    import "meshapi/gateway/annotations.proto";
+    import "gopencloud/gateway/annotations.proto";
 
     service EchoService {
       rpc Echo(EchoRequest) returns (EchoResponse) {
-        option (meshapi.gateway.openapi_operation) = {
+        option (gopencloud.gateway.openapi_operation) = {
           tags: ["tag1", "tag2"]
         };
       };
@@ -84,10 +84,10 @@ By default, each operation is tagged with the service name, providing a clear an
                 - "tag2"
     ```
 
-#### Disable Automatic Service Tags
+### Disable Automatic Service Tags
 
 To prevent the automatic generation of tags based on the service name, use the `disable_service_tags` plug-in option.
 
-#### Include Package Name in Tags
+### Include Package Name in Tags
 
 For services with identical names or if you prefer to include the full package name in the tags, utilize the `include_package_in_tags` option.

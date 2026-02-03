@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/meshapi/grpc-api-gateway/codegen/internal/casing"
-	"github.com/meshapi/grpc-api-gateway/dotpath"
-	"github.com/meshapi/grpc-api-gateway/pkg/httprule"
-	"github.com/meshapi/grpc-api-gateway/trie"
+	"github.com/gopencloud/grpc-api-gateway/codegen/internal/casing"
+	"github.com/gopencloud/grpc-api-gateway/dotpath"
+	"github.com/gopencloud/grpc-api-gateway/pkg/httprule"
+	"github.com/gopencloud/grpc-api-gateway/trie"
 	"google.golang.org/protobuf/types/descriptorpb"
 	"google.golang.org/protobuf/types/pluginpb"
 )

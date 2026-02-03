@@ -1,7 +1,6 @@
-module github.com/meshapi/grpc-api-gateway/websocket/wrapper/gorillawrapper
+module github.com/gopencloud/grpc-api-gateway/websocket/wrapper/gorillawrapper
 
-go 1.22.0
-toolchain go1.24.1
+go 1.25.2
 
 require github.com/gorilla/websocket v1.5.1
 

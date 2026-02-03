@@ -1,9 +1,9 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/SchemaStore/schemastore/refs/heads/master/src/schemas/json/mkdocs-1.6.json
 site_name: gRPC API Gateway
-site_url: https://meshapi.github.com/grpc-api-gateway
-site_author: Peyman Mortazavi
-site_description: Documentation for the gRPC API Gateway (https://github.com/meshapi/grpc-api-gateway).
-repo_name: meshapi/grpc-api-gateway
-repo_url: https://github.com/meshapi/grpc-api-gateway
+site_url: https://gopencloud.github.com/grpc-api-gateway
+site_description: Documentation for the gRPC API Gateway (https://github.com/gopencloud/grpc-api-gateway).
+repo_name: gopencloud/grpc-api-gateway
+repo_url: https://github.com/gopencloud/grpc-api-gateway
 
 markdown_extensions:
   - admonition

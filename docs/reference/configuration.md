@@ -27,45 +27,45 @@ You can mix and match these two methods, setting some configurations in `proto` 
 
 When using proto annotations, you will need to import the proto annotations and types for the `gRPC API Gateway`.
 
+### Buf
+
 [Buf](https://buf.build/) is a tool that simplifies the development and consumption of the Protobuf APIs.
 It manages dependencies and builds proto files efficiently.
 
-All proto files and annotations are available on [buf.build](https://buf.build/meshapi/grpc-api-gateway).
+Currently, this fork dropped buf support. It uses [EasyP](https://easyp.tech) instead - similar tool, but without geoip restrictions and supports managing dependencies directly from github instead of private registry.
 
-If you decide to use Buf, follow the instructions below or you can visit the `protoc` tab for
+### EasyP
+
+If you decide to use EasyP, follow the instructions below or you can visit the `protoc` tab for
 instructions on using protoc.
 
-=== "Using Buf"
+=== "Using EasyP"
 
-    Let's create a `buf.gen.yaml` file if you do not already have one
-    with the following content or add `buf.build/meshapi/grpc-api-gateway` in your dependencies if you have an existing one:
+    Let's create a `easyp.yaml` file if you do not already have one
+    with the following content and add `github.com/gopencloud/grpc-api-gateway` in your dependencies:
 
     ```yaml title="buf.yaml" linenums="1"
-    version: v1
     deps:
-      - "buf.build/meshapi/grpc-api-gateway"
+      - github.com/gopencloud/grpc-api-gateway
     ``` 
 
     Update mods to download the proto files:
 
     ```sh
-    $ buf mod update
+    $ easyp mod download
     ```
 
 === "Using protoc"
 
     You will first need to download the proto files for `gRPC API Gateway`.
-    File named `grpc_api_gateway_proto.tar.gz` in the [Releases](https://github.com/meshapi/grpc-api-gateway/releases) page contains all the necessary proto files.
 
     From now on, use the `-I` or `--proto-path` option to include these proto files if they reside outside of the proto search path.
 
-
 In any proto file you wish to use annotations, use the import line below when wanting to use gateway or openapi options:
 
-```proto
-import "meshapi/gateway/annotations.proto";
-```
-
+    ```proto
+    import "gopencloud/gateway/annotations.proto";
+    ```
 
 ## Using configuration files
 
@@ -148,8 +148,8 @@ The value column shows the value for an example proto file `proto/myservice/v1/m
 It is truly a matter of personal preference which method you would like to use to customize
 the gateway and/or the OpenAPI objects. It might be worth noting the following:
 
-* A [JSON schema](https://json.schemastore.org/grpc-api-gateway.json) exists for YAML/JSON files so you benefit from autocompletion
-if you have installed the proper YAML/JSON extension.
+* A JSON schema exists for YAML/JSON files so you benefit from autocompletion
+if you have installed the proper YAML/JSON extension. See api/gopencloud/gateway/config.schema.json in project repo.
 
 * With many customization, proto files can get bloated. Separating the proto definitions from the gateway and OpenAPI configurations
 can help with the organization of files.

@@ -5,14 +5,14 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/meshapi/grpc-api-gateway/codegen/internal/httpspec"
+	"github.com/gopencloud/grpc-api-gateway/codegen/internal/httpspec"
 )
 
 const (
 	testConfigYAML = `
 gateway:
  endpoints:
-  - selector: 'meshapi.example.v1.Test'
+  - selector: 'gopencloud.example.v1.Test'
     get: '/v1/test'
     additional_bindings:
     - post: '/v1/test'
@@ -22,7 +22,7 @@ gateway:
         path: '/v1/test'
         method: 'REGISTER'
 
-  - selector: 'meshapi.example.v2.Test'
+  - selector: 'gopencloud.example.v2.Test'
     post: '/v1/test'
     body: 'data'
     query_params:
@@ -35,7 +35,7 @@ gateway:
     "gateway": {
         "endpoints": [
             {
-                "selector": "meshapi.example.v1.Test",
+                "selector": "gopencloud.example.v1.Test",
                 "get": "/v1/test",
                 "additional_bindings": [
                     {
@@ -52,7 +52,7 @@ gateway:
                 ]
             },
             {
-                "selector": "meshapi.example.v2.Test",
+                "selector": "gopencloud.example.v2.Test",
                 "post": "/v1/test",
                 "body": "data",
                 "query_params": [
@@ -86,9 +86,9 @@ func TestLoadYAML(t *testing.T) {
 		return
 	}
 
-	_, ok := r.LookupBinding(".meshapi.example.v1.Test")
+	_, ok := r.LookupBinding(".gopencloud.example.v1.Test")
 	if !ok {
-		t.Fatal("unexpected failure in looking up meshapi.example.v1.Test")
+		t.Fatal("unexpected failure in looking up gopencloud.example.v1.Test")
 		return
 	}
 }

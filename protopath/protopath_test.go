@@ -4,8 +4,8 @@ import (
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
-	"github.com/meshapi/grpc-api-gateway/internal/examplepb"
-	"github.com/meshapi/grpc-api-gateway/protopath"
+	"github.com/gopencloud/grpc-api-gateway/internal/testpb"
+	"github.com/gopencloud/grpc-api-gateway/protopath"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/testing/protocmp"
 )
@@ -21,49 +21,49 @@ func TestPopulateFromPath(t *testing.T) {
 	}{
 		{
 			Name:    "Enum",
-			Message: &examplepb.Proto3Message{},
+			Message: &testpb.Proto3Message{},
 			Path:    "enum_value",
 			Value:   "Y",
-			Result:  &examplepb.Proto3Message{EnumValue: examplepb.EnumValue_Y},
+			Result:  &testpb.Proto3Message{EnumValue: testpb.EnumValue_Y},
 		},
 		{
 			Name:    "Nested",
-			Message: &examplepb.Proto3Message{},
+			Message: &testpb.Proto3Message{},
 			Path:    "nested.double_value",
 			Value:   "5.6",
-			Result:  &examplepb.Proto3Message{Nested: &examplepb.Proto3Message{DoubleValue: 5.6}},
+			Result:  &testpb.Proto3Message{Nested: &testpb.Proto3Message{DoubleValue: 5.6}},
 		},
 		{
 			Name:    "NestedDeep",
-			Message: &examplepb.Proto3Message{},
+			Message: &testpb.Proto3Message{},
 			Path:    "nested.nested.repeated_enum",
 			Value:   "Z",
-			Result: &examplepb.Proto3Message{
-				Nested: &examplepb.Proto3Message{
-					Nested: &examplepb.Proto3Message{
-						RepeatedEnum: []examplepb.EnumValue{examplepb.EnumValue_Z},
+			Result: &testpb.Proto3Message{
+				Nested: &testpb.Proto3Message{
+					Nested: &testpb.Proto3Message{
+						RepeatedEnum: []testpb.EnumValue{testpb.EnumValue_Z},
 					},
 				},
 			},
 		},
 		{
 			Name:    "OneOf",
-			Message: &examplepb.Proto3Message{},
+			Message: &testpb.Proto3Message{},
 			Path:    "oneof_bool_value",
 			Value:   "true",
-			Result: &examplepb.Proto3Message{
-				OneofValue: &examplepb.Proto3Message_OneofBoolValue{OneofBoolValue: true},
+			Result: &testpb.Proto3Message{
+				OneofValue: &testpb.Proto3Message_OneofBoolValue{OneofBoolValue: true},
 			},
 		},
 		{
 			Name: "OneOf",
-			Message: &examplepb.Proto3Message{
-				OneofValue: &examplepb.Proto3Message_OneofBoolValue{OneofBoolValue: true},
+			Message: &testpb.Proto3Message{
+				OneofValue: &testpb.Proto3Message_OneofBoolValue{OneofBoolValue: true},
 			},
 			Path:  "oneof_bool_value",
 			Value: "true",
-			Result: &examplepb.Proto3Message{
-				OneofValue: &examplepb.Proto3Message_OneofStringValue{OneofStringValue: "string_value"},
+			Result: &testpb.Proto3Message{
+				OneofValue: &testpb.Proto3Message_OneofStringValue{OneofStringValue: "string_value"},
 			},
 			Error: true,
 		},

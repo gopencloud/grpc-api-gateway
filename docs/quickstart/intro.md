@@ -16,6 +16,6 @@ gRPC API Gateway is a `protoc` plug-in, similar to the Go code generator. The to
 To install the Go and Go gRPC plug-ins, execute the following commands:
 
 ```sh
-$ go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
-$ go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
 ```

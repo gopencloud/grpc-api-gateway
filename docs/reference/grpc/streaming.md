@@ -148,7 +148,7 @@ By default, the gateway does not include a WebSocket handler. You must supply a 
     To use this wrapper:
 
     ```sh
-    go get github.com/meshapi/grpc-api-gateway/websocket/wrapper/gorillawrapper
+    go get github.com/gopencloud/grpc-api-gateway/websocket/wrapper/gorillawrapper
     ```
 
 To enable WebSockets in your gateway, use `WithWebSocketUpgrader` option:
@@ -166,9 +166,9 @@ The upgrader function has the following signature:
 
     ```go linenums="1"
     import (
-      ws "github.com/meshapi/grpc-api-gateway/websocket"
-      "github.com/meshapi/grpc-api-gateway/websocket/wrapper/gorillawrapper"
-	  "github.com/meshapi/grpc-api-gateway/gateway"
+      ws "github.com/gopencloud/grpc-api-gateway/websocket"
+      "github.com/gopencloud/grpc-api-gateway/websocket/wrapper/gorillawrapper"
+	  "github.com/gopencloud/grpc-api-gateway/gateway"
 
 	  "github.com/gorilla/websocket"
     )
@@ -247,7 +247,7 @@ To disable a specific streaming mode for an endpoint binding, use the [Stream](/
         ```proto title="service.proto"
         service ChatService {
             rpc StartChat(ChatRequest) returns (ChatResponse) {
-                option (meshapi.gateway.http) = {
+                option (gopencloud.gateway.http) = {
                     get: "/chat",
                     stream: {
                       disable_sse: true,

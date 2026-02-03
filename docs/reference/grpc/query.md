@@ -51,7 +51,7 @@ In [EndpointConfig](/grpc-api-gateway/reference/grpc/config), you have the optio
     ```proto title="service.proto" linenums="1" hl_lines="5"
     service MyService {
         rpc MyMethod(Request) returns (Response) {
-            option (meshapi.gateway.http) = {
+            option (gopencloud.gateway.http) = {
                 post: "/my-endpoint",
                 disable_query_param_discovery: true
             };
@@ -108,7 +108,7 @@ By utilizing `query_params` in [EndpointConfig](/grpc-api-gateway/reference/grpc
         ```proto title="query.proto" linenums="1" hl_lines="5-9"
         service QueryService {
             rpc Query(QueryRequest) returns (QueryResponse) {
-                option (meshapi.gateway.http) = {
+                option (gopencloud.gateway.http) = {
                     get: "/query",
                     query_params: [
                         {selector: 'language', name: 'lang'},
@@ -158,7 +158,7 @@ You may want to exclude certain proto fields from being bound to any query param
         ```proto title="query.proto" linenums="1" hl_lines="6"
         service QueryService {
             rpc Query(QueryRequest) returns (QueryResponse) {
-                option (meshapi.gateway.http) = {
+                option (gopencloud.gateway.http) = {
                     get: "/query",
                     query_params: [
                         {selector: 'language', ignore: true},

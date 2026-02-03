@@ -3,9 +3,9 @@ package genopenapi
 import (
 	"strings"
 
-	"github.com/meshapi/grpc-api-gateway/codegen/internal/descriptor"
-	"github.com/meshapi/grpc-api-gateway/codegen/internal/genopenapi/internal"
-	"github.com/meshapi/grpc-api-gateway/dotpath"
+	"github.com/gopencloud/grpc-api-gateway/codegen/internal/descriptor"
+	"github.com/gopencloud/grpc-api-gateway/codegen/internal/genopenapi/internal"
+	"github.com/gopencloud/grpc-api-gateway/dotpath"
 )
 
 func (g *Generator) fieldName(field *descriptor.Field) string {

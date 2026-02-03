@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 
-	"github.com/meshapi/grpc-api-gateway/codegen/internal/genopenapi"
+	"github.com/gopencloud/grpc-api-gateway/codegen/internal/genopenapi"
 )
 
 // prepareOptions prepares a gen gateway options and adds necessary flags.
