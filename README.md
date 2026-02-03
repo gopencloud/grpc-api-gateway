@@ -1,5 +1,7 @@
 # grpc-api-gateway
 
+*Disclaimer*: this is a fork of [MeshAPI gateway](https://github.com/meshapi/grpc-api-gateway), made mostly for personal use, introducing some missing features I need.
+
 gRPC API Gateway is a plugin for the protocol buffers [protoc](https://github.com/protocolbuffers/protobuf)
 that reads protocol buffer and gRPC service definitions to generate a reverse-proxy HTTP server handler in Go.
 This handler is compatible with the standard library's http package and enables translation of HTTP API calls into gRPC.
