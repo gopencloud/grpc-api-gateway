@@ -807,8 +807,16 @@ message Operation {
 }
 
 message OperationConfiguration {
+	// Set 2xx if your endpoint returns > 200 and < 300 http code (e.g. 201 accepted).
+	// Default response, if enabled, will have specified code.
+	// Default: 200
 	string success_response_code = 1;
-	bool ignore_additional_bindings = 2;
+	// Disable default response at operation level.
+	// Not necessary, if similar plugin option enabled globally
+	bool disable_default_response = 2;
+	// Disable default error response at operation level.
+	// Not necessary, if similar plugin option enabled globally
+	bool disable_default_error_response = 3;
 }
 
 // Holds a set of reusable objects for different aspects of the OAS. All objects defined within the

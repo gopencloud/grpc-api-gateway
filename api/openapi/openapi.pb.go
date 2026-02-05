@@ -2713,11 +2713,19 @@ func (x *Operation) GetConfig() *OperationConfiguration {
 }
 
 type OperationConfiguration struct {
-	state                    protoimpl.MessageState `protogen:"open.v1"`
-	SuccessResponseCode      string                 `protobuf:"bytes,1,opt,name=success_response_code,json=successResponseCode,proto3" json:"success_response_code,omitempty"`
-	IgnoreAdditionalBindings bool                   `protobuf:"varint,2,opt,name=ignore_additional_bindings,json=ignoreAdditionalBindings,proto3" json:"ignore_additional_bindings,omitempty"`
-	unknownFields            protoimpl.UnknownFields
-	sizeCache                protoimpl.SizeCache
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Set 2xx if your endpoint returns > 200 and < 300 http code (e.g. 201 accepted).
+	// Default response, if enabled, will have specified code.
+	// Default: 200
+	SuccessResponseCode string `protobuf:"bytes,1,opt,name=success_response_code,json=successResponseCode,proto3" json:"success_response_code,omitempty"`
+	// Disable default response at operation level.
+	// Not necessary, if similar plugin option enabled globally
+	DisableDefaultResponse bool `protobuf:"varint,2,opt,name=disable_default_response,json=disableDefaultResponse,proto3" json:"disable_default_response,omitempty"`
+	// Disable default error response at operation level.
+	// Not necessary, if similar plugin option enabled globally
+	DisableDefaultErrorResponse bool `protobuf:"varint,3,opt,name=disable_default_error_response,json=disableDefaultErrorResponse,proto3" json:"disable_default_error_response,omitempty"`
+	unknownFields               protoimpl.UnknownFields
+	sizeCache                   protoimpl.SizeCache
 }
 
 func (x *OperationConfiguration) Reset() {
@@ -2757,9 +2765,16 @@ func (x *OperationConfiguration) GetSuccessResponseCode() string {
 	return ""
 }
 
-func (x *OperationConfiguration) GetIgnoreAdditionalBindings() bool {
+func (x *OperationConfiguration) GetDisableDefaultResponse() bool {
 	if x != nil {
-		return x.IgnoreAdditionalBindings
+		return x.DisableDefaultResponse
+	}
+	return false
+}
+
+func (x *OperationConfiguration) GetDisableDefaultErrorResponse() bool {
+	if x != nil {
+		return x.DisableDefaultErrorResponse
 	}
 	return false
 }
@@ -3751,10 +3766,11 @@ const file_gopencloud_gateway_openapi_openapi_proto_rawDesc = "" +
 	"\x05value\x18\x02 \x01(\v2$.gopencloud.gateway.openapi.ResponseR\x05value:\x028\x01\x1aU\n" +
 	"\x0fExtensionsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12,\n" +
-	"\x05value\x18\x02 \x01(\v2\x16.google.protobuf.ValueR\x05value:\x028\x01J\x04\b\b\x10\tJ\x04\b\t\x10\v\"\x8a\x01\n" +
+	"\x05value\x18\x02 \x01(\v2\x16.google.protobuf.ValueR\x05value:\x028\x01J\x04\b\b\x10\tJ\x04\b\t\x10\v\"\xcb\x01\n" +
 	"\x16OperationConfiguration\x122\n" +
-	"\x15success_response_code\x18\x01 \x01(\tR\x13successResponseCode\x12<\n" +
-	"\x1aignore_additional_bindings\x18\x02 \x01(\bR\x18ignoreAdditionalBindings\"\x9a\r\n" +
+	"\x15success_response_code\x18\x01 \x01(\tR\x13successResponseCode\x128\n" +
+	"\x18disable_default_response\x18\x02 \x01(\bR\x16disableDefaultResponse\x12C\n" +
+	"\x1edisable_default_error_response\x18\x03 \x01(\bR\x1bdisableDefaultErrorResponse\"\x9a\r\n" +
 	"\n" +
 	"Components\x12M\n" +
 	"\aschemas\x18\x01 \x03(\v23.gopencloud.gateway.openapi.Components.SchemasEntryR\aschemas\x12S\n" +
