@@ -55,6 +55,14 @@ func WithForwardResponseOption(forwardResponseOption ForwardResponseFunc) ServeM
 	})
 }
 
+// WithCustomResponseCodeHandlerOption returns a ServeMuxOption representing the forwardResponseOption,
+// providing a handler to control http response code.
+func WithCustomResponseCodeHandlerOption() ServeMuxOption {
+	return optionFunc(func(s *ServeMux) {
+		s.forwardResponseOptions = append(s.forwardResponseOptions, httpResponseModifier)
+	})
+}
+
 // WithQueryParameterParser sets the query parameter parser, used to populate message from query parameters.
 // Configuring this will mean the generated OpenAPI output is no longer correct, and it should be
 // done with careful consideration.

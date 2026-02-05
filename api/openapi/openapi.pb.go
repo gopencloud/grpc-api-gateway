@@ -2591,7 +2591,9 @@ type Operation struct {
 	// standard OpenAPI specification.
 	//
 	// See: https://spec.openapis.org/oas/latest.html#specification-extensions
-	Extensions    map[string]*structpb.Value `protobuf:"bytes,14,rep,name=extensions,proto3" json:"extensions,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	Extensions map[string]*structpb.Value `protobuf:"bytes,14,rep,name=extensions,proto3" json:"extensions,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	// Configuration for operation
+	Config        *OperationConfiguration `protobuf:"bytes,15,opt,name=config,proto3" json:"config,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2703,6 +2705,65 @@ func (x *Operation) GetExtensions() map[string]*structpb.Value {
 	return nil
 }
 
+func (x *Operation) GetConfig() *OperationConfiguration {
+	if x != nil {
+		return x.Config
+	}
+	return nil
+}
+
+type OperationConfiguration struct {
+	state                    protoimpl.MessageState `protogen:"open.v1"`
+	SuccessResponseCode      string                 `protobuf:"bytes,1,opt,name=success_response_code,json=successResponseCode,proto3" json:"success_response_code,omitempty"`
+	IgnoreAdditionalBindings bool                   `protobuf:"varint,2,opt,name=ignore_additional_bindings,json=ignoreAdditionalBindings,proto3" json:"ignore_additional_bindings,omitempty"`
+	unknownFields            protoimpl.UnknownFields
+	sizeCache                protoimpl.SizeCache
+}
+
+func (x *OperationConfiguration) Reset() {
+	*x = OperationConfiguration{}
+	mi := &file_gopencloud_gateway_openapi_openapi_proto_msgTypes[22]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *OperationConfiguration) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OperationConfiguration) ProtoMessage() {}
+
+func (x *OperationConfiguration) ProtoReflect() protoreflect.Message {
+	mi := &file_gopencloud_gateway_openapi_openapi_proto_msgTypes[22]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OperationConfiguration.ProtoReflect.Descriptor instead.
+func (*OperationConfiguration) Descriptor() ([]byte, []int) {
+	return file_gopencloud_gateway_openapi_openapi_proto_rawDescGZIP(), []int{22}
+}
+
+func (x *OperationConfiguration) GetSuccessResponseCode() string {
+	if x != nil {
+		return x.SuccessResponseCode
+	}
+	return ""
+}
+
+func (x *OperationConfiguration) GetIgnoreAdditionalBindings() bool {
+	if x != nil {
+		return x.IgnoreAdditionalBindings
+	}
+	return false
+}
+
 // Holds a set of reusable objects for different aspects of the OAS. All objects defined within the
 // components object will have no effect on the API unless they are explicitly referenced from properties
 // outside the components object.
@@ -2729,7 +2790,7 @@ type Components struct {
 
 func (x *Components) Reset() {
 	*x = Components{}
-	mi := &file_gopencloud_gateway_openapi_openapi_proto_msgTypes[22]
+	mi := &file_gopencloud_gateway_openapi_openapi_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2741,7 +2802,7 @@ func (x *Components) String() string {
 func (*Components) ProtoMessage() {}
 
 func (x *Components) ProtoReflect() protoreflect.Message {
-	mi := &file_gopencloud_gateway_openapi_openapi_proto_msgTypes[22]
+	mi := &file_gopencloud_gateway_openapi_openapi_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2754,7 +2815,7 @@ func (x *Components) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Components.ProtoReflect.Descriptor instead.
 func (*Components) Descriptor() ([]byte, []int) {
-	return file_gopencloud_gateway_openapi_openapi_proto_rawDescGZIP(), []int{22}
+	return file_gopencloud_gateway_openapi_openapi_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *Components) GetSchemas() map[string]*Schema {
@@ -2831,7 +2892,7 @@ type DocumentConfiguration struct {
 
 func (x *DocumentConfiguration) Reset() {
 	*x = DocumentConfiguration{}
-	mi := &file_gopencloud_gateway_openapi_openapi_proto_msgTypes[23]
+	mi := &file_gopencloud_gateway_openapi_openapi_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2843,7 +2904,7 @@ func (x *DocumentConfiguration) String() string {
 func (*DocumentConfiguration) ProtoMessage() {}
 
 func (x *DocumentConfiguration) ProtoReflect() protoreflect.Message {
-	mi := &file_gopencloud_gateway_openapi_openapi_proto_msgTypes[23]
+	mi := &file_gopencloud_gateway_openapi_openapi_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2856,7 +2917,7 @@ func (x *DocumentConfiguration) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DocumentConfiguration.ProtoReflect.Descriptor instead.
 func (*DocumentConfiguration) Descriptor() ([]byte, []int) {
-	return file_gopencloud_gateway_openapi_openapi_proto_rawDescGZIP(), []int{23}
+	return file_gopencloud_gateway_openapi_openapi_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *DocumentConfiguration) GetDefaultResponses() map[string]*Response {
@@ -2918,7 +2979,7 @@ type Document struct {
 
 func (x *Document) Reset() {
 	*x = Document{}
-	mi := &file_gopencloud_gateway_openapi_openapi_proto_msgTypes[24]
+	mi := &file_gopencloud_gateway_openapi_openapi_proto_msgTypes[25]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2930,7 +2991,7 @@ func (x *Document) String() string {
 func (*Document) ProtoMessage() {}
 
 func (x *Document) ProtoReflect() protoreflect.Message {
-	mi := &file_gopencloud_gateway_openapi_openapi_proto_msgTypes[24]
+	mi := &file_gopencloud_gateway_openapi_openapi_proto_msgTypes[25]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2943,7 +3004,7 @@ func (x *Document) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Document.ProtoReflect.Descriptor instead.
 func (*Document) Descriptor() ([]byte, []int) {
-	return file_gopencloud_gateway_openapi_openapi_proto_rawDescGZIP(), []int{24}
+	return file_gopencloud_gateway_openapi_openapi_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *Document) GetInfo() *Info {
@@ -3012,7 +3073,7 @@ type Schema_SchemaList struct {
 
 func (x *Schema_SchemaList) Reset() {
 	*x = Schema_SchemaList{}
-	mi := &file_gopencloud_gateway_openapi_openapi_proto_msgTypes[36]
+	mi := &file_gopencloud_gateway_openapi_openapi_proto_msgTypes[37]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3024,7 +3085,7 @@ func (x *Schema_SchemaList) String() string {
 func (*Schema_SchemaList) ProtoMessage() {}
 
 func (x *Schema_SchemaList) ProtoReflect() protoreflect.Message {
-	mi := &file_gopencloud_gateway_openapi_openapi_proto_msgTypes[36]
+	mi := &file_gopencloud_gateway_openapi_openapi_proto_msgTypes[37]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3061,7 +3122,7 @@ type Schema_Item struct {
 
 func (x *Schema_Item) Reset() {
 	*x = Schema_Item{}
-	mi := &file_gopencloud_gateway_openapi_openapi_proto_msgTypes[37]
+	mi := &file_gopencloud_gateway_openapi_openapi_proto_msgTypes[38]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3073,7 +3134,7 @@ func (x *Schema_Item) String() string {
 func (*Schema_Item) ProtoMessage() {}
 
 func (x *Schema_Item) ProtoReflect() protoreflect.Message {
-	mi := &file_gopencloud_gateway_openapi_openapi_proto_msgTypes[37]
+	mi := &file_gopencloud_gateway_openapi_openapi_proto_msgTypes[38]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3150,7 +3211,7 @@ type SecurityScheme_OAuthFlow struct {
 
 func (x *SecurityScheme_OAuthFlow) Reset() {
 	*x = SecurityScheme_OAuthFlow{}
-	mi := &file_gopencloud_gateway_openapi_openapi_proto_msgTypes[59]
+	mi := &file_gopencloud_gateway_openapi_openapi_proto_msgTypes[60]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3162,7 +3223,7 @@ func (x *SecurityScheme_OAuthFlow) String() string {
 func (*SecurityScheme_OAuthFlow) ProtoMessage() {}
 
 func (x *SecurityScheme_OAuthFlow) ProtoReflect() protoreflect.Message {
-	mi := &file_gopencloud_gateway_openapi_openapi_proto_msgTypes[59]
+	mi := &file_gopencloud_gateway_openapi_openapi_proto_msgTypes[60]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3235,7 +3296,7 @@ type SecurityScheme_OAuthFlows struct {
 
 func (x *SecurityScheme_OAuthFlows) Reset() {
 	*x = SecurityScheme_OAuthFlows{}
-	mi := &file_gopencloud_gateway_openapi_openapi_proto_msgTypes[60]
+	mi := &file_gopencloud_gateway_openapi_openapi_proto_msgTypes[61]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3247,7 +3308,7 @@ func (x *SecurityScheme_OAuthFlows) String() string {
 func (*SecurityScheme_OAuthFlows) ProtoMessage() {}
 
 func (x *SecurityScheme_OAuthFlows) ProtoReflect() protoreflect.Message {
-	mi := &file_gopencloud_gateway_openapi_openapi_proto_msgTypes[60]
+	mi := &file_gopencloud_gateway_openapi_openapi_proto_msgTypes[61]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3665,7 +3726,7 @@ const file_gopencloud_gateway_openapi_openapi_proto_rawDesc = "" +
 	"\x05value\x18\x02 \x01(\v2\x16.google.protobuf.ValueR\x05value:\x028\x01\x1aU\n" +
 	"\x0fExtensionsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12,\n" +
-	"\x05value\x18\x02 \x01(\v2\x16.google.protobuf.ValueR\x05value:\x028\x01\"\xba\x06\n" +
+	"\x05value\x18\x02 \x01(\v2\x16.google.protobuf.ValueR\x05value:\x028\x01\"\x86\a\n" +
 	"\tOperation\x12\x12\n" +
 	"\x04tags\x18\x01 \x03(\tR\x04tags\x12\x18\n" +
 	"\asummary\x18\x02 \x01(\tR\asummary\x12 \n" +
@@ -3683,13 +3744,17 @@ const file_gopencloud_gateway_openapi_openapi_proto_rawDesc = "" +
 	"\aservers\x18\r \x03(\v2\".gopencloud.gateway.openapi.ServerR\aservers\x12U\n" +
 	"\n" +
 	"extensions\x18\x0e \x03(\v25.gopencloud.gateway.openapi.Operation.ExtensionsEntryR\n" +
-	"extensions\x1ab\n" +
+	"extensions\x12J\n" +
+	"\x06config\x18\x0f \x01(\v22.gopencloud.gateway.openapi.OperationConfigurationR\x06config\x1ab\n" +
 	"\x0eResponsesEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12:\n" +
 	"\x05value\x18\x02 \x01(\v2$.gopencloud.gateway.openapi.ResponseR\x05value:\x028\x01\x1aU\n" +
 	"\x0fExtensionsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12,\n" +
-	"\x05value\x18\x02 \x01(\v2\x16.google.protobuf.ValueR\x05value:\x028\x01J\x04\b\b\x10\tJ\x04\b\t\x10\v\"\x9a\r\n" +
+	"\x05value\x18\x02 \x01(\v2\x16.google.protobuf.ValueR\x05value:\x028\x01J\x04\b\b\x10\tJ\x04\b\t\x10\v\"\x8a\x01\n" +
+	"\x16OperationConfiguration\x122\n" +
+	"\x15success_response_code\x18\x01 \x01(\tR\x13successResponseCode\x12<\n" +
+	"\x1aignore_additional_bindings\x18\x02 \x01(\bR\x18ignoreAdditionalBindings\"\x9a\r\n" +
 	"\n" +
 	"Components\x12M\n" +
 	"\aschemas\x18\x01 \x03(\v23.gopencloud.gateway.openapi.Components.SchemasEntryR\aschemas\x12S\n" +
@@ -3783,7 +3848,7 @@ func file_gopencloud_gateway_openapi_openapi_proto_rawDescGZIP() []byte {
 }
 
 var file_gopencloud_gateway_openapi_openapi_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_gopencloud_gateway_openapi_openapi_proto_msgTypes = make([]protoimpl.MessageInfo, 78)
+var file_gopencloud_gateway_openapi_openapi_proto_msgTypes = make([]protoimpl.MessageInfo, 79)
 var file_gopencloud_gateway_openapi_openapi_proto_goTypes = []any{
 	(SchemaDataType)(0),               // 0: gopencloud.gateway.openapi.SchemaDataType
 	(*Contact)(nil),                   // 1: gopencloud.gateway.openapi.Contact
@@ -3808,216 +3873,218 @@ var file_gopencloud_gateway_openapi_openapi_proto_goTypes = []any{
 	(*RequestBody)(nil),               // 20: gopencloud.gateway.openapi.RequestBody
 	(*SecurityScheme)(nil),            // 21: gopencloud.gateway.openapi.SecurityScheme
 	(*Operation)(nil),                 // 22: gopencloud.gateway.openapi.Operation
-	(*Components)(nil),                // 23: gopencloud.gateway.openapi.Components
-	(*DocumentConfiguration)(nil),     // 24: gopencloud.gateway.openapi.DocumentConfiguration
-	(*Document)(nil),                  // 25: gopencloud.gateway.openapi.Document
-	nil,                               // 26: gopencloud.gateway.openapi.Contact.ExtensionsEntry
-	nil,                               // 27: gopencloud.gateway.openapi.License.ExtensionsEntry
-	nil,                               // 28: gopencloud.gateway.openapi.Info.ExtensionsEntry
-	nil,                               // 29: gopencloud.gateway.openapi.ServerVariable.ExtensionsEntry
-	nil,                               // 30: gopencloud.gateway.openapi.Server.VariablesEntry
-	nil,                               // 31: gopencloud.gateway.openapi.Server.ExtensionsEntry
-	nil,                               // 32: gopencloud.gateway.openapi.ExternalDocumentation.ExtensionsEntry
-	nil,                               // 33: gopencloud.gateway.openapi.Tag.ExtensionsEntry
-	nil,                               // 34: gopencloud.gateway.openapi.Discriminator.MappingEntry
-	nil,                               // 35: gopencloud.gateway.openapi.Discriminator.ExtensionsEntry
-	nil,                               // 36: gopencloud.gateway.openapi.Schema.ExtraEntry
-	(*Schema_SchemaList)(nil),         // 37: gopencloud.gateway.openapi.Schema.SchemaList
-	(*Schema_Item)(nil),               // 38: gopencloud.gateway.openapi.Schema.Item
-	nil,                               // 39: gopencloud.gateway.openapi.Schema.PropertiesEntry
-	nil,                               // 40: gopencloud.gateway.openapi.Link.ParametersEntry
-	nil,                               // 41: gopencloud.gateway.openapi.Link.ExtensionsEntry
-	nil,                               // 42: gopencloud.gateway.openapi.Example.ExtensionsEntry
-	nil,                               // 43: gopencloud.gateway.openapi.Encoding.HeadersEntry
-	nil,                               // 44: gopencloud.gateway.openapi.Encoding.ExtensionsEntry
-	nil,                               // 45: gopencloud.gateway.openapi.MediaType.ExamplesEntry
-	nil,                               // 46: gopencloud.gateway.openapi.MediaType.EncodingEntry
-	nil,                               // 47: gopencloud.gateway.openapi.MediaType.ExtensionsEntry
-	nil,                               // 48: gopencloud.gateway.openapi.Header.ExamplesEntry
-	nil,                               // 49: gopencloud.gateway.openapi.Header.ContentEntry
-	nil,                               // 50: gopencloud.gateway.openapi.Header.ExtensionsEntry
-	nil,                               // 51: gopencloud.gateway.openapi.Parameter.ExamplesEntry
-	nil,                               // 52: gopencloud.gateway.openapi.Parameter.ContentEntry
-	nil,                               // 53: gopencloud.gateway.openapi.Parameter.ExtensionsEntry
-	nil,                               // 54: gopencloud.gateway.openapi.Response.HeadersEntry
-	nil,                               // 55: gopencloud.gateway.openapi.Response.ContentEntry
-	nil,                               // 56: gopencloud.gateway.openapi.Response.LinksEntry
-	nil,                               // 57: gopencloud.gateway.openapi.Response.ExtensionsEntry
-	nil,                               // 58: gopencloud.gateway.openapi.RequestBody.ContentEntry
-	nil,                               // 59: gopencloud.gateway.openapi.RequestBody.ExtensionsEntry
-	(*SecurityScheme_OAuthFlow)(nil),  // 60: gopencloud.gateway.openapi.SecurityScheme.OAuthFlow
-	(*SecurityScheme_OAuthFlows)(nil), // 61: gopencloud.gateway.openapi.SecurityScheme.OAuthFlows
-	nil,                               // 62: gopencloud.gateway.openapi.SecurityScheme.ExtensionsEntry
-	nil,                               // 63: gopencloud.gateway.openapi.SecurityScheme.OAuthFlow.ScopesEntry
-	nil,                               // 64: gopencloud.gateway.openapi.SecurityScheme.OAuthFlow.ExtensionsEntry
-	nil,                               // 65: gopencloud.gateway.openapi.SecurityScheme.OAuthFlows.ExtensionsEntry
-	nil,                               // 66: gopencloud.gateway.openapi.Operation.ResponsesEntry
-	nil,                               // 67: gopencloud.gateway.openapi.Operation.ExtensionsEntry
-	nil,                               // 68: gopencloud.gateway.openapi.Components.SchemasEntry
-	nil,                               // 69: gopencloud.gateway.openapi.Components.ResponsesEntry
-	nil,                               // 70: gopencloud.gateway.openapi.Components.ParametersEntry
-	nil,                               // 71: gopencloud.gateway.openapi.Components.ExamplesEntry
-	nil,                               // 72: gopencloud.gateway.openapi.Components.RequestBodiesEntry
-	nil,                               // 73: gopencloud.gateway.openapi.Components.HeadersEntry
-	nil,                               // 74: gopencloud.gateway.openapi.Components.SecuritySchemesEntry
-	nil,                               // 75: gopencloud.gateway.openapi.Components.LinksEntry
-	nil,                               // 76: gopencloud.gateway.openapi.Components.ExtensionsEntry
-	nil,                               // 77: gopencloud.gateway.openapi.DocumentConfiguration.DefaultResponsesEntry
-	nil,                               // 78: gopencloud.gateway.openapi.Document.ExtensionsEntry
-	(*structpb.Value)(nil),            // 79: google.protobuf.Value
+	(*OperationConfiguration)(nil),    // 23: gopencloud.gateway.openapi.OperationConfiguration
+	(*Components)(nil),                // 24: gopencloud.gateway.openapi.Components
+	(*DocumentConfiguration)(nil),     // 25: gopencloud.gateway.openapi.DocumentConfiguration
+	(*Document)(nil),                  // 26: gopencloud.gateway.openapi.Document
+	nil,                               // 27: gopencloud.gateway.openapi.Contact.ExtensionsEntry
+	nil,                               // 28: gopencloud.gateway.openapi.License.ExtensionsEntry
+	nil,                               // 29: gopencloud.gateway.openapi.Info.ExtensionsEntry
+	nil,                               // 30: gopencloud.gateway.openapi.ServerVariable.ExtensionsEntry
+	nil,                               // 31: gopencloud.gateway.openapi.Server.VariablesEntry
+	nil,                               // 32: gopencloud.gateway.openapi.Server.ExtensionsEntry
+	nil,                               // 33: gopencloud.gateway.openapi.ExternalDocumentation.ExtensionsEntry
+	nil,                               // 34: gopencloud.gateway.openapi.Tag.ExtensionsEntry
+	nil,                               // 35: gopencloud.gateway.openapi.Discriminator.MappingEntry
+	nil,                               // 36: gopencloud.gateway.openapi.Discriminator.ExtensionsEntry
+	nil,                               // 37: gopencloud.gateway.openapi.Schema.ExtraEntry
+	(*Schema_SchemaList)(nil),         // 38: gopencloud.gateway.openapi.Schema.SchemaList
+	(*Schema_Item)(nil),               // 39: gopencloud.gateway.openapi.Schema.Item
+	nil,                               // 40: gopencloud.gateway.openapi.Schema.PropertiesEntry
+	nil,                               // 41: gopencloud.gateway.openapi.Link.ParametersEntry
+	nil,                               // 42: gopencloud.gateway.openapi.Link.ExtensionsEntry
+	nil,                               // 43: gopencloud.gateway.openapi.Example.ExtensionsEntry
+	nil,                               // 44: gopencloud.gateway.openapi.Encoding.HeadersEntry
+	nil,                               // 45: gopencloud.gateway.openapi.Encoding.ExtensionsEntry
+	nil,                               // 46: gopencloud.gateway.openapi.MediaType.ExamplesEntry
+	nil,                               // 47: gopencloud.gateway.openapi.MediaType.EncodingEntry
+	nil,                               // 48: gopencloud.gateway.openapi.MediaType.ExtensionsEntry
+	nil,                               // 49: gopencloud.gateway.openapi.Header.ExamplesEntry
+	nil,                               // 50: gopencloud.gateway.openapi.Header.ContentEntry
+	nil,                               // 51: gopencloud.gateway.openapi.Header.ExtensionsEntry
+	nil,                               // 52: gopencloud.gateway.openapi.Parameter.ExamplesEntry
+	nil,                               // 53: gopencloud.gateway.openapi.Parameter.ContentEntry
+	nil,                               // 54: gopencloud.gateway.openapi.Parameter.ExtensionsEntry
+	nil,                               // 55: gopencloud.gateway.openapi.Response.HeadersEntry
+	nil,                               // 56: gopencloud.gateway.openapi.Response.ContentEntry
+	nil,                               // 57: gopencloud.gateway.openapi.Response.LinksEntry
+	nil,                               // 58: gopencloud.gateway.openapi.Response.ExtensionsEntry
+	nil,                               // 59: gopencloud.gateway.openapi.RequestBody.ContentEntry
+	nil,                               // 60: gopencloud.gateway.openapi.RequestBody.ExtensionsEntry
+	(*SecurityScheme_OAuthFlow)(nil),  // 61: gopencloud.gateway.openapi.SecurityScheme.OAuthFlow
+	(*SecurityScheme_OAuthFlows)(nil), // 62: gopencloud.gateway.openapi.SecurityScheme.OAuthFlows
+	nil,                               // 63: gopencloud.gateway.openapi.SecurityScheme.ExtensionsEntry
+	nil,                               // 64: gopencloud.gateway.openapi.SecurityScheme.OAuthFlow.ScopesEntry
+	nil,                               // 65: gopencloud.gateway.openapi.SecurityScheme.OAuthFlow.ExtensionsEntry
+	nil,                               // 66: gopencloud.gateway.openapi.SecurityScheme.OAuthFlows.ExtensionsEntry
+	nil,                               // 67: gopencloud.gateway.openapi.Operation.ResponsesEntry
+	nil,                               // 68: gopencloud.gateway.openapi.Operation.ExtensionsEntry
+	nil,                               // 69: gopencloud.gateway.openapi.Components.SchemasEntry
+	nil,                               // 70: gopencloud.gateway.openapi.Components.ResponsesEntry
+	nil,                               // 71: gopencloud.gateway.openapi.Components.ParametersEntry
+	nil,                               // 72: gopencloud.gateway.openapi.Components.ExamplesEntry
+	nil,                               // 73: gopencloud.gateway.openapi.Components.RequestBodiesEntry
+	nil,                               // 74: gopencloud.gateway.openapi.Components.HeadersEntry
+	nil,                               // 75: gopencloud.gateway.openapi.Components.SecuritySchemesEntry
+	nil,                               // 76: gopencloud.gateway.openapi.Components.LinksEntry
+	nil,                               // 77: gopencloud.gateway.openapi.Components.ExtensionsEntry
+	nil,                               // 78: gopencloud.gateway.openapi.DocumentConfiguration.DefaultResponsesEntry
+	nil,                               // 79: gopencloud.gateway.openapi.Document.ExtensionsEntry
+	(*structpb.Value)(nil),            // 80: google.protobuf.Value
 }
 var file_gopencloud_gateway_openapi_openapi_proto_depIdxs = []int32{
-	26,  // 0: gopencloud.gateway.openapi.Contact.extensions:type_name -> gopencloud.gateway.openapi.Contact.ExtensionsEntry
-	27,  // 1: gopencloud.gateway.openapi.License.extensions:type_name -> gopencloud.gateway.openapi.License.ExtensionsEntry
+	27,  // 0: gopencloud.gateway.openapi.Contact.extensions:type_name -> gopencloud.gateway.openapi.Contact.ExtensionsEntry
+	28,  // 1: gopencloud.gateway.openapi.License.extensions:type_name -> gopencloud.gateway.openapi.License.ExtensionsEntry
 	1,   // 2: gopencloud.gateway.openapi.Info.contact:type_name -> gopencloud.gateway.openapi.Contact
 	2,   // 3: gopencloud.gateway.openapi.Info.license:type_name -> gopencloud.gateway.openapi.License
-	28,  // 4: gopencloud.gateway.openapi.Info.extensions:type_name -> gopencloud.gateway.openapi.Info.ExtensionsEntry
-	29,  // 5: gopencloud.gateway.openapi.ServerVariable.extensions:type_name -> gopencloud.gateway.openapi.ServerVariable.ExtensionsEntry
-	30,  // 6: gopencloud.gateway.openapi.Server.variables:type_name -> gopencloud.gateway.openapi.Server.VariablesEntry
-	31,  // 7: gopencloud.gateway.openapi.Server.extensions:type_name -> gopencloud.gateway.openapi.Server.ExtensionsEntry
-	32,  // 8: gopencloud.gateway.openapi.ExternalDocumentation.extensions:type_name -> gopencloud.gateway.openapi.ExternalDocumentation.ExtensionsEntry
+	29,  // 4: gopencloud.gateway.openapi.Info.extensions:type_name -> gopencloud.gateway.openapi.Info.ExtensionsEntry
+	30,  // 5: gopencloud.gateway.openapi.ServerVariable.extensions:type_name -> gopencloud.gateway.openapi.ServerVariable.ExtensionsEntry
+	31,  // 6: gopencloud.gateway.openapi.Server.variables:type_name -> gopencloud.gateway.openapi.Server.VariablesEntry
+	32,  // 7: gopencloud.gateway.openapi.Server.extensions:type_name -> gopencloud.gateway.openapi.Server.ExtensionsEntry
+	33,  // 8: gopencloud.gateway.openapi.ExternalDocumentation.extensions:type_name -> gopencloud.gateway.openapi.ExternalDocumentation.ExtensionsEntry
 	7,   // 9: gopencloud.gateway.openapi.Tag.external_docs:type_name -> gopencloud.gateway.openapi.ExternalDocumentation
-	33,  // 10: gopencloud.gateway.openapi.Tag.extensions:type_name -> gopencloud.gateway.openapi.Tag.ExtensionsEntry
-	34,  // 11: gopencloud.gateway.openapi.Discriminator.mapping:type_name -> gopencloud.gateway.openapi.Discriminator.MappingEntry
-	35,  // 12: gopencloud.gateway.openapi.Discriminator.extensions:type_name -> gopencloud.gateway.openapi.Discriminator.ExtensionsEntry
+	34,  // 10: gopencloud.gateway.openapi.Tag.extensions:type_name -> gopencloud.gateway.openapi.Tag.ExtensionsEntry
+	35,  // 11: gopencloud.gateway.openapi.Discriminator.mapping:type_name -> gopencloud.gateway.openapi.Discriminator.MappingEntry
+	36,  // 12: gopencloud.gateway.openapi.Discriminator.extensions:type_name -> gopencloud.gateway.openapi.Discriminator.ExtensionsEntry
 	9,   // 13: gopencloud.gateway.openapi.Schema.discriminator:type_name -> gopencloud.gateway.openapi.Discriminator
 	7,   // 14: gopencloud.gateway.openapi.Schema.external_docs:type_name -> gopencloud.gateway.openapi.ExternalDocumentation
-	36,  // 15: gopencloud.gateway.openapi.Schema.extra:type_name -> gopencloud.gateway.openapi.Schema.ExtraEntry
+	37,  // 15: gopencloud.gateway.openapi.Schema.extra:type_name -> gopencloud.gateway.openapi.Schema.ExtraEntry
 	10,  // 16: gopencloud.gateway.openapi.Schema.config:type_name -> gopencloud.gateway.openapi.FieldConfiguration
 	0,   // 17: gopencloud.gateway.openapi.Schema.types:type_name -> gopencloud.gateway.openapi.SchemaDataType
-	38,  // 18: gopencloud.gateway.openapi.Schema.items:type_name -> gopencloud.gateway.openapi.Schema.Item
-	39,  // 19: gopencloud.gateway.openapi.Schema.properties:type_name -> gopencloud.gateway.openapi.Schema.PropertiesEntry
+	39,  // 18: gopencloud.gateway.openapi.Schema.items:type_name -> gopencloud.gateway.openapi.Schema.Item
+	40,  // 19: gopencloud.gateway.openapi.Schema.properties:type_name -> gopencloud.gateway.openapi.Schema.PropertiesEntry
 	11,  // 20: gopencloud.gateway.openapi.Schema.additional_properties:type_name -> gopencloud.gateway.openapi.Schema
-	79,  // 21: gopencloud.gateway.openapi.Schema.default:type_name -> google.protobuf.Value
+	80,  // 21: gopencloud.gateway.openapi.Schema.default:type_name -> google.protobuf.Value
 	11,  // 22: gopencloud.gateway.openapi.Schema.all_of:type_name -> gopencloud.gateway.openapi.Schema
 	11,  // 23: gopencloud.gateway.openapi.Schema.any_of:type_name -> gopencloud.gateway.openapi.Schema
 	11,  // 24: gopencloud.gateway.openapi.Schema.one_of:type_name -> gopencloud.gateway.openapi.Schema
 	11,  // 25: gopencloud.gateway.openapi.Schema.not:type_name -> gopencloud.gateway.openapi.Schema
-	79,  // 26: gopencloud.gateway.openapi.Schema.examples:type_name -> google.protobuf.Value
+	80,  // 26: gopencloud.gateway.openapi.Schema.examples:type_name -> google.protobuf.Value
 	12,  // 27: gopencloud.gateway.openapi.Link.ref:type_name -> gopencloud.gateway.openapi.Reference
-	40,  // 28: gopencloud.gateway.openapi.Link.parameters:type_name -> gopencloud.gateway.openapi.Link.ParametersEntry
-	79,  // 29: gopencloud.gateway.openapi.Link.request_body:type_name -> google.protobuf.Value
+	41,  // 28: gopencloud.gateway.openapi.Link.parameters:type_name -> gopencloud.gateway.openapi.Link.ParametersEntry
+	80,  // 29: gopencloud.gateway.openapi.Link.request_body:type_name -> google.protobuf.Value
 	5,   // 30: gopencloud.gateway.openapi.Link.server:type_name -> gopencloud.gateway.openapi.Server
-	41,  // 31: gopencloud.gateway.openapi.Link.extensions:type_name -> gopencloud.gateway.openapi.Link.ExtensionsEntry
+	42,  // 31: gopencloud.gateway.openapi.Link.extensions:type_name -> gopencloud.gateway.openapi.Link.ExtensionsEntry
 	12,  // 32: gopencloud.gateway.openapi.Example.ref:type_name -> gopencloud.gateway.openapi.Reference
-	79,  // 33: gopencloud.gateway.openapi.Example.value:type_name -> google.protobuf.Value
-	42,  // 34: gopencloud.gateway.openapi.Example.extensions:type_name -> gopencloud.gateway.openapi.Example.ExtensionsEntry
-	43,  // 35: gopencloud.gateway.openapi.Encoding.headers:type_name -> gopencloud.gateway.openapi.Encoding.HeadersEntry
-	44,  // 36: gopencloud.gateway.openapi.Encoding.extensions:type_name -> gopencloud.gateway.openapi.Encoding.ExtensionsEntry
+	80,  // 33: gopencloud.gateway.openapi.Example.value:type_name -> google.protobuf.Value
+	43,  // 34: gopencloud.gateway.openapi.Example.extensions:type_name -> gopencloud.gateway.openapi.Example.ExtensionsEntry
+	44,  // 35: gopencloud.gateway.openapi.Encoding.headers:type_name -> gopencloud.gateway.openapi.Encoding.HeadersEntry
+	45,  // 36: gopencloud.gateway.openapi.Encoding.extensions:type_name -> gopencloud.gateway.openapi.Encoding.ExtensionsEntry
 	11,  // 37: gopencloud.gateway.openapi.MediaType.schema:type_name -> gopencloud.gateway.openapi.Schema
-	79,  // 38: gopencloud.gateway.openapi.MediaType.example:type_name -> google.protobuf.Value
-	45,  // 39: gopencloud.gateway.openapi.MediaType.examples:type_name -> gopencloud.gateway.openapi.MediaType.ExamplesEntry
-	46,  // 40: gopencloud.gateway.openapi.MediaType.encoding:type_name -> gopencloud.gateway.openapi.MediaType.EncodingEntry
-	47,  // 41: gopencloud.gateway.openapi.MediaType.extensions:type_name -> gopencloud.gateway.openapi.MediaType.ExtensionsEntry
+	80,  // 38: gopencloud.gateway.openapi.MediaType.example:type_name -> google.protobuf.Value
+	46,  // 39: gopencloud.gateway.openapi.MediaType.examples:type_name -> gopencloud.gateway.openapi.MediaType.ExamplesEntry
+	47,  // 40: gopencloud.gateway.openapi.MediaType.encoding:type_name -> gopencloud.gateway.openapi.MediaType.EncodingEntry
+	48,  // 41: gopencloud.gateway.openapi.MediaType.extensions:type_name -> gopencloud.gateway.openapi.MediaType.ExtensionsEntry
 	12,  // 42: gopencloud.gateway.openapi.Header.ref:type_name -> gopencloud.gateway.openapi.Reference
 	11,  // 43: gopencloud.gateway.openapi.Header.schema:type_name -> gopencloud.gateway.openapi.Schema
-	79,  // 44: gopencloud.gateway.openapi.Header.example:type_name -> google.protobuf.Value
-	48,  // 45: gopencloud.gateway.openapi.Header.examples:type_name -> gopencloud.gateway.openapi.Header.ExamplesEntry
-	49,  // 46: gopencloud.gateway.openapi.Header.content:type_name -> gopencloud.gateway.openapi.Header.ContentEntry
-	50,  // 47: gopencloud.gateway.openapi.Header.extensions:type_name -> gopencloud.gateway.openapi.Header.ExtensionsEntry
+	80,  // 44: gopencloud.gateway.openapi.Header.example:type_name -> google.protobuf.Value
+	49,  // 45: gopencloud.gateway.openapi.Header.examples:type_name -> gopencloud.gateway.openapi.Header.ExamplesEntry
+	50,  // 46: gopencloud.gateway.openapi.Header.content:type_name -> gopencloud.gateway.openapi.Header.ContentEntry
+	51,  // 47: gopencloud.gateway.openapi.Header.extensions:type_name -> gopencloud.gateway.openapi.Header.ExtensionsEntry
 	12,  // 48: gopencloud.gateway.openapi.Parameter.ref:type_name -> gopencloud.gateway.openapi.Reference
 	11,  // 49: gopencloud.gateway.openapi.Parameter.schema:type_name -> gopencloud.gateway.openapi.Schema
-	79,  // 50: gopencloud.gateway.openapi.Parameter.example:type_name -> google.protobuf.Value
-	51,  // 51: gopencloud.gateway.openapi.Parameter.examples:type_name -> gopencloud.gateway.openapi.Parameter.ExamplesEntry
-	52,  // 52: gopencloud.gateway.openapi.Parameter.content:type_name -> gopencloud.gateway.openapi.Parameter.ContentEntry
-	53,  // 53: gopencloud.gateway.openapi.Parameter.extensions:type_name -> gopencloud.gateway.openapi.Parameter.ExtensionsEntry
+	80,  // 50: gopencloud.gateway.openapi.Parameter.example:type_name -> google.protobuf.Value
+	52,  // 51: gopencloud.gateway.openapi.Parameter.examples:type_name -> gopencloud.gateway.openapi.Parameter.ExamplesEntry
+	53,  // 52: gopencloud.gateway.openapi.Parameter.content:type_name -> gopencloud.gateway.openapi.Parameter.ContentEntry
+	54,  // 53: gopencloud.gateway.openapi.Parameter.extensions:type_name -> gopencloud.gateway.openapi.Parameter.ExtensionsEntry
 	12,  // 54: gopencloud.gateway.openapi.Response.ref:type_name -> gopencloud.gateway.openapi.Reference
-	54,  // 55: gopencloud.gateway.openapi.Response.headers:type_name -> gopencloud.gateway.openapi.Response.HeadersEntry
-	55,  // 56: gopencloud.gateway.openapi.Response.content:type_name -> gopencloud.gateway.openapi.Response.ContentEntry
-	56,  // 57: gopencloud.gateway.openapi.Response.links:type_name -> gopencloud.gateway.openapi.Response.LinksEntry
-	57,  // 58: gopencloud.gateway.openapi.Response.extensions:type_name -> gopencloud.gateway.openapi.Response.ExtensionsEntry
+	55,  // 55: gopencloud.gateway.openapi.Response.headers:type_name -> gopencloud.gateway.openapi.Response.HeadersEntry
+	56,  // 56: gopencloud.gateway.openapi.Response.content:type_name -> gopencloud.gateway.openapi.Response.ContentEntry
+	57,  // 57: gopencloud.gateway.openapi.Response.links:type_name -> gopencloud.gateway.openapi.Response.LinksEntry
+	58,  // 58: gopencloud.gateway.openapi.Response.extensions:type_name -> gopencloud.gateway.openapi.Response.ExtensionsEntry
 	12,  // 59: gopencloud.gateway.openapi.RequestBody.ref:type_name -> gopencloud.gateway.openapi.Reference
-	58,  // 60: gopencloud.gateway.openapi.RequestBody.content:type_name -> gopencloud.gateway.openapi.RequestBody.ContentEntry
-	59,  // 61: gopencloud.gateway.openapi.RequestBody.extensions:type_name -> gopencloud.gateway.openapi.RequestBody.ExtensionsEntry
+	59,  // 60: gopencloud.gateway.openapi.RequestBody.content:type_name -> gopencloud.gateway.openapi.RequestBody.ContentEntry
+	60,  // 61: gopencloud.gateway.openapi.RequestBody.extensions:type_name -> gopencloud.gateway.openapi.RequestBody.ExtensionsEntry
 	12,  // 62: gopencloud.gateway.openapi.SecurityScheme.ref:type_name -> gopencloud.gateway.openapi.Reference
-	61,  // 63: gopencloud.gateway.openapi.SecurityScheme.flows:type_name -> gopencloud.gateway.openapi.SecurityScheme.OAuthFlows
-	62,  // 64: gopencloud.gateway.openapi.SecurityScheme.extensions:type_name -> gopencloud.gateway.openapi.SecurityScheme.ExtensionsEntry
+	62,  // 63: gopencloud.gateway.openapi.SecurityScheme.flows:type_name -> gopencloud.gateway.openapi.SecurityScheme.OAuthFlows
+	63,  // 64: gopencloud.gateway.openapi.SecurityScheme.extensions:type_name -> gopencloud.gateway.openapi.SecurityScheme.ExtensionsEntry
 	7,   // 65: gopencloud.gateway.openapi.Operation.external_docs:type_name -> gopencloud.gateway.openapi.ExternalDocumentation
 	18,  // 66: gopencloud.gateway.openapi.Operation.parameters:type_name -> gopencloud.gateway.openapi.Parameter
-	66,  // 67: gopencloud.gateway.openapi.Operation.responses:type_name -> gopencloud.gateway.openapi.Operation.ResponsesEntry
+	67,  // 67: gopencloud.gateway.openapi.Operation.responses:type_name -> gopencloud.gateway.openapi.Operation.ResponsesEntry
 	6,   // 68: gopencloud.gateway.openapi.Operation.security:type_name -> gopencloud.gateway.openapi.SecurityRequirement
 	5,   // 69: gopencloud.gateway.openapi.Operation.servers:type_name -> gopencloud.gateway.openapi.Server
-	67,  // 70: gopencloud.gateway.openapi.Operation.extensions:type_name -> gopencloud.gateway.openapi.Operation.ExtensionsEntry
-	68,  // 71: gopencloud.gateway.openapi.Components.schemas:type_name -> gopencloud.gateway.openapi.Components.SchemasEntry
-	69,  // 72: gopencloud.gateway.openapi.Components.responses:type_name -> gopencloud.gateway.openapi.Components.ResponsesEntry
-	70,  // 73: gopencloud.gateway.openapi.Components.parameters:type_name -> gopencloud.gateway.openapi.Components.ParametersEntry
-	71,  // 74: gopencloud.gateway.openapi.Components.examples:type_name -> gopencloud.gateway.openapi.Components.ExamplesEntry
-	72,  // 75: gopencloud.gateway.openapi.Components.request_bodies:type_name -> gopencloud.gateway.openapi.Components.RequestBodiesEntry
-	73,  // 76: gopencloud.gateway.openapi.Components.headers:type_name -> gopencloud.gateway.openapi.Components.HeadersEntry
-	74,  // 77: gopencloud.gateway.openapi.Components.security_schemes:type_name -> gopencloud.gateway.openapi.Components.SecuritySchemesEntry
-	75,  // 78: gopencloud.gateway.openapi.Components.links:type_name -> gopencloud.gateway.openapi.Components.LinksEntry
-	76,  // 79: gopencloud.gateway.openapi.Components.extensions:type_name -> gopencloud.gateway.openapi.Components.ExtensionsEntry
-	77,  // 80: gopencloud.gateway.openapi.DocumentConfiguration.default_responses:type_name -> gopencloud.gateway.openapi.DocumentConfiguration.DefaultResponsesEntry
-	3,   // 81: gopencloud.gateway.openapi.Document.info:type_name -> gopencloud.gateway.openapi.Info
-	5,   // 82: gopencloud.gateway.openapi.Document.servers:type_name -> gopencloud.gateway.openapi.Server
-	23,  // 83: gopencloud.gateway.openapi.Document.components:type_name -> gopencloud.gateway.openapi.Components
-	6,   // 84: gopencloud.gateway.openapi.Document.security:type_name -> gopencloud.gateway.openapi.SecurityRequirement
-	8,   // 85: gopencloud.gateway.openapi.Document.tags:type_name -> gopencloud.gateway.openapi.Tag
-	7,   // 86: gopencloud.gateway.openapi.Document.external_docs:type_name -> gopencloud.gateway.openapi.ExternalDocumentation
-	78,  // 87: gopencloud.gateway.openapi.Document.extensions:type_name -> gopencloud.gateway.openapi.Document.ExtensionsEntry
-	24,  // 88: gopencloud.gateway.openapi.Document.config:type_name -> gopencloud.gateway.openapi.DocumentConfiguration
-	79,  // 89: gopencloud.gateway.openapi.Contact.ExtensionsEntry.value:type_name -> google.protobuf.Value
-	79,  // 90: gopencloud.gateway.openapi.License.ExtensionsEntry.value:type_name -> google.protobuf.Value
-	79,  // 91: gopencloud.gateway.openapi.Info.ExtensionsEntry.value:type_name -> google.protobuf.Value
-	79,  // 92: gopencloud.gateway.openapi.ServerVariable.ExtensionsEntry.value:type_name -> google.protobuf.Value
-	4,   // 93: gopencloud.gateway.openapi.Server.VariablesEntry.value:type_name -> gopencloud.gateway.openapi.ServerVariable
-	79,  // 94: gopencloud.gateway.openapi.Server.ExtensionsEntry.value:type_name -> google.protobuf.Value
-	79,  // 95: gopencloud.gateway.openapi.ExternalDocumentation.ExtensionsEntry.value:type_name -> google.protobuf.Value
-	79,  // 96: gopencloud.gateway.openapi.Tag.ExtensionsEntry.value:type_name -> google.protobuf.Value
-	79,  // 97: gopencloud.gateway.openapi.Discriminator.ExtensionsEntry.value:type_name -> google.protobuf.Value
-	79,  // 98: gopencloud.gateway.openapi.Schema.ExtraEntry.value:type_name -> google.protobuf.Value
-	11,  // 99: gopencloud.gateway.openapi.Schema.SchemaList.items:type_name -> gopencloud.gateway.openapi.Schema
-	11,  // 100: gopencloud.gateway.openapi.Schema.Item.schema:type_name -> gopencloud.gateway.openapi.Schema
-	37,  // 101: gopencloud.gateway.openapi.Schema.Item.list:type_name -> gopencloud.gateway.openapi.Schema.SchemaList
-	11,  // 102: gopencloud.gateway.openapi.Schema.PropertiesEntry.value:type_name -> gopencloud.gateway.openapi.Schema
-	79,  // 103: gopencloud.gateway.openapi.Link.ParametersEntry.value:type_name -> google.protobuf.Value
-	79,  // 104: gopencloud.gateway.openapi.Link.ExtensionsEntry.value:type_name -> google.protobuf.Value
-	79,  // 105: gopencloud.gateway.openapi.Example.ExtensionsEntry.value:type_name -> google.protobuf.Value
-	17,  // 106: gopencloud.gateway.openapi.Encoding.HeadersEntry.value:type_name -> gopencloud.gateway.openapi.Header
-	79,  // 107: gopencloud.gateway.openapi.Encoding.ExtensionsEntry.value:type_name -> google.protobuf.Value
-	14,  // 108: gopencloud.gateway.openapi.MediaType.ExamplesEntry.value:type_name -> gopencloud.gateway.openapi.Example
-	15,  // 109: gopencloud.gateway.openapi.MediaType.EncodingEntry.value:type_name -> gopencloud.gateway.openapi.Encoding
-	79,  // 110: gopencloud.gateway.openapi.MediaType.ExtensionsEntry.value:type_name -> google.protobuf.Value
-	14,  // 111: gopencloud.gateway.openapi.Header.ExamplesEntry.value:type_name -> gopencloud.gateway.openapi.Example
-	16,  // 112: gopencloud.gateway.openapi.Header.ContentEntry.value:type_name -> gopencloud.gateway.openapi.MediaType
-	79,  // 113: gopencloud.gateway.openapi.Header.ExtensionsEntry.value:type_name -> google.protobuf.Value
-	14,  // 114: gopencloud.gateway.openapi.Parameter.ExamplesEntry.value:type_name -> gopencloud.gateway.openapi.Example
-	16,  // 115: gopencloud.gateway.openapi.Parameter.ContentEntry.value:type_name -> gopencloud.gateway.openapi.MediaType
-	79,  // 116: gopencloud.gateway.openapi.Parameter.ExtensionsEntry.value:type_name -> google.protobuf.Value
-	17,  // 117: gopencloud.gateway.openapi.Response.HeadersEntry.value:type_name -> gopencloud.gateway.openapi.Header
-	16,  // 118: gopencloud.gateway.openapi.Response.ContentEntry.value:type_name -> gopencloud.gateway.openapi.MediaType
-	13,  // 119: gopencloud.gateway.openapi.Response.LinksEntry.value:type_name -> gopencloud.gateway.openapi.Link
-	79,  // 120: gopencloud.gateway.openapi.Response.ExtensionsEntry.value:type_name -> google.protobuf.Value
-	16,  // 121: gopencloud.gateway.openapi.RequestBody.ContentEntry.value:type_name -> gopencloud.gateway.openapi.MediaType
-	79,  // 122: gopencloud.gateway.openapi.RequestBody.ExtensionsEntry.value:type_name -> google.protobuf.Value
-	63,  // 123: gopencloud.gateway.openapi.SecurityScheme.OAuthFlow.scopes:type_name -> gopencloud.gateway.openapi.SecurityScheme.OAuthFlow.ScopesEntry
-	64,  // 124: gopencloud.gateway.openapi.SecurityScheme.OAuthFlow.extensions:type_name -> gopencloud.gateway.openapi.SecurityScheme.OAuthFlow.ExtensionsEntry
-	60,  // 125: gopencloud.gateway.openapi.SecurityScheme.OAuthFlows.implicit:type_name -> gopencloud.gateway.openapi.SecurityScheme.OAuthFlow
-	60,  // 126: gopencloud.gateway.openapi.SecurityScheme.OAuthFlows.password:type_name -> gopencloud.gateway.openapi.SecurityScheme.OAuthFlow
-	60,  // 127: gopencloud.gateway.openapi.SecurityScheme.OAuthFlows.client_credentials:type_name -> gopencloud.gateway.openapi.SecurityScheme.OAuthFlow
-	60,  // 128: gopencloud.gateway.openapi.SecurityScheme.OAuthFlows.authorization_code:type_name -> gopencloud.gateway.openapi.SecurityScheme.OAuthFlow
-	65,  // 129: gopencloud.gateway.openapi.SecurityScheme.OAuthFlows.extensions:type_name -> gopencloud.gateway.openapi.SecurityScheme.OAuthFlows.ExtensionsEntry
-	79,  // 130: gopencloud.gateway.openapi.SecurityScheme.ExtensionsEntry.value:type_name -> google.protobuf.Value
-	79,  // 131: gopencloud.gateway.openapi.SecurityScheme.OAuthFlow.ExtensionsEntry.value:type_name -> google.protobuf.Value
-	79,  // 132: gopencloud.gateway.openapi.SecurityScheme.OAuthFlows.ExtensionsEntry.value:type_name -> google.protobuf.Value
-	19,  // 133: gopencloud.gateway.openapi.Operation.ResponsesEntry.value:type_name -> gopencloud.gateway.openapi.Response
-	79,  // 134: gopencloud.gateway.openapi.Operation.ExtensionsEntry.value:type_name -> google.protobuf.Value
-	11,  // 135: gopencloud.gateway.openapi.Components.SchemasEntry.value:type_name -> gopencloud.gateway.openapi.Schema
-	19,  // 136: gopencloud.gateway.openapi.Components.ResponsesEntry.value:type_name -> gopencloud.gateway.openapi.Response
-	18,  // 137: gopencloud.gateway.openapi.Components.ParametersEntry.value:type_name -> gopencloud.gateway.openapi.Parameter
-	14,  // 138: gopencloud.gateway.openapi.Components.ExamplesEntry.value:type_name -> gopencloud.gateway.openapi.Example
-	20,  // 139: gopencloud.gateway.openapi.Components.RequestBodiesEntry.value:type_name -> gopencloud.gateway.openapi.RequestBody
-	17,  // 140: gopencloud.gateway.openapi.Components.HeadersEntry.value:type_name -> gopencloud.gateway.openapi.Header
-	21,  // 141: gopencloud.gateway.openapi.Components.SecuritySchemesEntry.value:type_name -> gopencloud.gateway.openapi.SecurityScheme
-	13,  // 142: gopencloud.gateway.openapi.Components.LinksEntry.value:type_name -> gopencloud.gateway.openapi.Link
-	79,  // 143: gopencloud.gateway.openapi.Components.ExtensionsEntry.value:type_name -> google.protobuf.Value
-	19,  // 144: gopencloud.gateway.openapi.DocumentConfiguration.DefaultResponsesEntry.value:type_name -> gopencloud.gateway.openapi.Response
-	79,  // 145: gopencloud.gateway.openapi.Document.ExtensionsEntry.value:type_name -> google.protobuf.Value
-	146, // [146:146] is the sub-list for method output_type
-	146, // [146:146] is the sub-list for method input_type
-	146, // [146:146] is the sub-list for extension type_name
-	146, // [146:146] is the sub-list for extension extendee
-	0,   // [0:146] is the sub-list for field type_name
+	68,  // 70: gopencloud.gateway.openapi.Operation.extensions:type_name -> gopencloud.gateway.openapi.Operation.ExtensionsEntry
+	23,  // 71: gopencloud.gateway.openapi.Operation.config:type_name -> gopencloud.gateway.openapi.OperationConfiguration
+	69,  // 72: gopencloud.gateway.openapi.Components.schemas:type_name -> gopencloud.gateway.openapi.Components.SchemasEntry
+	70,  // 73: gopencloud.gateway.openapi.Components.responses:type_name -> gopencloud.gateway.openapi.Components.ResponsesEntry
+	71,  // 74: gopencloud.gateway.openapi.Components.parameters:type_name -> gopencloud.gateway.openapi.Components.ParametersEntry
+	72,  // 75: gopencloud.gateway.openapi.Components.examples:type_name -> gopencloud.gateway.openapi.Components.ExamplesEntry
+	73,  // 76: gopencloud.gateway.openapi.Components.request_bodies:type_name -> gopencloud.gateway.openapi.Components.RequestBodiesEntry
+	74,  // 77: gopencloud.gateway.openapi.Components.headers:type_name -> gopencloud.gateway.openapi.Components.HeadersEntry
+	75,  // 78: gopencloud.gateway.openapi.Components.security_schemes:type_name -> gopencloud.gateway.openapi.Components.SecuritySchemesEntry
+	76,  // 79: gopencloud.gateway.openapi.Components.links:type_name -> gopencloud.gateway.openapi.Components.LinksEntry
+	77,  // 80: gopencloud.gateway.openapi.Components.extensions:type_name -> gopencloud.gateway.openapi.Components.ExtensionsEntry
+	78,  // 81: gopencloud.gateway.openapi.DocumentConfiguration.default_responses:type_name -> gopencloud.gateway.openapi.DocumentConfiguration.DefaultResponsesEntry
+	3,   // 82: gopencloud.gateway.openapi.Document.info:type_name -> gopencloud.gateway.openapi.Info
+	5,   // 83: gopencloud.gateway.openapi.Document.servers:type_name -> gopencloud.gateway.openapi.Server
+	24,  // 84: gopencloud.gateway.openapi.Document.components:type_name -> gopencloud.gateway.openapi.Components
+	6,   // 85: gopencloud.gateway.openapi.Document.security:type_name -> gopencloud.gateway.openapi.SecurityRequirement
+	8,   // 86: gopencloud.gateway.openapi.Document.tags:type_name -> gopencloud.gateway.openapi.Tag
+	7,   // 87: gopencloud.gateway.openapi.Document.external_docs:type_name -> gopencloud.gateway.openapi.ExternalDocumentation
+	79,  // 88: gopencloud.gateway.openapi.Document.extensions:type_name -> gopencloud.gateway.openapi.Document.ExtensionsEntry
+	25,  // 89: gopencloud.gateway.openapi.Document.config:type_name -> gopencloud.gateway.openapi.DocumentConfiguration
+	80,  // 90: gopencloud.gateway.openapi.Contact.ExtensionsEntry.value:type_name -> google.protobuf.Value
+	80,  // 91: gopencloud.gateway.openapi.License.ExtensionsEntry.value:type_name -> google.protobuf.Value
+	80,  // 92: gopencloud.gateway.openapi.Info.ExtensionsEntry.value:type_name -> google.protobuf.Value
+	80,  // 93: gopencloud.gateway.openapi.ServerVariable.ExtensionsEntry.value:type_name -> google.protobuf.Value
+	4,   // 94: gopencloud.gateway.openapi.Server.VariablesEntry.value:type_name -> gopencloud.gateway.openapi.ServerVariable
+	80,  // 95: gopencloud.gateway.openapi.Server.ExtensionsEntry.value:type_name -> google.protobuf.Value
+	80,  // 96: gopencloud.gateway.openapi.ExternalDocumentation.ExtensionsEntry.value:type_name -> google.protobuf.Value
+	80,  // 97: gopencloud.gateway.openapi.Tag.ExtensionsEntry.value:type_name -> google.protobuf.Value
+	80,  // 98: gopencloud.gateway.openapi.Discriminator.ExtensionsEntry.value:type_name -> google.protobuf.Value
+	80,  // 99: gopencloud.gateway.openapi.Schema.ExtraEntry.value:type_name -> google.protobuf.Value
+	11,  // 100: gopencloud.gateway.openapi.Schema.SchemaList.items:type_name -> gopencloud.gateway.openapi.Schema
+	11,  // 101: gopencloud.gateway.openapi.Schema.Item.schema:type_name -> gopencloud.gateway.openapi.Schema
+	38,  // 102: gopencloud.gateway.openapi.Schema.Item.list:type_name -> gopencloud.gateway.openapi.Schema.SchemaList
+	11,  // 103: gopencloud.gateway.openapi.Schema.PropertiesEntry.value:type_name -> gopencloud.gateway.openapi.Schema
+	80,  // 104: gopencloud.gateway.openapi.Link.ParametersEntry.value:type_name -> google.protobuf.Value
+	80,  // 105: gopencloud.gateway.openapi.Link.ExtensionsEntry.value:type_name -> google.protobuf.Value
+	80,  // 106: gopencloud.gateway.openapi.Example.ExtensionsEntry.value:type_name -> google.protobuf.Value
+	17,  // 107: gopencloud.gateway.openapi.Encoding.HeadersEntry.value:type_name -> gopencloud.gateway.openapi.Header
+	80,  // 108: gopencloud.gateway.openapi.Encoding.ExtensionsEntry.value:type_name -> google.protobuf.Value
+	14,  // 109: gopencloud.gateway.openapi.MediaType.ExamplesEntry.value:type_name -> gopencloud.gateway.openapi.Example
+	15,  // 110: gopencloud.gateway.openapi.MediaType.EncodingEntry.value:type_name -> gopencloud.gateway.openapi.Encoding
+	80,  // 111: gopencloud.gateway.openapi.MediaType.ExtensionsEntry.value:type_name -> google.protobuf.Value
+	14,  // 112: gopencloud.gateway.openapi.Header.ExamplesEntry.value:type_name -> gopencloud.gateway.openapi.Example
+	16,  // 113: gopencloud.gateway.openapi.Header.ContentEntry.value:type_name -> gopencloud.gateway.openapi.MediaType
+	80,  // 114: gopencloud.gateway.openapi.Header.ExtensionsEntry.value:type_name -> google.protobuf.Value
+	14,  // 115: gopencloud.gateway.openapi.Parameter.ExamplesEntry.value:type_name -> gopencloud.gateway.openapi.Example
+	16,  // 116: gopencloud.gateway.openapi.Parameter.ContentEntry.value:type_name -> gopencloud.gateway.openapi.MediaType
+	80,  // 117: gopencloud.gateway.openapi.Parameter.ExtensionsEntry.value:type_name -> google.protobuf.Value
+	17,  // 118: gopencloud.gateway.openapi.Response.HeadersEntry.value:type_name -> gopencloud.gateway.openapi.Header
+	16,  // 119: gopencloud.gateway.openapi.Response.ContentEntry.value:type_name -> gopencloud.gateway.openapi.MediaType
+	13,  // 120: gopencloud.gateway.openapi.Response.LinksEntry.value:type_name -> gopencloud.gateway.openapi.Link
+	80,  // 121: gopencloud.gateway.openapi.Response.ExtensionsEntry.value:type_name -> google.protobuf.Value
+	16,  // 122: gopencloud.gateway.openapi.RequestBody.ContentEntry.value:type_name -> gopencloud.gateway.openapi.MediaType
+	80,  // 123: gopencloud.gateway.openapi.RequestBody.ExtensionsEntry.value:type_name -> google.protobuf.Value
+	64,  // 124: gopencloud.gateway.openapi.SecurityScheme.OAuthFlow.scopes:type_name -> gopencloud.gateway.openapi.SecurityScheme.OAuthFlow.ScopesEntry
+	65,  // 125: gopencloud.gateway.openapi.SecurityScheme.OAuthFlow.extensions:type_name -> gopencloud.gateway.openapi.SecurityScheme.OAuthFlow.ExtensionsEntry
+	61,  // 126: gopencloud.gateway.openapi.SecurityScheme.OAuthFlows.implicit:type_name -> gopencloud.gateway.openapi.SecurityScheme.OAuthFlow
+	61,  // 127: gopencloud.gateway.openapi.SecurityScheme.OAuthFlows.password:type_name -> gopencloud.gateway.openapi.SecurityScheme.OAuthFlow
+	61,  // 128: gopencloud.gateway.openapi.SecurityScheme.OAuthFlows.client_credentials:type_name -> gopencloud.gateway.openapi.SecurityScheme.OAuthFlow
+	61,  // 129: gopencloud.gateway.openapi.SecurityScheme.OAuthFlows.authorization_code:type_name -> gopencloud.gateway.openapi.SecurityScheme.OAuthFlow
+	66,  // 130: gopencloud.gateway.openapi.SecurityScheme.OAuthFlows.extensions:type_name -> gopencloud.gateway.openapi.SecurityScheme.OAuthFlows.ExtensionsEntry
+	80,  // 131: gopencloud.gateway.openapi.SecurityScheme.ExtensionsEntry.value:type_name -> google.protobuf.Value
+	80,  // 132: gopencloud.gateway.openapi.SecurityScheme.OAuthFlow.ExtensionsEntry.value:type_name -> google.protobuf.Value
+	80,  // 133: gopencloud.gateway.openapi.SecurityScheme.OAuthFlows.ExtensionsEntry.value:type_name -> google.protobuf.Value
+	19,  // 134: gopencloud.gateway.openapi.Operation.ResponsesEntry.value:type_name -> gopencloud.gateway.openapi.Response
+	80,  // 135: gopencloud.gateway.openapi.Operation.ExtensionsEntry.value:type_name -> google.protobuf.Value
+	11,  // 136: gopencloud.gateway.openapi.Components.SchemasEntry.value:type_name -> gopencloud.gateway.openapi.Schema
+	19,  // 137: gopencloud.gateway.openapi.Components.ResponsesEntry.value:type_name -> gopencloud.gateway.openapi.Response
+	18,  // 138: gopencloud.gateway.openapi.Components.ParametersEntry.value:type_name -> gopencloud.gateway.openapi.Parameter
+	14,  // 139: gopencloud.gateway.openapi.Components.ExamplesEntry.value:type_name -> gopencloud.gateway.openapi.Example
+	20,  // 140: gopencloud.gateway.openapi.Components.RequestBodiesEntry.value:type_name -> gopencloud.gateway.openapi.RequestBody
+	17,  // 141: gopencloud.gateway.openapi.Components.HeadersEntry.value:type_name -> gopencloud.gateway.openapi.Header
+	21,  // 142: gopencloud.gateway.openapi.Components.SecuritySchemesEntry.value:type_name -> gopencloud.gateway.openapi.SecurityScheme
+	13,  // 143: gopencloud.gateway.openapi.Components.LinksEntry.value:type_name -> gopencloud.gateway.openapi.Link
+	80,  // 144: gopencloud.gateway.openapi.Components.ExtensionsEntry.value:type_name -> google.protobuf.Value
+	19,  // 145: gopencloud.gateway.openapi.DocumentConfiguration.DefaultResponsesEntry.value:type_name -> gopencloud.gateway.openapi.Response
+	80,  // 146: gopencloud.gateway.openapi.Document.ExtensionsEntry.value:type_name -> google.protobuf.Value
+	147, // [147:147] is the sub-list for method output_type
+	147, // [147:147] is the sub-list for method input_type
+	147, // [147:147] is the sub-list for extension type_name
+	147, // [147:147] is the sub-list for extension extendee
+	0,   // [0:147] is the sub-list for field type_name
 }
 
 func init() { file_gopencloud_gateway_openapi_openapi_proto_init() }
@@ -4029,7 +4096,7 @@ func file_gopencloud_gateway_openapi_openapi_proto_init() {
 		(*Link_OperationRef)(nil),
 		(*Link_OperationId)(nil),
 	}
-	file_gopencloud_gateway_openapi_openapi_proto_msgTypes[37].OneofWrappers = []any{
+	file_gopencloud_gateway_openapi_openapi_proto_msgTypes[38].OneofWrappers = []any{
 		(*Schema_Item_Schema)(nil),
 		(*Schema_Item_List)(nil),
 	}
@@ -4039,7 +4106,7 @@ func file_gopencloud_gateway_openapi_openapi_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_gopencloud_gateway_openapi_openapi_proto_rawDesc), len(file_gopencloud_gateway_openapi_openapi_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   78,
+			NumMessages:   79,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
