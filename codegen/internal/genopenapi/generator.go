@@ -402,7 +402,12 @@ func (s *Session) addService(service *descriptor.Service) error {
 				s.Document.Object.Paths[path] = pathObject
 			}
 
-			operation, err := s.renderOperation(binding, operationResponses)
+			customizedOperationConfig := openapiv3.OperationConfiguration{}
+			if customizedOperation != nil && customizedOperation.Object.Config != nil {
+				customizedOperationConfig = *customizedOperation.Object.Config
+			}
+
+			operation, err := s.renderOperation(binding, operationResponses, customizedOperationConfig)
 			if err != nil {
 				return fmt.Errorf("failed to render method %q: %w", method.FQMN(), err)
 			}

@@ -3,6 +3,7 @@ package openapimap
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 
 	"github.com/gopencloud/grpc-api-gateway/api/openapi"
@@ -1110,6 +1111,8 @@ func Operation(operation *openapi.Operation) (*openapiv3.Operation, error) {
 		return nil, fmt.Errorf("failed to map servers: %w", err)
 	}
 
+	result.Object.Config = OperationConfiguration(operation.GetConfig())
+
 	return result, nil
 }
 
@@ -1126,4 +1129,24 @@ func SecurityRequirementSlice(items []*openapi.SecurityRequirement) []map[string
 	}
 
 	return result
+}
+
+func OperationConfiguration(c *openapi.OperationConfiguration) *openapiv3.OperationConfiguration {
+	if c == nil {
+		return nil
+	}
+
+	code := c.GetDefaultResponseCode()
+	if code != "" {
+		codeInt, err := strconv.Atoi(code)
+		if err != nil || codeInt < 200 || codeInt >= 300 {
+			code = ""
+		}
+	}
+
+	return &openapiv3.OperationConfiguration{
+		DefaultResponseCode:         code,
+		DisableDefaultResponse:      c.GetDisableDefaultResponse(),
+		DisableDefaultErrorResponse: c.GetDisableDefaultErrorResponse(),
+	}
 }

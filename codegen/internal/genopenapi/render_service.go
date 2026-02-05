@@ -20,7 +20,9 @@ import (
 
 func (s *Session) renderOperation(
 	binding *descriptor.Binding,
-	defaultResponses internal.DefaultResponses) (*openapiv3.Operation, error) {
+	defaultResponses internal.DefaultResponses,
+	customizedOperationConfig openapiv3.OperationConfiguration,
+) (*openapiv3.Operation, error) {
 	operation := &openapiv3.Operation{}
 
 	switch s.OperationIDMode {
@@ -84,14 +86,21 @@ func (s *Session) renderOperation(
 		return nil, err
 	}
 
-	if !s.DisableDefaultResponses {
-		if err := s.addDefaultSuccessResponse(binding, &operation.Object); err != nil {
+	if !s.DisableDefaultResponses && !customizedOperationConfig.DisableDefaultResponse {
+		defaultRespCode := customizedOperationConfig.DefaultResponseCode
+		if defaultRespCode == "" {
+			defaultRespCode = httpStatusOK
+		}
+
+		if err := s.addDefaultSuccessResponse(binding, &operation.Object, defaultRespCode); err != nil {
 			return nil, fmt.Errorf("failed to add default responses: %w", err)
 		}
 	}
 
-	if err := s.addDefaultErrorResponse(&operation.Object); err != nil {
-		return nil, err
+	if !customizedOperationConfig.DisableDefaultErrorResponse {
+		if err := s.addDefaultErrorResponse(&operation.Object); err != nil {
+			return nil, err
+		}
 	}
 
 	return operation, nil
@@ -493,7 +502,11 @@ func (s *Session) renderQueryParameter(param *descriptor.QueryParameter) (*opena
 	return parameter, nil
 }
 
-func (s *Session) addDefaultSuccessResponse(binding *descriptor.Binding, operation *openapiv3.OperationCore) error {
+func (s *Session) addDefaultSuccessResponse(
+	binding *descriptor.Binding,
+	operation *openapiv3.OperationCore,
+	defaultRespCode string,
+) error {
 	if operation.Responses == nil {
 		operation.Responses = make(map[string]*openapiv3.Ref[openapiv3.Response])
 	}
@@ -547,7 +560,7 @@ func (s *Session) addDefaultSuccessResponse(binding *descriptor.Binding, operati
 		response.Data.Object.Content[mimeTypeJSON] = mediaType
 	}
 
-	operation.Responses[httpStatusOK] = response
+	operation.Responses[defaultRespCode] = response
 	return nil
 }
 

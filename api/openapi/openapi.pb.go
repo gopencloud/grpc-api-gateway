@@ -2716,7 +2716,7 @@ type OperationConfiguration struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Set 2xx if your endpoint returns > 200 and < 300 http code (e.g. 201 accepted).
 	// Default response, if enabled, will have specified code.
-	// Default: 200
+	// Default: "200"
 	DefaultResponseCode string `protobuf:"bytes,1,opt,name=default_response_code,json=defaultResponseCode,proto3" json:"default_response_code,omitempty"`
 	// Disable default response at operation level.
 	// Not necessary, if similar plugin option enabled globally

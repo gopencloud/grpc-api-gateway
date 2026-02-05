@@ -4,17 +4,17 @@ go 1.25.2
 
 require (
 	dario.cat/mergo v1.0.0
-	github.com/gopencloud/grpc-api-gateway v0.0.0-20260203204237-2190ebc5923d
-	golang.org/x/text v0.22.0
-	golang.org/x/tools v0.21.1-0.20240508182429-e35e4ccd0d2d
-	google.golang.org/genproto/googleapis/api v0.0.0-20231106174013-bbf56f31fb17
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20231106174013-bbf56f31fb17
-	google.golang.org/grpc v1.61.1
-	google.golang.org/protobuf v1.33.0
+	github.com/gopencloud/grpc-api-gateway v0.0.0-20260205221828-b549928bc93c
+	golang.org/x/text v0.33.0
+	golang.org/x/tools v0.40.0
+	google.golang.org/genproto/googleapis/api v0.0.0-20260128011058-8636f8732409
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20260128011058-8636f8732409
+	google.golang.org/grpc v1.78.0
+	google.golang.org/protobuf v1.36.11
 	gopkg.in/yaml.v3 v3.0.1
 )
 
 require (
-	golang.org/x/mod v0.17.0 // indirect
-	google.golang.org/genproto v0.0.0-20231106174013-bbf56f31fb17 // indirect
+	golang.org/x/mod v0.31.0 // indirect
+	golang.org/x/sync v0.19.0 // indirect
 )
