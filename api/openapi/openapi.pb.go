@@ -2717,7 +2717,7 @@ type OperationConfiguration struct {
 	// Set 2xx if your endpoint returns > 200 and < 300 http code (e.g. 201 accepted).
 	// Default response, if enabled, will have specified code.
 	// Default: 200
-	SuccessResponseCode string `protobuf:"bytes,1,opt,name=success_response_code,json=successResponseCode,proto3" json:"success_response_code,omitempty"`
+	DefaultResponseCode string `protobuf:"bytes,1,opt,name=default_response_code,json=defaultResponseCode,proto3" json:"default_response_code,omitempty"`
 	// Disable default response at operation level.
 	// Not necessary, if similar plugin option enabled globally
 	DisableDefaultResponse bool `protobuf:"varint,2,opt,name=disable_default_response,json=disableDefaultResponse,proto3" json:"disable_default_response,omitempty"`
@@ -2758,9 +2758,9 @@ func (*OperationConfiguration) Descriptor() ([]byte, []int) {
 	return file_gopencloud_gateway_openapi_openapi_proto_rawDescGZIP(), []int{22}
 }
 
-func (x *OperationConfiguration) GetSuccessResponseCode() string {
+func (x *OperationConfiguration) GetDefaultResponseCode() string {
 	if x != nil {
-		return x.SuccessResponseCode
+		return x.DefaultResponseCode
 	}
 	return ""
 }
@@ -3768,7 +3768,7 @@ const file_gopencloud_gateway_openapi_openapi_proto_rawDesc = "" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12,\n" +
 	"\x05value\x18\x02 \x01(\v2\x16.google.protobuf.ValueR\x05value:\x028\x01J\x04\b\b\x10\tJ\x04\b\t\x10\v\"\xcb\x01\n" +
 	"\x16OperationConfiguration\x122\n" +
-	"\x15success_response_code\x18\x01 \x01(\tR\x13successResponseCode\x128\n" +
+	"\x15default_response_code\x18\x01 \x01(\tR\x13defaultResponseCode\x128\n" +
 	"\x18disable_default_response\x18\x02 \x01(\bR\x16disableDefaultResponse\x12C\n" +
 	"\x1edisable_default_error_response\x18\x03 \x01(\bR\x1bdisableDefaultErrorResponse\"\x9a\r\n" +
 	"\n" +
