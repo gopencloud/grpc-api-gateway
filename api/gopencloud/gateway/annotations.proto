@@ -57,4 +57,10 @@ message ProtoEndpointBinding {
 	repeated AdditionalEndpointBinding additional_bindings = 10;
 	bool disable_query_param_discovery = 11;
 	StreamConfig stream = 12;
+	// aliases are additional routes for this endpoint binding.
+	//
+	// This field translates to additional_bindings, inheriting all values from endpoint binding.
+	// Consider this a syntax sugar for additional_bindings.
+	// If additional binding with same route and method exists, alias will not work.
+	repeated string aliases = 13;
 }
