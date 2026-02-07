@@ -112,7 +112,13 @@ type EndpointBinding struct {
 	// Default: `false`
 	DisableQueryParamDiscovery bool `protobuf:"varint,12,opt,name=disable_query_param_discovery,json=disableQueryParamDiscovery,proto3" json:"disable_query_param_discovery,omitempty"`
 	// stream holds configurations for streaming methods.
-	Stream        *StreamConfig `protobuf:"bytes,13,opt,name=stream,proto3" json:"stream,omitempty"`
+	Stream *StreamConfig `protobuf:"bytes,13,opt,name=stream,proto3" json:"stream,omitempty"`
+	// aliases are additional routes for this endpoint binding.
+	//
+	// This field translates to additional_bindings, inheriting all values from endpoint binding.
+	// Consider this a syntax sugar for additional_bindings.
+	// If additional binding with same route and method exists, alias will not work.
+	Aliases       []string `protobuf:"bytes,14,rep,name=aliases,proto3" json:"aliases,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -253,6 +259,13 @@ func (x *EndpointBinding) GetDisableQueryParamDiscovery() bool {
 func (x *EndpointBinding) GetStream() *StreamConfig {
 	if x != nil {
 		return x.Stream
+	}
+	return nil
+}
+
+func (x *EndpointBinding) GetAliases() []string {
+	if x != nil {
+		return x.Aliases
 	}
 	return nil
 }
@@ -709,7 +722,7 @@ const file_gopencloud_gateway_gateway_proto_rawDesc = "" +
 	"\n" +
 	" gopencloud/gateway/gateway.proto\x12\x12gopencloud.gateway\"P\n" +
 	"\vGatewaySpec\x12A\n" +
-	"\tendpoints\x18\x01 \x03(\v2#.gopencloud.gateway.EndpointBindingR\tendpoints\"\xc9\x04\n" +
+	"\tendpoints\x18\x01 \x03(\v2#.gopencloud.gateway.EndpointBindingR\tendpoints\"\xe3\x04\n" +
 	"\x0fEndpointBinding\x12\x1a\n" +
 	"\bselector\x18\x01 \x01(\tR\bselector\x12\x12\n" +
 	"\x03get\x18\x02 \x01(\tH\x00R\x03get\x12\x12\n" +
@@ -724,7 +737,8 @@ const file_gopencloud_gateway_gateway_proto_rawDesc = "" +
 	" \x03(\v2).gopencloud.gateway.QueryParameterBindingR\vqueryParams\x12^\n" +
 	"\x13additional_bindings\x18\v \x03(\v2-.gopencloud.gateway.AdditionalEndpointBindingR\x12additionalBindings\x12A\n" +
 	"\x1ddisable_query_param_discovery\x18\f \x01(\bR\x1adisableQueryParamDiscovery\x128\n" +
-	"\x06stream\x18\r \x01(\v2 .gopencloud.gateway.StreamConfigR\x06streamB\t\n" +
+	"\x06stream\x18\r \x01(\v2 .gopencloud.gateway.StreamConfigR\x06stream\x12\x18\n" +
+	"\aaliases\x18\x0e \x03(\tR\aaliasesB\t\n" +
 	"\apattern\"\xd7\x03\n" +
 	"\x19AdditionalEndpointBinding\x12\x12\n" +
 	"\x03get\x18\x02 \x01(\tH\x00R\x03get\x12\x12\n" +

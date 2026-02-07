@@ -70,6 +70,13 @@ message EndpointBinding {
 
 	// stream holds configurations for streaming methods.
 	StreamConfig stream = 13;
+
+	// aliases are additional routes for this endpoint binding.
+	//
+	// This field translates to additional_bindings, inheriting all values from endpoint binding.
+	// Consider this a syntax sugar for additional_bindings.
+	// If additional binding with same route and method exists, alias will not work.
+	repeated string aliases = 14;
 }
 
 // AdditionalEndpointBinding is an additional gRPC method - HTTP endpoint binding specification.
