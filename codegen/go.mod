@@ -4,7 +4,7 @@ go 1.25.2
 
 require (
 	dario.cat/mergo v1.0.0
-	github.com/gopencloud/grpc-api-gateway v0.0.0-20260207142443-7e91476928ea
+	github.com/gopencloud/grpc-api-gateway v0.0.0-20260208190531-62ef4b20d5c9
 	golang.org/x/text v0.33.0
 	golang.org/x/tools v0.40.0
 	google.golang.org/genproto/googleapis/api v0.0.0-20260128011058-8636f8732409
