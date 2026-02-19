@@ -93,16 +93,18 @@ func (SchemaDataType) EnumDescriptor() ([]byte, []int) {
 type Contact struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// The identifying name of the contact person/organization.
-	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	// The URL pointing to the contact information. This MUST be in the form of a URL.
-	Url string `protobuf:"bytes,2,opt,name=url,proto3" json:"url,omitempty"`
-	// The email address of the contact person/organization. This MUST be in the form of an email address.
-	Email string `protobuf:"bytes,3,opt,name=email,proto3" json:"email,omitempty"`
-	// Extensions that start with "x-" such as "x-foo" used to describe extra functionality that is not covered by
-	// standard OpenAPI specification.
+	Name *string `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
+	// The URL pointing to the contact information. This MUST be in the form of a
+	// URL.
+	Url *string `protobuf:"bytes,2,opt,name=url" json:"url,omitempty"`
+	// The email address of the contact person/organization. This MUST be in the
+	// form of an email address.
+	Email *string `protobuf:"bytes,3,opt,name=email" json:"email,omitempty"`
+	// Extensions that start with "x-" such as "x-foo" used to describe extra
+	// functionality that is not covered by standard OpenAPI specification.
 	//
 	// See: https://spec.openapis.org/oas/latest.html#specification-extensions
-	Extensions    map[string]*structpb.Value `protobuf:"bytes,4,rep,name=extensions,proto3" json:"extensions,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	Extensions    map[string]*structpb.Value `protobuf:"bytes,4,rep,name=extensions" json:"extensions,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -138,22 +140,22 @@ func (*Contact) Descriptor() ([]byte, []int) {
 }
 
 func (x *Contact) GetName() string {
-	if x != nil {
-		return x.Name
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
 
 func (x *Contact) GetUrl() string {
-	if x != nil {
-		return x.Url
+	if x != nil && x.Url != nil {
+		return *x.Url
 	}
 	return ""
 }
 
 func (x *Contact) GetEmail() string {
-	if x != nil {
-		return x.Email
+	if x != nil && x.Email != nil {
+		return *x.Email
 	}
 	return ""
 }
@@ -171,17 +173,18 @@ func (x *Contact) GetExtensions() map[string]*structpb.Value {
 type License struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// REQUIRED. The license name used for the API.
-	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	// An SPDX license expression for the API. The identifier field is mutually exclusive of the url field.
-	Identifier string `protobuf:"bytes,2,opt,name=identifier,proto3" json:"identifier,omitempty"`
+	Name *string `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
+	// An SPDX license expression for the API. The identifier field is mutually
+	// exclusive of the url field.
+	Identifier *string `protobuf:"bytes,2,opt,name=identifier" json:"identifier,omitempty"`
 	// A URL to the license used for the API. This MUST be in the form of a URL.
 	// The url field is mutually exclusive of the identifier field.
-	Url string `protobuf:"bytes,3,opt,name=url,proto3" json:"url,omitempty"`
-	// Extensions that start with "x-" such as "x-foo" used to describe extra functionality that is not covered by
-	// standard OpenAPI specification.
+	Url *string `protobuf:"bytes,3,opt,name=url" json:"url,omitempty"`
+	// Extensions that start with "x-" such as "x-foo" used to describe extra
+	// functionality that is not covered by standard OpenAPI specification.
 	//
 	// See: https://spec.openapis.org/oas/latest.html#specification-extensions
-	Extensions    map[string]*structpb.Value `protobuf:"bytes,4,rep,name=extensions,proto3" json:"extensions,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	Extensions    map[string]*structpb.Value `protobuf:"bytes,4,rep,name=extensions" json:"extensions,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -217,22 +220,22 @@ func (*License) Descriptor() ([]byte, []int) {
 }
 
 func (x *License) GetName() string {
-	if x != nil {
-		return x.Name
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
 
 func (x *License) GetIdentifier() string {
-	if x != nil {
-		return x.Identifier
+	if x != nil && x.Identifier != nil {
+		return *x.Identifier
 	}
 	return ""
 }
 
 func (x *License) GetUrl() string {
-	if x != nil {
-		return x.Url
+	if x != nil && x.Url != nil {
+		return *x.Url
 	}
 	return ""
 }
@@ -245,34 +248,37 @@ func (x *License) GetExtensions() map[string]*structpb.Value {
 }
 
 // Info captures OpenAPI Info object.
-// NOTE: A generated value will be used for the required fields if they are left empty.
+// NOTE: A generated value will be used for the required fields if they are left
+// empty.
 //
 // See: https://spec.openapis.org/oas/v3.1.0#info-object
 type Info struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// REQUIRED. The title of the API.
-	Title string `protobuf:"bytes,1,opt,name=title,proto3" json:"title,omitempty"`
+	Title *string `protobuf:"bytes,1,opt,name=title" json:"title,omitempty"`
 	// A short summary of the API.
-	Summary string `protobuf:"bytes,2,opt,name=summary,proto3" json:"summary,omitempty"`
-	// A description of the API. CommonMark syntax MAY be used for rich text representation.
-	Description string `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
-	// A URL to the Terms of Service for the API. This MUST be in the form of a URL.
-	TermsOfService string `protobuf:"bytes,4,opt,name=terms_of_service,json=termsOfService,proto3" json:"terms_of_service,omitempty"`
+	Summary *string `protobuf:"bytes,2,opt,name=summary" json:"summary,omitempty"`
+	// A description of the API. CommonMark syntax MAY be used for rich text
+	// representation.
+	Description *string `protobuf:"bytes,3,opt,name=description" json:"description,omitempty"`
+	// A URL to the Terms of Service for the API. This MUST be in the form of a
+	// URL.
+	TermsOfService *string `protobuf:"bytes,4,opt,name=terms_of_service,json=termsOfService" json:"terms_of_service,omitempty"`
 	// The contact information for the exposed API.
 	//
 	// See: https://spec.openapis.org/oas/v3.1.0#contact-object
-	Contact *Contact `protobuf:"bytes,5,opt,name=contact,proto3" json:"contact,omitempty"`
+	Contact *Contact `protobuf:"bytes,5,opt,name=contact" json:"contact,omitempty"`
 	// The license information for the exposed API.
 	//
 	// See: https://spec.openapis.org/oas/v3.1.0#license-object
-	License *License `protobuf:"bytes,6,opt,name=license,proto3" json:"license,omitempty"`
+	License *License `protobuf:"bytes,6,opt,name=license" json:"license,omitempty"`
 	// REQUIRED. The version of the OpenAPI document.
-	Version string `protobuf:"bytes,7,opt,name=version,proto3" json:"version,omitempty"`
-	// Extensions that start with "x-" such as "x-foo" used to describe extra functionality that is not covered by
-	// standard OpenAPI specification.
+	Version *string `protobuf:"bytes,7,opt,name=version" json:"version,omitempty"`
+	// Extensions that start with "x-" such as "x-foo" used to describe extra
+	// functionality that is not covered by standard OpenAPI specification.
 	//
 	// See: https://spec.openapis.org/oas/latest.html#specification-extensions
-	Extensions    map[string]*structpb.Value `protobuf:"bytes,8,rep,name=extensions,proto3" json:"extensions,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	Extensions    map[string]*structpb.Value `protobuf:"bytes,8,rep,name=extensions" json:"extensions,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -308,29 +314,29 @@ func (*Info) Descriptor() ([]byte, []int) {
 }
 
 func (x *Info) GetTitle() string {
-	if x != nil {
-		return x.Title
+	if x != nil && x.Title != nil {
+		return *x.Title
 	}
 	return ""
 }
 
 func (x *Info) GetSummary() string {
-	if x != nil {
-		return x.Summary
+	if x != nil && x.Summary != nil {
+		return *x.Summary
 	}
 	return ""
 }
 
 func (x *Info) GetDescription() string {
-	if x != nil {
-		return x.Description
+	if x != nil && x.Description != nil {
+		return *x.Description
 	}
 	return ""
 }
 
 func (x *Info) GetTermsOfService() string {
-	if x != nil {
-		return x.TermsOfService
+	if x != nil && x.TermsOfService != nil {
+		return *x.TermsOfService
 	}
 	return ""
 }
@@ -350,8 +356,8 @@ func (x *Info) GetLicense() *License {
 }
 
 func (x *Info) GetVersion() string {
-	if x != nil {
-		return x.Version
+	if x != nil && x.Version != nil {
+		return *x.Version
 	}
 	return ""
 }
@@ -363,27 +369,29 @@ func (x *Info) GetExtensions() map[string]*structpb.Value {
 	return nil
 }
 
-// An object representing a Server Variable for server URL template substitution.
+// An object representing a Server Variable for server URL template
+// substitution.
 //
 // See: https://spec.openapis.org/oas/v3.1.0#server-variable-object
 type ServerVariable struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// An enumeration of string values to be used if the substitution options are from a limited set.
-	// The array MUST NOT be empty.
-	EnumValues []string `protobuf:"bytes,1,rep,name=enum_values,json=enumValues,proto3" json:"enum_values,omitempty"`
-	// REQUIRED. The default value to use for substitution, which SHALL be sent if an alternate value
-	// is not supplied. Note this behavior is different than the Schema Object’s treatment of default values,
-	// because in those cases parameter values are optional. If the enum is defined, the value MUST exist in
-	// the enum’s values.
-	DefaultValue string `protobuf:"bytes,2,opt,name=default_value,json=defaultValue,proto3" json:"default_value,omitempty"`
+	// An enumeration of string values to be used if the substitution options are
+	// from a limited set. The array MUST NOT be empty.
+	EnumValues []string `protobuf:"bytes,1,rep,name=enum_values,json=enumValues" json:"enum_values,omitempty"`
+	// REQUIRED. The default value to use for substitution, which SHALL be sent if
+	// an alternate value is not supplied. Note this behavior is different than
+	// the Schema Object’s treatment of default values, because in those cases
+	// parameter values are optional. If the enum is defined, the value MUST exist
+	// in the enum’s values.
+	DefaultValue *string `protobuf:"bytes,2,opt,name=default_value,json=defaultValue" json:"default_value,omitempty"`
 	// An optional description for the server variable.
 	// CommonMark syntax MAY be used for rich text representation.
-	Description string `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
-	// Extensions that start with "x-" such as "x-foo" used to describe extra functionality that is not covered by
-	// standard OpenAPI specification.
+	Description *string `protobuf:"bytes,3,opt,name=description" json:"description,omitempty"`
+	// Extensions that start with "x-" such as "x-foo" used to describe extra
+	// functionality that is not covered by standard OpenAPI specification.
 	//
 	// See: https://spec.openapis.org/oas/latest.html#specification-extensions
-	Extensions    map[string]*structpb.Value `protobuf:"bytes,4,rep,name=extensions,proto3" json:"extensions,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	Extensions    map[string]*structpb.Value `protobuf:"bytes,4,rep,name=extensions" json:"extensions,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -426,15 +434,15 @@ func (x *ServerVariable) GetEnumValues() []string {
 }
 
 func (x *ServerVariable) GetDefaultValue() string {
-	if x != nil {
-		return x.DefaultValue
+	if x != nil && x.DefaultValue != nil {
+		return *x.DefaultValue
 	}
 	return ""
 }
 
 func (x *ServerVariable) GetDescription() string {
-	if x != nil {
-		return x.Description
+	if x != nil && x.Description != nil {
+		return *x.Description
 	}
 	return ""
 }
@@ -451,21 +459,22 @@ func (x *ServerVariable) GetExtensions() map[string]*structpb.Value {
 // See: https://spec.openapis.org/oas/v3.1.0#server-object
 type Server struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// REQUIRED. A URL to the target host. This URL supports Server Variables and MAY be relative,
-	// to indicate that the host location is relative to the location where the OpenAPI document is
-	// being served. Variable substitutions will be made when a variable is named in {brackets}.
-	Url string `protobuf:"bytes,1,opt,name=url,proto3" json:"url,omitempty"`
+	// REQUIRED. A URL to the target host. This URL supports Server Variables and
+	// MAY be relative, to indicate that the host location is relative to the
+	// location where the OpenAPI document is being served. Variable substitutions
+	// will be made when a variable is named in {brackets}.
+	Url *string `protobuf:"bytes,1,opt,name=url" json:"url,omitempty"`
 	// An optional string describing the host designated by the URL.
 	// CommonMark syntax MAY be used for rich text representation.
-	Description string `protobuf:"bytes,2,opt,name=description,proto3" json:"description,omitempty"`
-	// A map between a variable name and its value. The value is used for substitution in the
-	// server’s URL template.
-	Variables map[string]*ServerVariable `protobuf:"bytes,3,rep,name=variables,proto3" json:"variables,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
-	// Extensions that start with "x-" such as "x-foo" used to describe extra functionality that is not covered by
-	// standard OpenAPI specification.
+	Description *string `protobuf:"bytes,2,opt,name=description" json:"description,omitempty"`
+	// A map between a variable name and its value. The value is used for
+	// substitution in the server’s URL template.
+	Variables map[string]*ServerVariable `protobuf:"bytes,3,rep,name=variables" json:"variables,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	// Extensions that start with "x-" such as "x-foo" used to describe extra
+	// functionality that is not covered by standard OpenAPI specification.
 	//
 	// See: https://spec.openapis.org/oas/latest.html#specification-extensions
-	Extensions    map[string]*structpb.Value `protobuf:"bytes,4,rep,name=extensions,proto3" json:"extensions,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	Extensions    map[string]*structpb.Value `protobuf:"bytes,4,rep,name=extensions" json:"extensions,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -501,15 +510,15 @@ func (*Server) Descriptor() ([]byte, []int) {
 }
 
 func (x *Server) GetUrl() string {
-	if x != nil {
-		return x.Url
+	if x != nil && x.Url != nil {
+		return *x.Url
 	}
 	return ""
 }
 
 func (x *Server) GetDescription() string {
-	if x != nil {
-		return x.Description
+	if x != nil && x.Description != nil {
+		return *x.Description
 	}
 	return ""
 }
@@ -533,13 +542,15 @@ func (x *Server) GetExtensions() map[string]*structpb.Value {
 // See: https://spec.openapis.org/oas/v3.1.0#security-requirement-object
 type SecurityRequirement struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// Each name MUST correspond to a security scheme which is declared in the Security Schemes under
-	// the Components Object. If the security scheme is of type "oauth2" or "openIdConnect", then the
-	// value is a list of scope names required for the execution, and the list MAY be empty if authorization
-	// does not require a specified scope. For other security scheme types, the array MAY contain a list of role
-	// names which are required for the execution, but are not otherwise defined or exchanged in-band.
-	Name          string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Scopes        []string `protobuf:"bytes,2,rep,name=scopes,proto3" json:"scopes,omitempty"`
+	// Each name MUST correspond to a security scheme which is declared in the
+	// Security Schemes under the Components Object. If the security scheme is of
+	// type "oauth2" or "openIdConnect", then the value is a list of scope names
+	// required for the execution, and the list MAY be empty if authorization does
+	// not require a specified scope. For other security scheme types, the array
+	// MAY contain a list of role names which are required for the execution, but
+	// are not otherwise defined or exchanged in-band.
+	Name          *string  `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
+	Scopes        []string `protobuf:"bytes,2,rep,name=scopes" json:"scopes,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -575,8 +586,8 @@ func (*SecurityRequirement) Descriptor() ([]byte, []int) {
 }
 
 func (x *SecurityRequirement) GetName() string {
-	if x != nil {
-		return x.Name
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
@@ -593,15 +604,17 @@ func (x *SecurityRequirement) GetScopes() []string {
 // See: https://spec.openapis.org/oas/v3.1.0#external-documentation-object
 type ExternalDocumentation struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// A description of the target documentation. CommonMark syntax MAY be used for rich text representation.
-	Description string `protobuf:"bytes,1,opt,name=description,proto3" json:"description,omitempty"`
-	// REQUIRED. The URL for the target documentation. This MUST be in the form of a URL.
-	Url string `protobuf:"bytes,2,opt,name=url,proto3" json:"url,omitempty"`
-	// Extensions that start with "x-" such as "x-foo" used to describe extra functionality that is not covered by
-	// standard OpenAPI specification.
+	// A description of the target documentation. CommonMark syntax MAY be used
+	// for rich text representation.
+	Description *string `protobuf:"bytes,1,opt,name=description" json:"description,omitempty"`
+	// REQUIRED. The URL for the target documentation. This MUST be in the form of
+	// a URL.
+	Url *string `protobuf:"bytes,2,opt,name=url" json:"url,omitempty"`
+	// Extensions that start with "x-" such as "x-foo" used to describe extra
+	// functionality that is not covered by standard OpenAPI specification.
 	//
 	// See: https://spec.openapis.org/oas/latest.html#specification-extensions
-	Extensions    map[string]*structpb.Value `protobuf:"bytes,3,rep,name=extensions,proto3" json:"extensions,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	Extensions    map[string]*structpb.Value `protobuf:"bytes,3,rep,name=extensions" json:"extensions,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -637,15 +650,15 @@ func (*ExternalDocumentation) Descriptor() ([]byte, []int) {
 }
 
 func (x *ExternalDocumentation) GetDescription() string {
-	if x != nil {
-		return x.Description
+	if x != nil && x.Description != nil {
+		return *x.Description
 	}
 	return ""
 }
 
 func (x *ExternalDocumentation) GetUrl() string {
-	if x != nil {
-		return x.Url
+	if x != nil && x.Url != nil {
+		return *x.Url
 	}
 	return ""
 }
@@ -663,18 +676,19 @@ func (x *ExternalDocumentation) GetExtensions() map[string]*structpb.Value {
 type Tag struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// REQUIRED. The name of the tag.
-	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	// A description for the tag. CommonMark syntax MAY be used for rich text representation.
-	Description string `protobuf:"bytes,2,opt,name=description,proto3" json:"description,omitempty"`
+	Name *string `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
+	// A description for the tag. CommonMark syntax MAY be used for rich text
+	// representation.
+	Description *string `protobuf:"bytes,2,opt,name=description" json:"description,omitempty"`
 	// Additional external documentation for this tag.
 	//
 	// See: https://spec.openapis.org/oas/v3.1.0#external-documentation-object
-	ExternalDocs *ExternalDocumentation `protobuf:"bytes,3,opt,name=external_docs,json=externalDocs,proto3" json:"external_docs,omitempty"`
-	// Extensions that start with "x-" such as "x-foo" used to describe extra functionality that is not covered by
-	// standard OpenAPI specification.
+	ExternalDocs *ExternalDocumentation `protobuf:"bytes,3,opt,name=external_docs,json=externalDocs" json:"external_docs,omitempty"`
+	// Extensions that start with "x-" such as "x-foo" used to describe extra
+	// functionality that is not covered by standard OpenAPI specification.
 	//
 	// See: https://spec.openapis.org/oas/latest.html#specification-extensions
-	Extensions    map[string]*structpb.Value `protobuf:"bytes,4,rep,name=extensions,proto3" json:"extensions,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	Extensions    map[string]*structpb.Value `protobuf:"bytes,4,rep,name=extensions" json:"extensions,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -710,15 +724,15 @@ func (*Tag) Descriptor() ([]byte, []int) {
 }
 
 func (x *Tag) GetName() string {
-	if x != nil {
-		return x.Name
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
 
 func (x *Tag) GetDescription() string {
-	if x != nil {
-		return x.Description
+	if x != nil && x.Description != nil {
+		return *x.Description
 	}
 	return ""
 }
@@ -740,15 +754,17 @@ func (x *Tag) GetExtensions() map[string]*structpb.Value {
 // See: https://spec.openapis.org/oas/latest.html#discriminator-object
 type Discriminator struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// REQUIRED. The name of the property in the payload that will hold the discriminator value.
-	PropertyName string `protobuf:"bytes,1,opt,name=property_name,json=propertyName,proto3" json:"property_name,omitempty"`
-	// An object to hold mappings between payload values and schema names or references.
-	Mapping map[string]string `protobuf:"bytes,2,rep,name=mapping,proto3" json:"mapping,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
-	// Extensions that start with "x-" such as "x-foo" used to describe extra functionality that is not covered by
-	// standard OpenAPI specification.
+	// REQUIRED. The name of the property in the payload that will hold the
+	// discriminator value.
+	PropertyName *string `protobuf:"bytes,1,opt,name=property_name,json=propertyName" json:"property_name,omitempty"`
+	// An object to hold mappings between payload values and schema names or
+	// references.
+	Mapping map[string]string `protobuf:"bytes,2,rep,name=mapping" json:"mapping,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	// Extensions that start with "x-" such as "x-foo" used to describe extra
+	// functionality that is not covered by standard OpenAPI specification.
 	//
 	// See: https://spec.openapis.org/oas/latest.html#specification-extensions
-	Extensions    map[string]*structpb.Value `protobuf:"bytes,3,rep,name=extensions,proto3" json:"extensions,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	Extensions    map[string]*structpb.Value `protobuf:"bytes,3,rep,name=extensions" json:"extensions,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -784,8 +800,8 @@ func (*Discriminator) Descriptor() ([]byte, []int) {
 }
 
 func (x *Discriminator) GetPropertyName() string {
-	if x != nil {
-		return x.PropertyName
+	if x != nil && x.PropertyName != nil {
+		return *x.PropertyName
 	}
 	return ""
 }
@@ -804,17 +820,18 @@ func (x *Discriminator) GetExtensions() map[string]*structpb.Value {
 	return nil
 }
 
-// FieldConfiguration provides additional field level properties used when generating the OpenAPI v3.1 file.
-// These properties are not defined by OpenAPIv3, but they are used to control the generation.
+// FieldConfiguration provides additional field level properties used when
+// generating the OpenAPI v3.1 file. These properties are not defined by
+// OpenAPIv3, but they are used to control the generation.
 type FieldConfiguration struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Alternative parameter name when used as path parameter. If set, this will
 	// be used as the complete parameter name when this field is used as a path
 	// parameter. Use this to avoid having auto-generated path parameter names
 	// for overlapping paths.
-	PathParamName string `protobuf:"bytes,1,opt,name=path_param_name,json=pathParamName,proto3" json:"path_param_name,omitempty"`
+	PathParamName *string `protobuf:"bytes,1,opt,name=path_param_name,json=pathParamName" json:"path_param_name,omitempty"`
 	// Marks this field as required.
-	Required      bool `protobuf:"varint,2,opt,name=required,proto3" json:"required,omitempty"`
+	Required      *bool `protobuf:"varint,2,opt,name=required" json:"required,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -850,161 +867,194 @@ func (*FieldConfiguration) Descriptor() ([]byte, []int) {
 }
 
 func (x *FieldConfiguration) GetPathParamName() string {
-	if x != nil {
-		return x.PathParamName
+	if x != nil && x.PathParamName != nil {
+		return *x.PathParamName
 	}
 	return ""
 }
 
 func (x *FieldConfiguration) GetRequired() bool {
-	if x != nil {
-		return x.Required
+	if x != nil && x.Required != nil {
+		return *x.Required
 	}
 	return false
 }
 
-// Schema represents an OpenAPI v3.1 Schema object, providing a structured definition for data types used in the API.
+// Schema represents an OpenAPI v3.1 Schema object, providing a structured
+// definition for data types used in the API.
 //
-// For detailed information on the Schema object, refer to the OpenAPI Specification:
-// https://spec.openapis.org/oas/v3.1.0#schema-object
+// For detailed information on the Schema object, refer to the OpenAPI
+// Specification: https://spec.openapis.org/oas/v3.1.0#schema-object
 type Schema struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// Adds support for polymorphism by specifying a discriminator object name that differentiates between schemas.
+	// Adds support for polymorphism by specifying a discriminator object name
+	// that differentiates between schemas.
 	//
 	// See: https://spec.openapis.org/oas/v3.1.0#discriminator-object
-	Discriminator *Discriminator `protobuf:"bytes,1,opt,name=discriminator,proto3" json:"discriminator,omitempty"`
+	Discriminator *Discriminator `protobuf:"bytes,1,opt,name=discriminator" json:"discriminator,omitempty"`
 	// Additional external documentation related to this schema.
 	//
 	// See: https://spec.openapis.org/oas/v3.1.0#external-documentation-object
-	ExternalDocs *ExternalDocumentation `protobuf:"bytes,3,opt,name=external_docs,json=externalDocs,proto3" json:"external_docs,omitempty"`
-	// Extra can be used to add any other field in the schema. Since OpenAPI v3.1 arbitrary fields can be
-	// used in the schema objects. This field can be utilized to add those extra fields. Some of the JSON schema
-	// validation properties or core properties that are not captured as part of the gRPC REST Gateway OpenAPI
-	// objects.
-	Extra map[string]*structpb.Value `protobuf:"bytes,4,rep,name=extra,proto3" json:"extra,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	ExternalDocs *ExternalDocumentation `protobuf:"bytes,3,opt,name=external_docs,json=externalDocs" json:"external_docs,omitempty"`
+	// Extra can be used to add any other field in the schema. Since OpenAPI v3.1
+	// arbitrary fields can be used in the schema objects. This field can be
+	// utilized to add those extra fields. Some of the JSON schema validation
+	// properties or core properties that are not captured as part of the gRPC
+	// REST Gateway OpenAPI objects.
+	Extra map[string]*structpb.Value `protobuf:"bytes,4,rep,name=extra" json:"extra,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	// Ref is used to define an external reference to include in the message.
-	// This could be a fully qualified proto message reference and start with a '.',
-	// and that type must be available in the proto files or their dependencies.
-	// If no message is identified, the Ref will be used verbatim in the output.
+	// This could be a fully qualified proto message reference and start with a
+	// '.', and that type must be available in the proto files or their
+	// dependencies. If no message is identified, the Ref will be used verbatim in
+	// the output.
 	//
 	// For example:
 	//
 	//	`ref: ".google.protobuf.Timestamp"`.
 	//
-	// NOTE: This reference will only be honored when used in top-level schemas in responses only.
-	Ref string `protobuf:"bytes,5,opt,name=ref,proto3" json:"ref,omitempty"`
+	// NOTE: This reference will only be honored when used in top-level schemas in
+	// responses only.
+	Ref *string `protobuf:"bytes,5,opt,name=ref" json:"ref,omitempty"`
 	// Configuration related to schema generation for OpenAPI documentation.
-	Config *FieldConfiguration `protobuf:"bytes,6,opt,name=config,proto3" json:"config,omitempty"`
-	// The "$schema" keyword is used to identify the schema dialect and its associated URI for validation.
+	Config *FieldConfiguration `protobuf:"bytes,6,opt,name=config" json:"config,omitempty"`
+	// The "$schema" keyword is used to identify the schema dialect and its
+	// associated URI for validation.
 	//
-	// See: https://json-schema.org/draft/2020-12/json-schema-core#name-the-schema-keyword
-	Schema string `protobuf:"bytes,10,opt,name=schema,proto3" json:"schema,omitempty"`
+	// See:
+	// https://json-schema.org/draft/2020-12/json-schema-core#name-the-schema-keyword
+	Schema *string `protobuf:"bytes,10,opt,name=schema" json:"schema,omitempty"`
 	// The title of the schema.
-	Title string `protobuf:"bytes,11,opt,name=title,proto3" json:"title,omitempty"`
+	Title *string `protobuf:"bytes,11,opt,name=title" json:"title,omitempty"`
 	// A regular expression pattern that the schema value should match.
-	// See: https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-validation-00#section-6.3.3
-	Pattern string `protobuf:"bytes,12,opt,name=pattern,proto3" json:"pattern,omitempty"`
+	// See:
+	// https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-validation-00#section-6.3.3
+	Pattern *string `protobuf:"bytes,12,opt,name=pattern" json:"pattern,omitempty"`
 	// A list of property names that are required in this schema.
-	Required []string `protobuf:"bytes,13,rep,name=required,proto3" json:"required,omitempty"`
+	Required []string `protobuf:"bytes,13,rep,name=required" json:"required,omitempty"`
 	// An array of unique values for enum validation.
 	//
-	// See: https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-validation-00#section-6.1.2
-	Enum []string `protobuf:"bytes,14,rep,name=enum,proto3" json:"enum,omitempty"`
+	// See:
+	// https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-validation-00#section-6.1.2
+	Enum []string `protobuf:"bytes,14,rep,name=enum" json:"enum,omitempty"`
 	// The value of "multipleOf" MUST be a number, strictly greater than 0.
-	// A numeric instance is valid only if division by this keyword's value results in an integer.
+	// A numeric instance is valid only if division by this keyword's value
+	// results in an integer.
 	//
-	// See: https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-validation-00#section-6.2.1
-	MultipleOf float64 `protobuf:"fixed64,15,opt,name=multiple_of,json=multipleOf,proto3" json:"multiple_of,omitempty"`
+	// See:
+	// https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-validation-00#section-6.2.1
+	MultipleOf *float64 `protobuf:"fixed64,15,opt,name=multiple_of,json=multipleOf" json:"multiple_of,omitempty"`
 	// Maximum represents an inclusive upper limit for a numeric instance. The
-	// value of MUST be a number, representing an inclusive upper limit for a numeric instance.
+	// value of MUST be a number, representing an inclusive upper limit for a
+	// numeric instance.
 	//
-	// See: https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-validation-00#section-6.2.2
-	Maximum float64 `protobuf:"fixed64,16,opt,name=maximum,proto3" json:"maximum,omitempty"`
-	// See: https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-validation-00#section-6.2.3
-	ExclusiveMaximum float64 `protobuf:"fixed64,17,opt,name=exclusive_maximum,json=exclusiveMaximum,proto3" json:"exclusive_maximum,omitempty"`
+	// See:
+	// https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-validation-00#section-6.2.2
+	Maximum *float64 `protobuf:"fixed64,16,opt,name=maximum" json:"maximum,omitempty"`
+	// See:
+	// https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-validation-00#section-6.2.3
+	ExclusiveMaximum *float64 `protobuf:"fixed64,17,opt,name=exclusive_maximum,json=exclusiveMaximum" json:"exclusive_maximum,omitempty"`
 	// minimum represents an inclusive lower limit for a numeric instance. The
-	// value of MUST be a number, representing an inclusive lower limit for a numeric instance.
+	// value of MUST be a number, representing an inclusive lower limit for a
+	// numeric instance.
 	//
-	// See: https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-validation-00#section-6.2.4
-	Minimum float64 `protobuf:"fixed64,18,opt,name=minimum,proto3" json:"minimum,omitempty"`
-	// See: https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-validation-00#section-6.2.5
-	ExclusiveMinimum float64 `protobuf:"fixed64,19,opt,name=exclusive_minimum,json=exclusiveMinimum,proto3" json:"exclusive_minimum,omitempty"`
+	// See:
+	// https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-validation-00#section-6.2.4
+	Minimum *float64 `protobuf:"fixed64,18,opt,name=minimum" json:"minimum,omitempty"`
+	// See:
+	// https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-validation-00#section-6.2.5
+	ExclusiveMinimum *float64 `protobuf:"fixed64,19,opt,name=exclusive_minimum,json=exclusiveMinimum" json:"exclusive_minimum,omitempty"`
 	// A string instance is valid against this keyword if its length is
 	// less than, or equal to, the value of this keyword.
 	//
-	// See: https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-validation-00#section-6.3.1
-	MaxLength uint64 `protobuf:"varint,20,opt,name=max_length,json=maxLength,proto3" json:"max_length,omitempty"`
+	// See:
+	// https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-validation-00#section-6.3.1
+	MaxLength *uint64 `protobuf:"varint,20,opt,name=max_length,json=maxLength" json:"max_length,omitempty"`
 	// A string instance is valid against this keyword if its length is
 	// greater than, or equal to, the value of this keyword.
 	//
-	// See: https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-validation-00#section-6.3.2
-	MinLength uint64 `protobuf:"varint,21,opt,name=min_length,json=minLength,proto3" json:"min_length,omitempty"`
+	// See:
+	// https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-validation-00#section-6.3.2
+	MinLength *uint64 `protobuf:"varint,21,opt,name=min_length,json=minLength" json:"min_length,omitempty"`
 	// An array instance is valid against "maxItems" if its size is
 	// less than, or equal to, the value of this keyword.
 	//
-	// See: https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-validation-00#section-6.4.1
-	MaxItems uint64 `protobuf:"varint,22,opt,name=max_items,json=maxItems,proto3" json:"max_items,omitempty"`
+	// See:
+	// https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-validation-00#section-6.4.1
+	MaxItems *uint64 `protobuf:"varint,22,opt,name=max_items,json=maxItems" json:"max_items,omitempty"`
 	// An array instance is valid against "minItems" if its size is
 	// greater than, or equal to, the value of this keyword.
 	//
-	// See: https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-validation-00#section-6.4.2
-	MinItems uint64 `protobuf:"varint,23,opt,name=min_items,json=minItems,proto3" json:"min_items,omitempty"`
+	// See:
+	// https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-validation-00#section-6.4.2
+	MinItems *uint64 `protobuf:"varint,23,opt,name=min_items,json=minItems" json:"min_items,omitempty"`
 	// If set to true, all items must be unique.
-	UniqueItems   bool   `protobuf:"varint,24,opt,name=unique_items,json=uniqueItems,proto3" json:"unique_items,omitempty"`
-	MaxProperties uint64 `protobuf:"varint,25,opt,name=max_properties,json=maxProperties,proto3" json:"max_properties,omitempty"`
-	MinProperties uint64 `protobuf:"varint,26,opt,name=min_properties,json=minProperties,proto3" json:"min_properties,omitempty"`
-	// Indicates what type this schema holds. In JSON schema draft 2020, this can be a singular value or
-	// a list of values. For simplicity of structure, types is always a list but if it contains only one
-	// item, in the generated file, it will be a single string and not a list.
-	Types []SchemaDataType `protobuf:"varint,27,rep,packed,name=types,proto3,enum=gopencloud.gateway.openapi.SchemaDataType" json:"types,omitempty"`
+	UniqueItems   *bool   `protobuf:"varint,24,opt,name=unique_items,json=uniqueItems" json:"unique_items,omitempty"`
+	MaxProperties *uint64 `protobuf:"varint,25,opt,name=max_properties,json=maxProperties" json:"max_properties,omitempty"`
+	MinProperties *uint64 `protobuf:"varint,26,opt,name=min_properties,json=minProperties" json:"min_properties,omitempty"`
+	// Indicates what type this schema holds. In JSON schema draft 2020, this can
+	// be a singular value or a list of values. For simplicity of structure, types
+	// is always a list but if it contains only one item, in the generated file,
+	// it will be a single string and not a list.
+	Types []SchemaDataType `protobuf:"varint,27,rep,packed,name=types,enum=gopencloud.gateway.openapi.SchemaDataType" json:"types,omitempty"`
 	// A description of the schema using CommonMark syntax.
-	Description string `protobuf:"bytes,28,opt,name=description,proto3" json:"description,omitempty"`
+	Description *string `protobuf:"bytes,28,opt,name=description" json:"description,omitempty"`
 	// The items keyword specifies the schema for items in an array.
-	Items *Schema_Item `protobuf:"bytes,29,opt,name=items,proto3" json:"items,omitempty"`
+	Items *Schema_Item `protobuf:"bytes,29,opt,name=items" json:"items,omitempty"`
 	// The properties keyword specifies the schema for properties in an object.
 	//
-	// Defining any property here for proto messages merges them with the automatically generated ones.
-	Properties map[string]*Schema `protobuf:"bytes,30,rep,name=properties,proto3" json:"properties,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
-	// The additionalProperties keyword specifies the schema for additional properties in an object.
-	AdditionalProperties *Schema `protobuf:"bytes,31,opt,name=additional_properties,json=additionalProperties,proto3" json:"additional_properties,omitempty"`
-	// The default keyword provides a default JSON value associated with the schema.
-	Default *structpb.Value `protobuf:"bytes,32,opt,name=default,proto3" json:"default,omitempty"`
-	// The allOf keyword specifies that an instance must validate against all the schemas defined in the array.
+	// Defining any property here for proto messages merges them with the
+	// automatically generated ones.
+	Properties map[string]*Schema `protobuf:"bytes,30,rep,name=properties" json:"properties,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	// The additionalProperties keyword specifies the schema for additional
+	// properties in an object.
+	AdditionalProperties *Schema `protobuf:"bytes,31,opt,name=additional_properties,json=additionalProperties" json:"additional_properties,omitempty"`
+	// The default keyword provides a default JSON value associated with the
+	// schema.
+	Default *structpb.Value `protobuf:"bytes,32,opt,name=default" json:"default,omitempty"`
+	// The allOf keyword specifies that an instance must validate against all the
+	// schemas defined in the array.
 	//
 	// See: https://json-schema.org/draft/2020-12/json-schema-core#name-allof
-	AllOf []*Schema `protobuf:"bytes,33,rep,name=all_of,json=allOf,proto3" json:"all_of,omitempty"`
-	// The anyOf keyword specifies that an instance must validate against at least one of the schemas defined in the array.
+	AllOf []*Schema `protobuf:"bytes,33,rep,name=all_of,json=allOf" json:"all_of,omitempty"`
+	// The anyOf keyword specifies that an instance must validate against at least
+	// one of the schemas defined in the array.
 	//
 	// See: https://json-schema.org/draft/2020-12/json-schema-core#name-anyof
-	AnyOf []*Schema `protobuf:"bytes,34,rep,name=any_of,json=anyOf,proto3" json:"any_of,omitempty"`
-	// The oneOf keyword specifies that an instance must validate against exactly one of the schemas defined in the array.
+	AnyOf []*Schema `protobuf:"bytes,34,rep,name=any_of,json=anyOf" json:"any_of,omitempty"`
+	// The oneOf keyword specifies that an instance must validate against exactly
+	// one of the schemas defined in the array.
 	//
 	// See: https://json-schema.org/draft/2020-12/json-schema-core#name-oneof
-	OneOf []*Schema `protobuf:"bytes,35,rep,name=one_of,json=oneOf,proto3" json:"one_of,omitempty"`
-	// The not keyword specifies that an instance must not validate against the schema defined.
+	OneOf []*Schema `protobuf:"bytes,35,rep,name=one_of,json=oneOf" json:"one_of,omitempty"`
+	// The not keyword specifies that an instance must not validate against the
+	// schema defined.
 	//
 	// See: https://json-schema.org/draft/2020-12/json-schema-core#name-not
-	Not *Schema `protobuf:"bytes,36,opt,name=not,proto3" json:"not,omitempty"`
+	Not *Schema `protobuf:"bytes,36,opt,name=not" json:"not,omitempty"`
 	// The readOnly keyword specifies that a property is read-only.
 	//
-	// See: https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-validation-00#section-9.4
-	ReadOnly bool `protobuf:"varint,37,opt,name=read_only,json=readOnly,proto3" json:"read_only,omitempty"`
+	// See:
+	// https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-validation-00#section-9.4
+	ReadOnly *bool `protobuf:"varint,37,opt,name=read_only,json=readOnly" json:"read_only,omitempty"`
 	// The writeOnly keyword specifies that a property is write-only.
 	//
-	// See: https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-validation-00#section-9.4
-	WriteOnly bool `protobuf:"varint,38,opt,name=write_only,json=writeOnly,proto3" json:"write_only,omitempty"`
+	// See:
+	// https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-validation-00#section-9.4
+	WriteOnly *bool `protobuf:"varint,38,opt,name=write_only,json=writeOnly" json:"write_only,omitempty"`
 	// Examples of valid instances for the schema.
 	//
-	// See: https://json-schema.org/draft/2020-12/json-schema-validation#section-9.5
-	Examples []*structpb.Value `protobuf:"bytes,39,rep,name=examples,proto3" json:"examples,omitempty"`
+	// See:
+	// https://json-schema.org/draft/2020-12/json-schema-validation#section-9.5
+	Examples []*structpb.Value `protobuf:"bytes,39,rep,name=examples" json:"examples,omitempty"`
 	// The format keyword specifies a predefined format for the schema value.
 	//
 	// See: https://json-schema.org/draft-06/json-schema-validation#rfc.section.8
-	Format string `protobuf:"bytes,40,opt,name=format,proto3" json:"format,omitempty"`
+	Format *string `protobuf:"bytes,40,opt,name=format" json:"format,omitempty"`
 	// The deprecated keyword specifies that the schema is deprecated.
 	//
-	// See: https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-validation-00#section-9.3
-	Deprecated    bool `protobuf:"varint,41,opt,name=deprecated,proto3" json:"deprecated,omitempty"`
+	// See:
+	// https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-validation-00#section-9.3
+	Deprecated    *bool `protobuf:"varint,41,opt,name=deprecated" json:"deprecated,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1061,8 +1111,8 @@ func (x *Schema) GetExtra() map[string]*structpb.Value {
 }
 
 func (x *Schema) GetRef() string {
-	if x != nil {
-		return x.Ref
+	if x != nil && x.Ref != nil {
+		return *x.Ref
 	}
 	return ""
 }
@@ -1075,22 +1125,22 @@ func (x *Schema) GetConfig() *FieldConfiguration {
 }
 
 func (x *Schema) GetSchema() string {
-	if x != nil {
-		return x.Schema
+	if x != nil && x.Schema != nil {
+		return *x.Schema
 	}
 	return ""
 }
 
 func (x *Schema) GetTitle() string {
-	if x != nil {
-		return x.Title
+	if x != nil && x.Title != nil {
+		return *x.Title
 	}
 	return ""
 }
 
 func (x *Schema) GetPattern() string {
-	if x != nil {
-		return x.Pattern
+	if x != nil && x.Pattern != nil {
+		return *x.Pattern
 	}
 	return ""
 }
@@ -1110,85 +1160,85 @@ func (x *Schema) GetEnum() []string {
 }
 
 func (x *Schema) GetMultipleOf() float64 {
-	if x != nil {
-		return x.MultipleOf
+	if x != nil && x.MultipleOf != nil {
+		return *x.MultipleOf
 	}
 	return 0
 }
 
 func (x *Schema) GetMaximum() float64 {
-	if x != nil {
-		return x.Maximum
+	if x != nil && x.Maximum != nil {
+		return *x.Maximum
 	}
 	return 0
 }
 
 func (x *Schema) GetExclusiveMaximum() float64 {
-	if x != nil {
-		return x.ExclusiveMaximum
+	if x != nil && x.ExclusiveMaximum != nil {
+		return *x.ExclusiveMaximum
 	}
 	return 0
 }
 
 func (x *Schema) GetMinimum() float64 {
-	if x != nil {
-		return x.Minimum
+	if x != nil && x.Minimum != nil {
+		return *x.Minimum
 	}
 	return 0
 }
 
 func (x *Schema) GetExclusiveMinimum() float64 {
-	if x != nil {
-		return x.ExclusiveMinimum
+	if x != nil && x.ExclusiveMinimum != nil {
+		return *x.ExclusiveMinimum
 	}
 	return 0
 }
 
 func (x *Schema) GetMaxLength() uint64 {
-	if x != nil {
-		return x.MaxLength
+	if x != nil && x.MaxLength != nil {
+		return *x.MaxLength
 	}
 	return 0
 }
 
 func (x *Schema) GetMinLength() uint64 {
-	if x != nil {
-		return x.MinLength
+	if x != nil && x.MinLength != nil {
+		return *x.MinLength
 	}
 	return 0
 }
 
 func (x *Schema) GetMaxItems() uint64 {
-	if x != nil {
-		return x.MaxItems
+	if x != nil && x.MaxItems != nil {
+		return *x.MaxItems
 	}
 	return 0
 }
 
 func (x *Schema) GetMinItems() uint64 {
-	if x != nil {
-		return x.MinItems
+	if x != nil && x.MinItems != nil {
+		return *x.MinItems
 	}
 	return 0
 }
 
 func (x *Schema) GetUniqueItems() bool {
-	if x != nil {
-		return x.UniqueItems
+	if x != nil && x.UniqueItems != nil {
+		return *x.UniqueItems
 	}
 	return false
 }
 
 func (x *Schema) GetMaxProperties() uint64 {
-	if x != nil {
-		return x.MaxProperties
+	if x != nil && x.MaxProperties != nil {
+		return *x.MaxProperties
 	}
 	return 0
 }
 
 func (x *Schema) GetMinProperties() uint64 {
-	if x != nil {
-		return x.MinProperties
+	if x != nil && x.MinProperties != nil {
+		return *x.MinProperties
 	}
 	return 0
 }
@@ -1201,8 +1251,8 @@ func (x *Schema) GetTypes() []SchemaDataType {
 }
 
 func (x *Schema) GetDescription() string {
-	if x != nil {
-		return x.Description
+	if x != nil && x.Description != nil {
+		return *x.Description
 	}
 	return ""
 }
@@ -1264,15 +1314,15 @@ func (x *Schema) GetNot() *Schema {
 }
 
 func (x *Schema) GetReadOnly() bool {
-	if x != nil {
-		return x.ReadOnly
+	if x != nil && x.ReadOnly != nil {
+		return *x.ReadOnly
 	}
 	return false
 }
 
 func (x *Schema) GetWriteOnly() bool {
-	if x != nil {
-		return x.WriteOnly
+	if x != nil && x.WriteOnly != nil {
+		return *x.WriteOnly
 	}
 	return false
 }
@@ -1285,36 +1335,40 @@ func (x *Schema) GetExamples() []*structpb.Value {
 }
 
 func (x *Schema) GetFormat() string {
-	if x != nil {
-		return x.Format
+	if x != nil && x.Format != nil {
+		return *x.Format
 	}
 	return ""
 }
 
 func (x *Schema) GetDeprecated() bool {
-	if x != nil {
-		return x.Deprecated
+	if x != nil && x.Deprecated != nil {
+		return *x.Deprecated
 	}
 	return false
 }
 
-// Reference allows referencing other components in the OpenAPI document, both internally and externally.
-// For detailed information on the Reference object, refer to the OpenAPI Specification:
+// Reference allows referencing other components in the OpenAPI document, both
+// internally and externally. For detailed information on the Reference object,
+// refer to the OpenAPI Specification:
 // https://spec.openapis.org/oas/latest.html#reference-object
 type Reference struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// REQUIRED. The reference identifier. This MUST be in the form of a URI.
-	// For proto messages, a fully qualified message name can be used (relative links are allowed where proto file is deduced).
+	// For proto messages, a fully qualified message name can be used (relative
+	// links are allowed where proto file is deduced).
 	//
 	// Example: ".google.protobuf.Timestamp"
-	Uri string `protobuf:"bytes,1,opt,name=uri,proto3" json:"uri,omitempty"`
-	// A short summary that, by default, SHOULD override that of the referenced component.
-	// If the referenced object-type does not allow a summary field, then this field has no effect.
-	Summary string `protobuf:"bytes,2,opt,name=summary,proto3" json:"summary,omitempty"`
-	// A description that, by default, SHOULD override that of the referenced component.
-	// CommonMark syntax MAY be used for rich text representation.
-	// If the referenced object-type does not allow a description field, then this field has no effect.
-	Description   string `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
+	Uri *string `protobuf:"bytes,1,opt,name=uri" json:"uri,omitempty"`
+	// A short summary that, by default, SHOULD override that of the referenced
+	// component. If the referenced object-type does not allow a summary field,
+	// then this field has no effect.
+	Summary *string `protobuf:"bytes,2,opt,name=summary" json:"summary,omitempty"`
+	// A description that, by default, SHOULD override that of the referenced
+	// component. CommonMark syntax MAY be used for rich text representation. If
+	// the referenced object-type does not allow a description field, then this
+	// field has no effect.
+	Description   *string `protobuf:"bytes,3,opt,name=description" json:"description,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1350,57 +1404,62 @@ func (*Reference) Descriptor() ([]byte, []int) {
 }
 
 func (x *Reference) GetUri() string {
-	if x != nil {
-		return x.Uri
+	if x != nil && x.Uri != nil {
+		return *x.Uri
 	}
 	return ""
 }
 
 func (x *Reference) GetSummary() string {
-	if x != nil {
-		return x.Summary
+	if x != nil && x.Summary != nil {
+		return *x.Summary
 	}
 	return ""
 }
 
 func (x *Reference) GetDescription() string {
-	if x != nil {
-		return x.Description
+	if x != nil && x.Description != nil {
+		return *x.Description
 	}
 	return ""
 }
 
-// The Link object represents a possible design-time link for a response. The presence of a link does
-// not guarantee the caller’s ability to successfully invoke it, rather it provides a known relationship
-// and traversal mechanism between responses and other operations.
+// The Link object represents a possible design-time link for a response. The
+// presence of a link does not guarantee the caller’s ability to successfully
+// invoke it, rather it provides a known relationship and traversal mechanism
+// between responses and other operations.
 //
 // See: https://spec.openapis.org/oas/v3.1.0#link-object
 type Link struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// ref is a reference to an existing link object. If used, all other fields in this object get ignored.
-	Ref *Reference `protobuf:"bytes,1,opt,name=ref,proto3" json:"ref,omitempty"`
+	// ref is a reference to an existing link object. If used, all other fields in
+	// this object get ignored.
+	Ref *Reference `protobuf:"bytes,1,opt,name=ref" json:"ref,omitempty"`
 	// Types that are valid to be assigned to Operation:
 	//
 	//	*Link_OperationRef
 	//	*Link_OperationId
 	Operation isLink_Operation `protobuf_oneof:"operation"`
 	// A map representing parameters to pass to an operation as specified with
-	// operationId or identified via operationRef. The key is the parameter name to be used,
-	// whereas the value can be a constant or an expression to be evaluated and passed to the linked operation.
-	// The parameter name can be qualified using the parameter location [{in}.]{name} for operations that use the
-	// same parameter name in different locations (e.g. path.id).
-	Parameters map[string]*structpb.Value `protobuf:"bytes,4,rep,name=parameters,proto3" json:"parameters,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
-	// A literal value or {expression} to use as a request body when calling the target operation.
-	RequestBody *structpb.Value `protobuf:"bytes,5,opt,name=request_body,json=requestBody,proto3" json:"request_body,omitempty"`
-	// A description of the link. CommonMark syntax MAY be used for rich text representation.
-	Description string `protobuf:"bytes,6,opt,name=description,proto3" json:"description,omitempty"`
+	// operationId or identified via operationRef. The key is the parameter name
+	// to be used, whereas the value can be a constant or an expression to be
+	// evaluated and passed to the linked operation. The parameter name can be
+	// qualified using the parameter location [{in}.]{name} for operations that
+	// use the same parameter name in different locations (e.g. path.id).
+	Parameters map[string]*structpb.Value `protobuf:"bytes,4,rep,name=parameters" json:"parameters,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	// A literal value or {expression} to use as a request body when calling the
+	// target operation.
+	RequestBody *structpb.Value `protobuf:"bytes,5,opt,name=request_body,json=requestBody" json:"request_body,omitempty"`
+	// A description of the link. CommonMark syntax MAY be used for rich text
+	// representation.
+	Description *string `protobuf:"bytes,6,opt,name=description" json:"description,omitempty"`
 	// A server object to be used by the target operation.
-	Server *Server `protobuf:"bytes,7,opt,name=server,proto3" json:"server,omitempty"`
-	// extensions that start with "x-" such as "x-foo" used to describe extra functionality that is not covered by
-	// standard OpenAPI specification.
+	Server *Server `protobuf:"bytes,7,opt,name=server" json:"server,omitempty"`
+	// extensions that start with "x-" such as "x-foo" used to describe extra
+	// functionality that is not covered by standard OpenAPI specification.
 	//
 	// See: https://spec.openapis.org/oas/latest.html#specification-extensions
-	Extensions    map[string]*structpb.Value `protobuf:"bytes,8,rep,name=extensions,proto3" json:"extensions,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	Extensions    map[string]*structpb.Value `protobuf:"bytes,8,rep,name=extensions" json:"extensions,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1482,8 +1541,8 @@ func (x *Link) GetRequestBody() *structpb.Value {
 }
 
 func (x *Link) GetDescription() string {
-	if x != nil {
-		return x.Description
+	if x != nil && x.Description != nil {
+		return *x.Description
 	}
 	return ""
 }
@@ -1507,20 +1566,22 @@ type isLink_Operation interface {
 }
 
 type Link_OperationRef struct {
-	// A relative or absolute URI reference to an OAS operation. This field is mutually exclusive of the
-	// operationId field, and MUST point to an Operation Object.
-	// Relative operationRef values MAY be used to locate an existing Operation Object in the OpenAPI definition.
-	OperationRef string `protobuf:"bytes,2,opt,name=operation_ref,json=operationRef,proto3,oneof"`
+	// A relative or absolute URI reference to an OAS operation. This field is
+	// mutually exclusive of the operationId field, and MUST point to an
+	// Operation Object. Relative operationRef values MAY be used to locate an
+	// existing Operation Object in the OpenAPI definition.
+	OperationRef string `protobuf:"bytes,2,opt,name=operation_ref,json=operationRef,oneof"`
 }
 
 type Link_OperationId struct {
-	// The name of an existing, resolvable OAS operation, as defined with a unique operationId.
-	// This field is mutually exclusive of the operationRef field.
+	// The name of an existing, resolvable OAS operation, as defined with a
+	// unique operationId. This field is mutually exclusive of the operationRef
+	// field.
 	//
-	// NOTE: If a path (relative or absolute) to another service method is used, that operation ID will be substituted.
-	//
-	//	Example: ".google.protobuf.Timestamp"
-	OperationId string `protobuf:"bytes,3,opt,name=operation_id,json=operationId,proto3,oneof"`
+	// NOTE: If a path (relative or absolute) to another service method is used,
+	// that operation ID will be substituted. 	Example:
+	// ".google.protobuf.Timestamp"
+	OperationId string `protobuf:"bytes,3,opt,name=operation_id,json=operationId,oneof"`
 }
 
 func (*Link_OperationRef) isLink_Operation() {}
@@ -1530,25 +1591,29 @@ func (*Link_OperationId) isLink_Operation() {}
 // See: https://spec.openapis.org/oas/latest.html#example-object
 type Example struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// ref is a reference to an existing example object. If used, all other fields in this object get ignored.
-	Ref *Reference `protobuf:"bytes,1,opt,name=ref,proto3" json:"ref,omitempty"`
+	// ref is a reference to an existing example object. If used, all other fields
+	// in this object get ignored.
+	Ref *Reference `protobuf:"bytes,1,opt,name=ref" json:"ref,omitempty"`
 	// Short description for the example.
-	Summary string `protobuf:"bytes,2,opt,name=summary,proto3" json:"summary,omitempty"`
-	// Long description for the example. CommonMark syntax MAY be used for rich text representation.
-	Description string `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
-	// Embedded literal example. The value field and externalValue field are mutually exclusive.
-	// To represent examples of media types that cannot naturally represented in JSON or YAML,
-	// use a string value to contain the example, escaping where necessary.
-	Value *structpb.Value `protobuf:"bytes,4,opt,name=value,proto3" json:"value,omitempty"`
-	// A URI that points to the literal example. This provides the capability to reference examples that cannot easily
-	// be included in JSON or YAML documents. The value field and externalValue field are mutually exclusive.
+	Summary *string `protobuf:"bytes,2,opt,name=summary" json:"summary,omitempty"`
+	// Long description for the example. CommonMark syntax MAY be used for rich
+	// text representation.
+	Description *string `protobuf:"bytes,3,opt,name=description" json:"description,omitempty"`
+	// Embedded literal example. The value field and externalValue field are
+	// mutually exclusive. To represent examples of media types that cannot
+	// naturally represented in JSON or YAML, use a string value to contain the
+	// example, escaping where necessary.
+	Value *structpb.Value `protobuf:"bytes,4,opt,name=value" json:"value,omitempty"`
+	// A URI that points to the literal example. This provides the capability to
+	// reference examples that cannot easily be included in JSON or YAML
+	// documents. The value field and externalValue field are mutually exclusive.
 	// See the rules for resolving Relative References.
-	ExternalValue string `protobuf:"bytes,5,opt,name=external_value,json=externalValue,proto3" json:"external_value,omitempty"`
-	// extensions that start with "x-" such as "x-foo" used to describe extra functionality that is not covered by
-	// standard OpenAPI specification.
+	ExternalValue *string `protobuf:"bytes,5,opt,name=external_value,json=externalValue" json:"external_value,omitempty"`
+	// extensions that start with "x-" such as "x-foo" used to describe extra
+	// functionality that is not covered by standard OpenAPI specification.
 	//
 	// See: https://spec.openapis.org/oas/latest.html#specification-extensions
-	Extensions    map[string]*structpb.Value `protobuf:"bytes,6,rep,name=extensions,proto3" json:"extensions,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	Extensions    map[string]*structpb.Value `protobuf:"bytes,6,rep,name=extensions" json:"extensions,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1591,15 +1656,15 @@ func (x *Example) GetRef() *Reference {
 }
 
 func (x *Example) GetSummary() string {
-	if x != nil {
-		return x.Summary
+	if x != nil && x.Summary != nil {
+		return *x.Summary
 	}
 	return ""
 }
 
 func (x *Example) GetDescription() string {
-	if x != nil {
-		return x.Description
+	if x != nil && x.Description != nil {
+		return *x.Description
 	}
 	return ""
 }
@@ -1612,8 +1677,8 @@ func (x *Example) GetValue() *structpb.Value {
 }
 
 func (x *Example) GetExternalValue() string {
-	if x != nil {
-		return x.ExternalValue
+	if x != nil && x.ExternalValue != nil {
+		return *x.ExternalValue
 	}
 	return ""
 }
@@ -1630,41 +1695,48 @@ func (x *Example) GetExtensions() map[string]*structpb.Value {
 // See: https://spec.openapis.org/oas/latest.html#encoding-object
 type Encoding struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The Content-Type for encoding a specific property. Default value depends on the property type:
-	// for object - application/json;
-	// for array – the default is defined based on the inner type;
-	// for all other cases the default is application/octet-stream.
-	// The value can be a specific media type (e.g. application/json),
-	// a wildcard media type (e.g. image/*), or a comma-separated list of the two types.
-	ContentType string `protobuf:"bytes,1,opt,name=content_type,json=contentType,proto3" json:"content_type,omitempty"`
-	// A map allowing additional information to be provided as headers, for example Content-Disposition.
-	// Content-Type is described separately and SHALL be ignored in this section.
-	// This property SHALL be ignored if the request body media type is not a multipart.
-	Headers map[string]*Header `protobuf:"bytes,2,rep,name=headers,proto3" json:"headers,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
-	// Describes how a specific property value will be serialized depending on its type.
-	// See Parameter Object for details on the style property. The behavior follows the same values as query parameters,
-	// including default values. This property SHALL be ignored if the request body media type is not
+	// The Content-Type for encoding a specific property. Default value depends on
+	// the property type: for object - application/json; for array – the default
+	// is defined based on the inner type; for all other cases the default is
+	// application/octet-stream. The value can be a specific media type (e.g.
+	// application/json), a wildcard media type (e.g. image/*), or a
+	// comma-separated list of the two types.
+	ContentType *string `protobuf:"bytes,1,opt,name=content_type,json=contentType" json:"content_type,omitempty"`
+	// A map allowing additional information to be provided as headers, for
+	// example Content-Disposition. Content-Type is described separately and SHALL
+	// be ignored in this section. This property SHALL be ignored if the request
+	// body media type is not a multipart.
+	Headers map[string]*Header `protobuf:"bytes,2,rep,name=headers" json:"headers,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	// Describes how a specific property value will be serialized depending on its
+	// type. See Parameter Object for details on the style property. The behavior
+	// follows the same values as query parameters, including default values. This
+	// property SHALL be ignored if the request body media type is not
 	// application/x-www-form-urlencoded or multipart/form-data.
-	// If a value is explicitly defined, then the value of contentType (implicit or explicit) SHALL be ignored.
-	Style string `protobuf:"bytes,3,opt,name=style,proto3" json:"style,omitempty"`
-	// When this is true, property values of type array or object generate separate parameters for each value of
-	// the array, or key-value-pair of the map. For other types of properties this property has no effect.
-	// When style is form, the default value is true. For all other styles, the default value is false.
-	// This property SHALL be ignored if the request body media type is not
-	// application/x-www-form-urlencoded or multipart/form-data.
-	// If a value is explicitly defined, then the value of contentType (implicit or explicit) SHALL be ignored.
-	Explode bool `protobuf:"varint,4,opt,name=explode,proto3" json:"explode,omitempty"`
+	// If a value is explicitly defined, then the value of contentType (implicit
+	// or explicit) SHALL be ignored.
+	Style *string `protobuf:"bytes,3,opt,name=style" json:"style,omitempty"`
+	// When this is true, property values of type array or object generate
+	// separate parameters for each value of the array, or key-value-pair of the
+	// map. For other types of properties this property has no effect. When style
+	// is form, the default value is true. For all other styles, the default value
+	// is false. This property SHALL be ignored if the request body media type is
+	// not application/x-www-form-urlencoded or multipart/form-data. If a value is
+	// explicitly defined, then the value of contentType (implicit or explicit)
+	// SHALL be ignored.
+	Explode *bool `protobuf:"varint,4,opt,name=explode" json:"explode,omitempty"`
 	// Determines whether the parameter value SHOULD allow reserved characters,
-	// as defined by [RFC3986] :/?#[]@!$&'()*+,;= to be included without percent-encoding. The default value is false.
-	// This property SHALL be ignored if the request body media type is not
+	// as defined by [RFC3986] :/?#[]@!$&'()*+,;= to be included without
+	// percent-encoding. The default value is false. This property SHALL be
+	// ignored if the request body media type is not
 	// application/x-www-form-urlencoded or multipart/form-data.
-	// If a value is explicitly defined, then the value of contentType (implicit or explicit) SHALL be ignored.
-	AllowReserved bool `protobuf:"varint,5,opt,name=allow_reserved,json=allowReserved,proto3" json:"allow_reserved,omitempty"`
-	// extensions that start with "x-" such as "x-foo" used to describe extra functionality that is not covered by
-	// standard OpenAPI specification.
+	// If a value is explicitly defined, then the value of contentType (implicit
+	// or explicit) SHALL be ignored.
+	AllowReserved *bool `protobuf:"varint,5,opt,name=allow_reserved,json=allowReserved" json:"allow_reserved,omitempty"`
+	// extensions that start with "x-" such as "x-foo" used to describe extra
+	// functionality that is not covered by standard OpenAPI specification.
 	//
 	// See: https://spec.openapis.org/oas/latest.html#specification-extensions
-	Extensions    map[string]*structpb.Value `protobuf:"bytes,6,rep,name=extensions,proto3" json:"extensions,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	Extensions    map[string]*structpb.Value `protobuf:"bytes,6,rep,name=extensions" json:"extensions,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1700,8 +1772,8 @@ func (*Encoding) Descriptor() ([]byte, []int) {
 }
 
 func (x *Encoding) GetContentType() string {
-	if x != nil {
-		return x.ContentType
+	if x != nil && x.ContentType != nil {
+		return *x.ContentType
 	}
 	return ""
 }
@@ -1714,22 +1786,22 @@ func (x *Encoding) GetHeaders() map[string]*Header {
 }
 
 func (x *Encoding) GetStyle() string {
-	if x != nil {
-		return x.Style
+	if x != nil && x.Style != nil {
+		return *x.Style
 	}
 	return ""
 }
 
 func (x *Encoding) GetExplode() bool {
-	if x != nil {
-		return x.Explode
+	if x != nil && x.Explode != nil {
+		return *x.Explode
 	}
 	return false
 }
 
 func (x *Encoding) GetAllowReserved() bool {
-	if x != nil {
-		return x.AllowReserved
+	if x != nil && x.AllowReserved != nil {
+		return *x.AllowReserved
 	}
 	return false
 }
@@ -1741,34 +1813,38 @@ func (x *Encoding) GetExtensions() map[string]*structpb.Value {
 	return nil
 }
 
-// Each Media Type Object provides schema and examples for the media type identified by its key.
+// Each Media Type Object provides schema and examples for the media type
+// identified by its key.
 //
 // See: https://spec.openapis.org/oas/latest.html#media-type-object
 type MediaType struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// The schema defining the content of the request, response, or parameter.
-	Schema *Schema `protobuf:"bytes,1,opt,name=schema,proto3" json:"schema,omitempty"`
+	Schema *Schema `protobuf:"bytes,1,opt,name=schema" json:"schema,omitempty"`
 	// Example of the parameter’s potential value.
-	// The example SHOULD match the specified schema and encoding properties if present.
-	// The example field is mutually exclusive of the examples field. Furthermore,
-	// if referencing a schema that contains an example, the example value SHALL override the
-	// example provided by the schema. To represent examples of media types that cannot naturally be
-	// represented in JSON or YAML, a string value can contain the example with escaping where necessary.
-	Example *structpb.Value `protobuf:"bytes,2,opt,name=example,proto3" json:"example,omitempty"`
-	// Examples of the parameter’s potential value. Each example SHOULD contain a value in the correct format
-	// as specified in the parameter encoding. The examples field is mutually exclusive of the example field.
-	// Furthermore, if referencing a schema that contains an example, the examples value SHALL override
-	// the example provided by the schema.
-	Examples map[string]*Example `protobuf:"bytes,3,rep,name=examples,proto3" json:"examples,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
-	// A map between a property name and its encoding information. The key, being the property name,
-	// MUST exist in the schema as a property. The encoding object SHALL only apply to requestBody objects when
-	// the media type is multipart or application/x-www-form-urlencoded.
-	Encoding map[string]*Encoding `protobuf:"bytes,4,rep,name=encoding,proto3" json:"encoding,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
-	// extensions that start with "x-" such as "x-foo" used to describe extra functionality that is not covered by
-	// standard OpenAPI specification.
+	// The example SHOULD match the specified schema and encoding properties if
+	// present. The example field is mutually exclusive of the examples field.
+	// Furthermore, if referencing a schema that contains an example, the example
+	// value SHALL override the example provided by the schema. To represent
+	// examples of media types that cannot naturally be represented in JSON or
+	// YAML, a string value can contain the example with escaping where necessary.
+	Example *structpb.Value `protobuf:"bytes,2,opt,name=example" json:"example,omitempty"`
+	// Examples of the parameter’s potential value. Each example SHOULD contain a
+	// value in the correct format as specified in the parameter encoding. The
+	// examples field is mutually exclusive of the example field. Furthermore, if
+	// referencing a schema that contains an example, the examples value SHALL
+	// override the example provided by the schema.
+	Examples map[string]*Example `protobuf:"bytes,3,rep,name=examples" json:"examples,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	// A map between a property name and its encoding information. The key, being
+	// the property name, MUST exist in the schema as a property. The encoding
+	// object SHALL only apply to requestBody objects when the media type is
+	// multipart or application/x-www-form-urlencoded.
+	Encoding map[string]*Encoding `protobuf:"bytes,4,rep,name=encoding" json:"encoding,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	// extensions that start with "x-" such as "x-foo" used to describe extra
+	// functionality that is not covered by standard OpenAPI specification.
 	//
 	// See: https://spec.openapis.org/oas/latest.html#specification-extensions
-	Extensions    map[string]*structpb.Value `protobuf:"bytes,5,rep,name=extensions,proto3" json:"extensions,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	Extensions    map[string]*structpb.Value `protobuf:"bytes,5,rep,name=extensions" json:"extensions,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1838,59 +1914,71 @@ func (x *MediaType) GetExtensions() map[string]*structpb.Value {
 	return nil
 }
 
-// Header object follows the structure of the Parameter object with the following changes:
+// Header object follows the structure of the Parameter object with the
+// following changes:
 // 1. name MUST NOT be specified, it is given in the corresponding headers map.
 // 2. in MUST NOT be specified, it is implicitly in header.
-// 3. All traits that are affected by the location MUST be applicable to a location of header (for example, style).
+// 3. All traits that are affected by the location MUST be applicable to a
+// location of header (for example, style).
 //
 // See: https://spec.openapis.org/oas/v3.1.0#header-object
 type Header struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// ref is a reference to an existing header object. If used, all other fields in this object get ignored.
-	Ref *Reference `protobuf:"bytes,1,opt,name=ref,proto3" json:"ref,omitempty"`
-	// A description of the link. CommonMark syntax MAY be used for rich text representation.
-	Description string `protobuf:"bytes,2,opt,name=description,proto3" json:"description,omitempty"`
+	// ref is a reference to an existing header object. If used, all other fields
+	// in this object get ignored.
+	Ref *Reference `protobuf:"bytes,1,opt,name=ref" json:"ref,omitempty"`
+	// A description of the link. CommonMark syntax MAY be used for rich text
+	// representation.
+	Description *string `protobuf:"bytes,2,opt,name=description" json:"description,omitempty"`
 	// Determines whether this parameter is mandatory.
-	// If the parameter location is "path", this property is REQUIRED and its value MUST be true.
-	// Otherwise, the property MAY be included and its default value is false.
-	Required bool `protobuf:"varint,3,opt,name=required,proto3" json:"required,omitempty"`
-	// Specifies that a parameter is deprecated and SHOULD be transitioned out of usage. Default value is false.
-	Deprecated bool `protobuf:"varint,4,opt,name=deprecated,proto3" json:"deprecated,omitempty"`
+	// If the parameter location is "path", this property is REQUIRED and its
+	// value MUST be true. Otherwise, the property MAY be included and its default
+	// value is false.
+	Required *bool `protobuf:"varint,3,opt,name=required" json:"required,omitempty"`
+	// Specifies that a parameter is deprecated and SHOULD be transitioned out of
+	// usage. Default value is false.
+	Deprecated *bool `protobuf:"varint,4,opt,name=deprecated" json:"deprecated,omitempty"`
 	// Sets the ability to pass empty-valued parameters.
-	// This is valid only for query parameters and allows sending a parameter with an empty value.
-	// Default value is false. If style is used, and if behavior is n/a (cannot be serialized),
-	// the value of allowEmptyValue SHALL be ignored. Use of this property is NOT RECOMMENDED,
-	// as it is likely to be removed in a later revision.
-	AllowEmptyValue bool `protobuf:"varint,5,opt,name=allow_empty_value,json=allowEmptyValue,proto3" json:"allow_empty_value,omitempty"`
-	// Describes how the parameter value will be serialized depending on the type of the parameter value.
-	// Default value for header parameters is "simple".
-	Style string `protobuf:"bytes,6,opt,name=style,proto3" json:"style,omitempty"`
-	// When this is true, parameter values of type array or object generate separate parameters for each value of
-	// the array or key-value pair of the map. For other types of parameters this property has no effect.
-	// When style is form, the default value is true. For all other styles, the default value is false.
-	Explode bool `protobuf:"varint,7,opt,name=explode,proto3" json:"explode,omitempty"`
+	// This is valid only for query parameters and allows sending a parameter with
+	// an empty value. Default value is false. If style is used, and if behavior
+	// is n/a (cannot be serialized), the value of allowEmptyValue SHALL be
+	// ignored. Use of this property is NOT RECOMMENDED, as it is likely to be
+	// removed in a later revision.
+	AllowEmptyValue *bool `protobuf:"varint,5,opt,name=allow_empty_value,json=allowEmptyValue" json:"allow_empty_value,omitempty"`
+	// Describes how the parameter value will be serialized depending on the type
+	// of the parameter value. Default value for header parameters is "simple".
+	Style *string `protobuf:"bytes,6,opt,name=style" json:"style,omitempty"`
+	// When this is true, parameter values of type array or object generate
+	// separate parameters for each value of the array or key-value pair of the
+	// map. For other types of parameters this property has no effect. When style
+	// is form, the default value is true. For all other styles, the default value
+	// is false.
+	Explode *bool `protobuf:"varint,7,opt,name=explode" json:"explode,omitempty"`
 	// The schema defining the type used for the parameter.
-	Schema *Schema `protobuf:"bytes,8,opt,name=schema,proto3" json:"schema,omitempty"`
+	Schema *Schema `protobuf:"bytes,8,opt,name=schema" json:"schema,omitempty"`
 	// Example of the parameter’s potential value.
-	// The example SHOULD match the specified schema and encoding properties if present.
-	// The example field is mutually exclusive of the examples field. Furthermore,
-	// if referencing a schema that contains an example, the example value SHALL override the
-	// example provided by the schema. To represent examples of media types that cannot naturally be
-	// represented in JSON or YAML, a string value can contain the example with escaping where necessary.
-	Example *structpb.Value `protobuf:"bytes,9,opt,name=example,proto3" json:"example,omitempty"`
-	// Examples of the parameter’s potential value. Each example SHOULD contain a value in the correct format
-	// as specified in the parameter encoding. The examples field is mutually exclusive of the example field.
-	// Furthermore, if referencing a schema that contains an example, the examples value SHALL override
-	// the example provided by the schema.
-	Examples map[string]*Example `protobuf:"bytes,10,rep,name=examples,proto3" json:"examples,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	// The example SHOULD match the specified schema and encoding properties if
+	// present. The example field is mutually exclusive of the examples field.
+	// Furthermore, if referencing a schema that contains an example, the example
+	// value SHALL override the example provided by the schema. To represent
+	// examples of media types that cannot naturally be represented in JSON or
+	// YAML, a string value can contain the example with escaping where necessary.
+	Example *structpb.Value `protobuf:"bytes,9,opt,name=example" json:"example,omitempty"`
+	// Examples of the parameter’s potential value. Each example SHOULD contain a
+	// value in the correct format as specified in the parameter encoding. The
+	// examples field is mutually exclusive of the example field. Furthermore, if
+	// referencing a schema that contains an example, the examples value SHALL
+	// override the example provided by the schema.
+	Examples map[string]*Example `protobuf:"bytes,10,rep,name=examples" json:"examples,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	// A map containing the representations for the parameter.
-	// The key is the media type and the value describes it. The map MUST only contain one entry.
-	Content map[string]*MediaType `protobuf:"bytes,11,rep,name=content,proto3" json:"content,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
-	// extensions that start with "x-" such as "x-foo" used to describe extra functionality that is not covered by
-	// standard OpenAPI specification.
+	// The key is the media type and the value describes it. The map MUST only
+	// contain one entry.
+	Content map[string]*MediaType `protobuf:"bytes,11,rep,name=content" json:"content,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	// extensions that start with "x-" such as "x-foo" used to describe extra
+	// functionality that is not covered by standard OpenAPI specification.
 	//
 	// See: https://spec.openapis.org/oas/latest.html#specification-extensions
-	Extensions    map[string]*structpb.Value `protobuf:"bytes,12,rep,name=extensions,proto3" json:"extensions,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	Extensions    map[string]*structpb.Value `protobuf:"bytes,12,rep,name=extensions" json:"extensions,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1933,43 +2021,43 @@ func (x *Header) GetRef() *Reference {
 }
 
 func (x *Header) GetDescription() string {
-	if x != nil {
-		return x.Description
+	if x != nil && x.Description != nil {
+		return *x.Description
 	}
 	return ""
 }
 
 func (x *Header) GetRequired() bool {
-	if x != nil {
-		return x.Required
+	if x != nil && x.Required != nil {
+		return *x.Required
 	}
 	return false
 }
 
 func (x *Header) GetDeprecated() bool {
-	if x != nil {
-		return x.Deprecated
+	if x != nil && x.Deprecated != nil {
+		return *x.Deprecated
 	}
 	return false
 }
 
 func (x *Header) GetAllowEmptyValue() bool {
-	if x != nil {
-		return x.AllowEmptyValue
+	if x != nil && x.AllowEmptyValue != nil {
+		return *x.AllowEmptyValue
 	}
 	return false
 }
 
 func (x *Header) GetStyle() string {
-	if x != nil {
-		return x.Style
+	if x != nil && x.Style != nil {
+		return *x.Style
 	}
 	return ""
 }
 
 func (x *Header) GetExplode() bool {
-	if x != nil {
-		return x.Explode
+	if x != nil && x.Explode != nil {
+		return *x.Explode
 	}
 	return false
 }
@@ -2015,64 +2103,78 @@ func (x *Header) GetExtensions() map[string]*structpb.Value {
 // See: https://spec.openapis.org/oas/latest.html#parameter-object
 type Parameter struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// ref is a reference to an existing parameter object. If used, all other fields in this object get ignored.
-	Ref *Reference `protobuf:"bytes,1,opt,name=ref,proto3" json:"ref,omitempty"`
+	// ref is a reference to an existing parameter object. If used, all other
+	// fields in this object get ignored.
+	Ref *Reference `protobuf:"bytes,1,opt,name=ref" json:"ref,omitempty"`
 	// REQUIRED. The name of the parameter. Parameter names are case sensitive.
-	// If in is "path", the name field MUST correspond to a template expression occurring within the
-	// path field in the Paths Object. See Path Templating for further information.
-	// If in is "header" and the name field is
-	// "Accept", "Content-Type" or "Authorization", the parameter definition SHALL be ignored.
-	// For all other cases, the name corresponds to the parameter name used by the in property.
-	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	// REQUIRED. The location of the parameter. Possible values are "query", "header", "path" or "cookie".
-	In string `protobuf:"bytes,3,opt,name=in,proto3" json:"in,omitempty"`
-	// A description of the link. CommonMark syntax MAY be used for rich text representation.
-	Description string `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
+	// If in is "path", the name field MUST correspond to a template expression
+	// occurring within the path field in the Paths Object. See Path Templating
+	// for further information. If in is "header" and the name field is "Accept",
+	// "Content-Type" or "Authorization", the parameter definition SHALL be
+	// ignored. For all other cases, the name corresponds to the parameter name
+	// used by the in property.
+	Name *string `protobuf:"bytes,2,opt,name=name" json:"name,omitempty"`
+	// REQUIRED. The location of the parameter. Possible values are "query",
+	// "header", "path" or "cookie".
+	In *string `protobuf:"bytes,3,opt,name=in" json:"in,omitempty"`
+	// A description of the link. CommonMark syntax MAY be used for rich text
+	// representation.
+	Description *string `protobuf:"bytes,4,opt,name=description" json:"description,omitempty"`
 	// Determines whether this parameter is mandatory.
-	// If the parameter location is "path", this property is REQUIRED and its value MUST be true.
-	// Otherwise, the property MAY be included and its default value is false.
-	Required bool `protobuf:"varint,5,opt,name=required,proto3" json:"required,omitempty"`
-	// Specifies that a parameter is deprecated and SHOULD be transitioned out of usage. Default value is false.
-	Deprecated bool `protobuf:"varint,6,opt,name=deprecated,proto3" json:"deprecated,omitempty"`
+	// If the parameter location is "path", this property is REQUIRED and its
+	// value MUST be true. Otherwise, the property MAY be included and its default
+	// value is false.
+	Required *bool `protobuf:"varint,5,opt,name=required" json:"required,omitempty"`
+	// Specifies that a parameter is deprecated and SHOULD be transitioned out of
+	// usage. Default value is false.
+	Deprecated *bool `protobuf:"varint,6,opt,name=deprecated" json:"deprecated,omitempty"`
 	// Sets the ability to pass empty-valued parameters.
-	// This is valid only for query parameters and allows sending a parameter with an empty value.
-	// Default value is false. If style is used, and if behavior is n/a (cannot be serialized),
-	// the value of allowEmptyValue SHALL be ignored. Use of this property is NOT RECOMMENDED,
-	// as it is likely to be removed in a later revision.
-	AllowEmptyValue bool `protobuf:"varint,7,opt,name=allow_empty_value,json=allowEmptyValue,proto3" json:"allow_empty_value,omitempty"`
-	// Describes how the parameter value will be serialized depending on the type of the parameter value.
-	// Default value for header parameters is "simple".
-	Style string `protobuf:"bytes,8,opt,name=style,proto3" json:"style,omitempty"`
-	// When this is true, parameter values of type array or object generate separate parameters for each value of
-	// the array or key-value pair of the map. For other types of parameters this property has no effect.
-	// When style is form, the default value is true. For all other styles, the default value is false.
-	Explode bool `protobuf:"varint,9,opt,name=explode,proto3" json:"explode,omitempty"`
-	// Determines whether the parameter value SHOULD allow reserved characters, as defined by [RFC3986]
+	// This is valid only for query parameters and allows sending a parameter with
+	// an empty value. Default value is false. If style is used, and if behavior
+	// is n/a (cannot be serialized), the value of allowEmptyValue SHALL be
+	// ignored. Use of this property is NOT RECOMMENDED, as it is likely to be
+	// removed in a later revision.
+	AllowEmptyValue *bool `protobuf:"varint,7,opt,name=allow_empty_value,json=allowEmptyValue" json:"allow_empty_value,omitempty"`
+	// Describes how the parameter value will be serialized depending on the type
+	// of the parameter value. Default value for header parameters is "simple".
+	Style *string `protobuf:"bytes,8,opt,name=style" json:"style,omitempty"`
+	// When this is true, parameter values of type array or object generate
+	// separate parameters for each value of the array or key-value pair of the
+	// map. For other types of parameters this property has no effect. When style
+	// is form, the default value is true. For all other styles, the default value
+	// is false.
+	Explode *bool `protobuf:"varint,9,opt,name=explode" json:"explode,omitempty"`
+	// Determines whether the parameter value SHOULD allow reserved characters, as
+	// defined by [RFC3986]
 	// :/?#[]@!$&'()*+,;= to be included without percent-encoding.
-	// This property only applies to parameters with an in value of query. The default value is false.
-	AllowReserved bool `protobuf:"varint,10,opt,name=allow_reserved,json=allowReserved,proto3" json:"allow_reserved,omitempty"`
+	// This property only applies to parameters with an in value of query. The
+	// default value is false.
+	AllowReserved *bool `protobuf:"varint,10,opt,name=allow_reserved,json=allowReserved" json:"allow_reserved,omitempty"`
 	// The schema defining the type used for the parameter.
-	Schema *Schema `protobuf:"bytes,11,opt,name=schema,proto3" json:"schema,omitempty"`
+	Schema *Schema `protobuf:"bytes,11,opt,name=schema" json:"schema,omitempty"`
 	// Example of the parameter’s potential value.
-	// The example SHOULD match the specified schema and encoding properties if present.
-	// The example field is mutually exclusive of the examples field. Furthermore,
-	// if referencing a schema that contains an example, the example value SHALL override the
-	// example provided by the schema. To represent examples of media types that cannot naturally be
-	// represented in JSON or YAML, a string value can contain the example with escaping where necessary.
-	Example *structpb.Value `protobuf:"bytes,12,opt,name=example,proto3" json:"example,omitempty"`
-	// Examples of the parameter’s potential value. Each example SHOULD contain a value in the correct format
-	// as specified in the parameter encoding. The examples field is mutually exclusive of the example field.
-	// Furthermore, if referencing a schema that contains an example, the examples value SHALL override
-	// the example provided by the schema.
-	Examples map[string]*Example `protobuf:"bytes,13,rep,name=examples,proto3" json:"examples,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	// The example SHOULD match the specified schema and encoding properties if
+	// present. The example field is mutually exclusive of the examples field.
+	// Furthermore, if referencing a schema that contains an example, the example
+	// value SHALL override the example provided by the schema. To represent
+	// examples of media types that cannot naturally be represented in JSON or
+	// YAML, a string value can contain the example with escaping where necessary.
+	Example *structpb.Value `protobuf:"bytes,12,opt,name=example" json:"example,omitempty"`
+	// Examples of the parameter’s potential value. Each example SHOULD contain a
+	// value in the correct format as specified in the parameter encoding. The
+	// examples field is mutually exclusive of the example field. Furthermore, if
+	// referencing a schema that contains an example, the examples value SHALL
+	// override the example provided by the schema.
+	Examples map[string]*Example `protobuf:"bytes,13,rep,name=examples" json:"examples,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	// A map containing the representations for the parameter.
-	// The key is the media type and the value describes it. The map MUST only contain one entry.
-	Content map[string]*MediaType `protobuf:"bytes,14,rep,name=content,proto3" json:"content,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
-	// extensions that start with "x-" such as "x-foo" used to describe extra functionality that is not covered by
-	// standard OpenAPI specification.
+	// The key is the media type and the value describes it. The map MUST only
+	// contain one entry.
+	Content map[string]*MediaType `protobuf:"bytes,14,rep,name=content" json:"content,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	// extensions that start with "x-" such as "x-foo" used to describe extra
+	// functionality that is not covered by standard OpenAPI specification.
 	//
 	// See: https://spec.openapis.org/oas/latest.html#specification-extensions
-	Extensions    map[string]*structpb.Value `protobuf:"bytes,15,rep,name=extensions,proto3" json:"extensions,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	Extensions    map[string]*structpb.Value `protobuf:"bytes,15,rep,name=extensions" json:"extensions,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2115,64 +2217,64 @@ func (x *Parameter) GetRef() *Reference {
 }
 
 func (x *Parameter) GetName() string {
-	if x != nil {
-		return x.Name
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
 
 func (x *Parameter) GetIn() string {
-	if x != nil {
-		return x.In
+	if x != nil && x.In != nil {
+		return *x.In
 	}
 	return ""
 }
 
 func (x *Parameter) GetDescription() string {
-	if x != nil {
-		return x.Description
+	if x != nil && x.Description != nil {
+		return *x.Description
 	}
 	return ""
 }
 
 func (x *Parameter) GetRequired() bool {
-	if x != nil {
-		return x.Required
+	if x != nil && x.Required != nil {
+		return *x.Required
 	}
 	return false
 }
 
 func (x *Parameter) GetDeprecated() bool {
-	if x != nil {
-		return x.Deprecated
+	if x != nil && x.Deprecated != nil {
+		return *x.Deprecated
 	}
 	return false
 }
 
 func (x *Parameter) GetAllowEmptyValue() bool {
-	if x != nil {
-		return x.AllowEmptyValue
+	if x != nil && x.AllowEmptyValue != nil {
+		return *x.AllowEmptyValue
 	}
 	return false
 }
 
 func (x *Parameter) GetStyle() string {
-	if x != nil {
-		return x.Style
+	if x != nil && x.Style != nil {
+		return *x.Style
 	}
 	return ""
 }
 
 func (x *Parameter) GetExplode() bool {
-	if x != nil {
-		return x.Explode
+	if x != nil && x.Explode != nil {
+		return *x.Explode
 	}
 	return false
 }
 
 func (x *Parameter) GetAllowReserved() bool {
-	if x != nil {
-		return x.AllowReserved
+	if x != nil && x.AllowReserved != nil {
+		return *x.AllowReserved
 	}
 	return false
 }
@@ -2214,27 +2316,32 @@ func (x *Parameter) GetExtensions() map[string]*structpb.Value {
 
 type Response struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// ref is a reference to an existing response object. If used, all other fields in this object get ignored.
-	Ref *Reference `protobuf:"bytes,1,opt,name=ref,proto3" json:"ref,omitempty"`
-	// A description which by default SHOULD override that of the referenced component.
-	// CommonMark syntax MAY be used for rich text representation.
-	// If the referenced object-type does not allow a description field, then this field has no effect.
-	Description string `protobuf:"bytes,2,opt,name=description,proto3" json:"description,omitempty"`
-	// Maps a header name to its definition. [RFC7230] states header names are case insensitive.
-	// If a response header is defined with the name "Content-Type", it SHALL be ignored.
-	Headers map[string]*Header `protobuf:"bytes,3,rep,name=headers,proto3" json:"headers,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	// ref is a reference to an existing response object. If used, all other
+	// fields in this object get ignored.
+	Ref *Reference `protobuf:"bytes,1,opt,name=ref" json:"ref,omitempty"`
+	// A description which by default SHOULD override that of the referenced
+	// component. CommonMark syntax MAY be used for rich text representation. If
+	// the referenced object-type does not allow a description field, then this
+	// field has no effect.
+	Description *string `protobuf:"bytes,2,opt,name=description" json:"description,omitempty"`
+	// Maps a header name to its definition. [RFC7230] states header names are
+	// case insensitive. If a response header is defined with the name
+	// "Content-Type", it SHALL be ignored.
+	Headers map[string]*Header `protobuf:"bytes,3,rep,name=headers" json:"headers,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	// A map containing descriptions of potential response payloads.
 	// The key is a media type or media type range and the value describes it.
-	// For responses that match multiple keys, only the most specific key is applicable. e.g. text/plain overrides text/*
-	Content map[string]*MediaType `protobuf:"bytes,4,rep,name=content,proto3" json:"content,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
-	// A map of operations links that can be followed from the response. The key of the map is a short name for the link,
-	// following the naming constraints of the names for Component Objects.
-	Links map[string]*Link `protobuf:"bytes,5,rep,name=links,proto3" json:"links,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
-	// extensions that start with "x-" such as "x-foo" used to describe extra functionality that is not covered by
-	// standard OpenAPI specification.
+	// For responses that match multiple keys, only the most specific key is
+	// applicable. e.g. text/plain overrides text/*
+	Content map[string]*MediaType `protobuf:"bytes,4,rep,name=content" json:"content,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	// A map of operations links that can be followed from the response. The key
+	// of the map is a short name for the link, following the naming constraints
+	// of the names for Component Objects.
+	Links map[string]*Link `protobuf:"bytes,5,rep,name=links" json:"links,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	// extensions that start with "x-" such as "x-foo" used to describe extra
+	// functionality that is not covered by standard OpenAPI specification.
 	//
 	// See: https://spec.openapis.org/oas/latest.html#specification-extensions
-	Extensions    map[string]*structpb.Value `protobuf:"bytes,6,rep,name=extensions,proto3" json:"extensions,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	Extensions    map[string]*structpb.Value `protobuf:"bytes,6,rep,name=extensions" json:"extensions,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2277,8 +2384,8 @@ func (x *Response) GetRef() *Reference {
 }
 
 func (x *Response) GetDescription() string {
-	if x != nil {
-		return x.Description
+	if x != nil && x.Description != nil {
+		return *x.Description
 	}
 	return ""
 }
@@ -2316,21 +2423,25 @@ func (x *Response) GetExtensions() map[string]*structpb.Value {
 // See: https://spec.openapis.org/oas/latest.html#request-body-object
 type RequestBody struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// ref is a reference to an existing request body object. If used, all other fields in this object get ignored.
-	Ref *Reference `protobuf:"bytes,1,opt,name=ref,proto3" json:"ref,omitempty"`
-	// A brief description of the request body. This could contain examples of use.
-	// CommonMark syntax MAY be used for rich text representation.
-	Description string `protobuf:"bytes,2,opt,name=description,proto3" json:"description,omitempty"`
-	// REQUIRED. The content of the request body. The key is a media type or media type range and the value describes it.
-	// For requests that match multiple keys, only the most specific key is applicable. e.g. text/plain overrides text/*
-	Content map[string]*MediaType `protobuf:"bytes,3,rep,name=content,proto3" json:"content,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
-	// Determines if the request body is required in the request. Defaults to false.
-	Required bool `protobuf:"varint,4,opt,name=required,proto3" json:"required,omitempty"`
-	// extensions that start with "x-" such as "x-foo" used to describe extra functionality that is not covered by
-	// standard OpenAPI specification.
+	// ref is a reference to an existing request body object. If used, all other
+	// fields in this object get ignored.
+	Ref *Reference `protobuf:"bytes,1,opt,name=ref" json:"ref,omitempty"`
+	// A brief description of the request body. This could contain examples of
+	// use. CommonMark syntax MAY be used for rich text representation.
+	Description *string `protobuf:"bytes,2,opt,name=description" json:"description,omitempty"`
+	// REQUIRED. The content of the request body. The key is a media type or media
+	// type range and the value describes it. For requests that match multiple
+	// keys, only the most specific key is applicable. e.g. text/plain overrides
+	// text/*
+	Content map[string]*MediaType `protobuf:"bytes,3,rep,name=content" json:"content,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	// Determines if the request body is required in the request. Defaults to
+	// false.
+	Required *bool `protobuf:"varint,4,opt,name=required" json:"required,omitempty"`
+	// extensions that start with "x-" such as "x-foo" used to describe extra
+	// functionality that is not covered by standard OpenAPI specification.
 	//
 	// See: https://spec.openapis.org/oas/latest.html#specification-extensions
-	Extensions    map[string]*structpb.Value `protobuf:"bytes,5,rep,name=extensions,proto3" json:"extensions,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	Extensions    map[string]*structpb.Value `protobuf:"bytes,5,rep,name=extensions" json:"extensions,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2373,8 +2484,8 @@ func (x *RequestBody) GetRef() *Reference {
 }
 
 func (x *RequestBody) GetDescription() string {
-	if x != nil {
-		return x.Description
+	if x != nil && x.Description != nil {
+		return *x.Description
 	}
 	return ""
 }
@@ -2387,8 +2498,8 @@ func (x *RequestBody) GetContent() map[string]*MediaType {
 }
 
 func (x *RequestBody) GetRequired() bool {
-	if x != nil {
-		return x.Required
+	if x != nil && x.Required != nil {
+		return *x.Required
 	}
 	return false
 }
@@ -2405,36 +2516,41 @@ func (x *RequestBody) GetExtensions() map[string]*structpb.Value {
 // See: https://spec.openapis.org/oas/latest.html#security-scheme-object
 type SecurityScheme struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// ref is a reference to an existing response object. If used, all other fields in this object get ignored.
-	Ref *Reference `protobuf:"bytes,1,opt,name=ref,proto3" json:"ref,omitempty"`
+	// ref is a reference to an existing response object. If used, all other
+	// fields in this object get ignored.
+	Ref *Reference `protobuf:"bytes,1,opt,name=ref" json:"ref,omitempty"`
 	// REQUIRED. The type of the security scheme.
 	// Valid values are "apiKey", "http", "mutualTLS", "oauth2", "openIdConnect".
-	Type string `protobuf:"bytes,2,opt,name=type,proto3" json:"type,omitempty"`
-	// A brief description of the request body. This could contain examples of use.
-	// CommonMark syntax MAY be used for rich text representation.
-	Description string `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
+	Type *string `protobuf:"bytes,2,opt,name=type" json:"type,omitempty"`
+	// A brief description of the request body. This could contain examples of
+	// use. CommonMark syntax MAY be used for rich text representation.
+	Description *string `protobuf:"bytes,3,opt,name=description" json:"description,omitempty"`
 	// REQUIRED. The name of the header, query or cookie parameter to be used.
-	Name string `protobuf:"bytes,4,opt,name=name,proto3" json:"name,omitempty"`
-	// REQUIRED. The location of the API key. Valid values are "query", "header" or "cookie".
-	In string `protobuf:"bytes,5,opt,name=in,proto3" json:"in,omitempty"`
+	Name *string `protobuf:"bytes,4,opt,name=name" json:"name,omitempty"`
+	// REQUIRED. The location of the API key. Valid values are "query", "header"
+	// or "cookie".
+	In *string `protobuf:"bytes,5,opt,name=in" json:"in,omitempty"`
 	// REQUIRED. The name of the HTTP Authorization scheme to be used in the
 	// Authorization header as defined in [RFC7235].
-	// The values used SHOULD be registered in the IANA Authentication Scheme registry.
-	Scheme string `protobuf:"bytes,6,opt,name=scheme,proto3" json:"scheme,omitempty"`
+	// The values used SHOULD be registered in the IANA Authentication Scheme
+	// registry.
+	Scheme *string `protobuf:"bytes,6,opt,name=scheme" json:"scheme,omitempty"`
 	// A hint to the client to identify how the bearer token is formatted.
 	// Bearer tokens are usually generated by an authorization server,
 	// so this information is primarily for documentation purposes.
-	BearerFormat string `protobuf:"bytes,7,opt,name=bearer_format,json=bearerFormat,proto3" json:"bearer_format,omitempty"`
-	// REQUIRED. An object containing configuration information for the flow types supported.
-	Flows *SecurityScheme_OAuthFlows `protobuf:"bytes,8,opt,name=flows,proto3" json:"flows,omitempty"`
+	BearerFormat *string `protobuf:"bytes,7,opt,name=bearer_format,json=bearerFormat" json:"bearer_format,omitempty"`
+	// REQUIRED. An object containing configuration information for the flow types
+	// supported.
+	Flows *SecurityScheme_OAuthFlows `protobuf:"bytes,8,opt,name=flows" json:"flows,omitempty"`
 	// REQUIRED. OpenId Connect URL to discover OAuth2 configuration values.
-	// This MUST be in the form of a URL. The OpenID Connect standard requires the use of TLS.
-	OpenIdConnectUrl string `protobuf:"bytes,9,opt,name=open_id_connect_url,json=openIdConnectUrl,proto3" json:"open_id_connect_url,omitempty"`
-	// extensions that start with "x-" such as "x-foo" used to describe extra functionality that is not covered by
-	// standard OpenAPI specification.
+	// This MUST be in the form of a URL. The OpenID Connect standard requires the
+	// use of TLS.
+	OpenIdConnectUrl *string `protobuf:"bytes,9,opt,name=open_id_connect_url,json=openIdConnectUrl" json:"open_id_connect_url,omitempty"`
+	// extensions that start with "x-" such as "x-foo" used to describe extra
+	// functionality that is not covered by standard OpenAPI specification.
 	//
 	// See: https://spec.openapis.org/oas/latest.html#specification-extensions
-	Extensions    map[string]*structpb.Value `protobuf:"bytes,10,rep,name=extensions,proto3" json:"extensions,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	Extensions    map[string]*structpb.Value `protobuf:"bytes,10,rep,name=extensions" json:"extensions,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2477,43 +2593,43 @@ func (x *SecurityScheme) GetRef() *Reference {
 }
 
 func (x *SecurityScheme) GetType() string {
-	if x != nil {
-		return x.Type
+	if x != nil && x.Type != nil {
+		return *x.Type
 	}
 	return ""
 }
 
 func (x *SecurityScheme) GetDescription() string {
-	if x != nil {
-		return x.Description
+	if x != nil && x.Description != nil {
+		return *x.Description
 	}
 	return ""
 }
 
 func (x *SecurityScheme) GetName() string {
-	if x != nil {
-		return x.Name
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
 
 func (x *SecurityScheme) GetIn() string {
-	if x != nil {
-		return x.In
+	if x != nil && x.In != nil {
+		return *x.In
 	}
 	return ""
 }
 
 func (x *SecurityScheme) GetScheme() string {
-	if x != nil {
-		return x.Scheme
+	if x != nil && x.Scheme != nil {
+		return *x.Scheme
 	}
 	return ""
 }
 
 func (x *SecurityScheme) GetBearerFormat() string {
-	if x != nil {
-		return x.BearerFormat
+	if x != nil && x.BearerFormat != nil {
+		return *x.BearerFormat
 	}
 	return ""
 }
@@ -2526,8 +2642,8 @@ func (x *SecurityScheme) GetFlows() *SecurityScheme_OAuthFlows {
 }
 
 func (x *SecurityScheme) GetOpenIdConnectUrl() string {
-	if x != nil {
-		return x.OpenIdConnectUrl
+	if x != nil && x.OpenIdConnectUrl != nil {
+		return *x.OpenIdConnectUrl
 	}
 	return ""
 }
@@ -2541,59 +2657,65 @@ func (x *SecurityScheme) GetExtensions() map[string]*structpb.Value {
 
 // Describes a single API operation on a path.
 //
-// NOTE: this operation object is a partial implementation of the OpenAPI Operation object.
-// Fields overridden here will only impact this method but will be used for all different
-// HTTP bindings of the same method.
+// NOTE: this operation object is a partial implementation of the OpenAPI
+// Operation object. Fields overridden here will only impact this method but
+// will be used for all different HTTP bindings of the same method.
 //
 // See: https://spec.openapis.org/oas/v3.1.0#operation-object
 type Operation struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// A list of tags for API documentation control.
-	// Tags can be used for logical grouping of operations by resources or any other qualifier.
-	Tags []string `protobuf:"bytes,1,rep,name=tags,proto3" json:"tags,omitempty"`
+	// Tags can be used for logical grouping of operations by resources or any
+	// other qualifier.
+	Tags []string `protobuf:"bytes,1,rep,name=tags" json:"tags,omitempty"`
 	// A short summary of what the operation does.
 	//
 	// Default is the proto docstring for this method.
-	Summary string `protobuf:"bytes,2,opt,name=summary,proto3" json:"summary,omitempty"`
-	// A verbose explanation of the operation behavior. CommonMark syntax MAY be used for rich text representation.
-	Description string `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
+	Summary *string `protobuf:"bytes,2,opt,name=summary" json:"summary,omitempty"`
+	// A verbose explanation of the operation behavior. CommonMark syntax MAY be
+	// used for rich text representation.
+	Description *string `protobuf:"bytes,3,opt,name=description" json:"description,omitempty"`
 	// Additional external documentation for this operation.
 	//
 	// See: https://spec.openapis.org/oas/v3.1.0#external-documentation-object
-	ExternalDocs *ExternalDocumentation `protobuf:"bytes,4,opt,name=external_docs,json=externalDocs,proto3" json:"external_docs,omitempty"`
+	ExternalDocs *ExternalDocumentation `protobuf:"bytes,4,opt,name=external_docs,json=externalDocs" json:"external_docs,omitempty"`
 	// Override the operation ID, if left unset, a default value will be provided.
-	OperationId string `protobuf:"bytes,5,opt,name=operation_id,json=operationId,proto3" json:"operation_id,omitempty"`
-	// A list of parameters that are applicable for this operation. Note that path and query parameters
-	// get populated by the generator and will override any overlapping keys.
+	OperationId *string `protobuf:"bytes,5,opt,name=operation_id,json=operationId" json:"operation_id,omitempty"`
+	// A list of parameters that are applicable for this operation. Note that path
+	// and query parameters get populated by the generator and will override any
+	// overlapping keys.
 	//
-	// You might use this to define headers and values that are not defined on the request payload.
-	Parameters []*Parameter `protobuf:"bytes,6,rep,name=parameters,proto3" json:"parameters,omitempty"`
+	// You might use this to define headers and values that are not defined on the
+	// request payload.
+	Parameters []*Parameter `protobuf:"bytes,6,rep,name=parameters" json:"parameters,omitempty"`
 	// The list of possible responses returned from executing this operation.
 	//
-	// NOTE: This list is additive meaning that it will override any generated response from the
-	// proto files.
-	Responses map[string]*Response `protobuf:"bytes,7,rep,name=responses,proto3" json:"responses,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	// NOTE: This list is additive meaning that it will override any generated
+	// response from the proto files.
+	Responses map[string]*Response `protobuf:"bytes,7,rep,name=responses" json:"responses,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	// Declares this operation to be deprecated.
-	// Consumers SHOULD refrain from usage of the declared operation. Default value is false.
-	Deprecated bool `protobuf:"varint,11,opt,name=deprecated,proto3" json:"deprecated,omitempty"`
+	// Consumers SHOULD refrain from usage of the declared operation. Default
+	// value is false.
+	Deprecated *bool `protobuf:"varint,11,opt,name=deprecated" json:"deprecated,omitempty"`
 	// A declaration of which security mechanisms can be used for this operation.
-	// The list of values includes alternative security requirement objects that can be used.
-	// Only one of the security requirement objects need to be satisfied to authorize a request.
-	// To make security optional, an empty security requirement ({}) can be included in the array.
-	// This definition overrides any declared top-level security.
-	// To remove a top-level security declaration, an empty array can be used.
-	Security []*SecurityRequirement `protobuf:"bytes,12,rep,name=security,proto3" json:"security,omitempty"`
+	// The list of values includes alternative security requirement objects that
+	// can be used. Only one of the security requirement objects need to be
+	// satisfied to authorize a request. To make security optional, an empty
+	// security requirement ({}) can be included in the array. This definition
+	// overrides any declared top-level security. To remove a top-level security
+	// declaration, an empty array can be used.
+	Security []*SecurityRequirement `protobuf:"bytes,12,rep,name=security" json:"security,omitempty"`
 	// An alternative server array to service this operation.
-	// If an alternative server object is specified at the Path Item Object or Root level,
-	// it will be overridden by this value.
-	Servers []*Server `protobuf:"bytes,13,rep,name=servers,proto3" json:"servers,omitempty"`
-	// extensions that start with "x-" such as "x-foo" used to describe extra functionality that is not covered by
-	// standard OpenAPI specification.
+	// If an alternative server object is specified at the Path Item Object or
+	// Root level, it will be overridden by this value.
+	Servers []*Server `protobuf:"bytes,13,rep,name=servers" json:"servers,omitempty"`
+	// extensions that start with "x-" such as "x-foo" used to describe extra
+	// functionality that is not covered by standard OpenAPI specification.
 	//
 	// See: https://spec.openapis.org/oas/latest.html#specification-extensions
-	Extensions map[string]*structpb.Value `protobuf:"bytes,14,rep,name=extensions,proto3" json:"extensions,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	Extensions map[string]*structpb.Value `protobuf:"bytes,14,rep,name=extensions" json:"extensions,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	// Configuration for operation
-	Config        *OperationConfiguration `protobuf:"bytes,15,opt,name=config,proto3" json:"config,omitempty"`
+	Config        *OperationConfiguration `protobuf:"bytes,15,opt,name=config" json:"config,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2636,15 +2758,15 @@ func (x *Operation) GetTags() []string {
 }
 
 func (x *Operation) GetSummary() string {
-	if x != nil {
-		return x.Summary
+	if x != nil && x.Summary != nil {
+		return *x.Summary
 	}
 	return ""
 }
 
 func (x *Operation) GetDescription() string {
-	if x != nil {
-		return x.Description
+	if x != nil && x.Description != nil {
+		return *x.Description
 	}
 	return ""
 }
@@ -2657,8 +2779,8 @@ func (x *Operation) GetExternalDocs() *ExternalDocumentation {
 }
 
 func (x *Operation) GetOperationId() string {
-	if x != nil {
-		return x.OperationId
+	if x != nil && x.OperationId != nil {
+		return *x.OperationId
 	}
 	return ""
 }
@@ -2678,8 +2800,8 @@ func (x *Operation) GetResponses() map[string]*Response {
 }
 
 func (x *Operation) GetDeprecated() bool {
-	if x != nil {
-		return x.Deprecated
+	if x != nil && x.Deprecated != nil {
+		return *x.Deprecated
 	}
 	return false
 }
@@ -2714,16 +2836,16 @@ func (x *Operation) GetConfig() *OperationConfiguration {
 
 type OperationConfiguration struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// Set 2xx if your endpoint returns > 200 and < 300 http code (e.g. 201 accepted).
-	// Default response, if enabled, will have specified code.
-	// Default: "200"
-	DefaultResponseCode string `protobuf:"bytes,1,opt,name=default_response_code,json=defaultResponseCode,proto3" json:"default_response_code,omitempty"`
+	// Set 2xx if your endpoint returns > 200 and < 300 http code (e.g. 201
+	// accepted). Default response, if enabled, will have specified code. Default:
+	// "200"
+	DefaultResponseCode *string `protobuf:"bytes,1,opt,name=default_response_code,json=defaultResponseCode" json:"default_response_code,omitempty"`
 	// Disable default response at operation level.
 	// Not necessary, if similar plugin option enabled globally
-	DisableDefaultResponse bool `protobuf:"varint,2,opt,name=disable_default_response,json=disableDefaultResponse,proto3" json:"disable_default_response,omitempty"`
+	DisableDefaultResponse *bool `protobuf:"varint,2,opt,name=disable_default_response,json=disableDefaultResponse" json:"disable_default_response,omitempty"`
 	// Disable default error response at operation level.
 	// Not necessary, if similar plugin option enabled globally
-	DisableDefaultErrorResponse bool `protobuf:"varint,3,opt,name=disable_default_error_response,json=disableDefaultErrorResponse,proto3" json:"disable_default_error_response,omitempty"`
+	DisableDefaultErrorResponse *bool `protobuf:"varint,3,opt,name=disable_default_error_response,json=disableDefaultErrorResponse" json:"disable_default_error_response,omitempty"`
 	unknownFields               protoimpl.UnknownFields
 	sizeCache                   protoimpl.SizeCache
 }
@@ -2759,46 +2881,47 @@ func (*OperationConfiguration) Descriptor() ([]byte, []int) {
 }
 
 func (x *OperationConfiguration) GetDefaultResponseCode() string {
-	if x != nil {
-		return x.DefaultResponseCode
+	if x != nil && x.DefaultResponseCode != nil {
+		return *x.DefaultResponseCode
 	}
 	return ""
 }
 
 func (x *OperationConfiguration) GetDisableDefaultResponse() bool {
-	if x != nil {
-		return x.DisableDefaultResponse
+	if x != nil && x.DisableDefaultResponse != nil {
+		return *x.DisableDefaultResponse
 	}
 	return false
 }
 
 func (x *OperationConfiguration) GetDisableDefaultErrorResponse() bool {
-	if x != nil {
-		return x.DisableDefaultErrorResponse
+	if x != nil && x.DisableDefaultErrorResponse != nil {
+		return *x.DisableDefaultErrorResponse
 	}
 	return false
 }
 
-// Holds a set of reusable objects for different aspects of the OAS. All objects defined within the
-// components object will have no effect on the API unless they are explicitly referenced from properties
-// outside the components object.
+// Holds a set of reusable objects for different aspects of the OAS. All objects
+// defined within the components object will have no effect on the API unless
+// they are explicitly referenced from properties outside the components object.
 //
 // See: https://spec.openapis.org/oas/latest.html#components-object
 type Components struct {
 	state           protoimpl.MessageState     `protogen:"open.v1"`
-	Schemas         map[string]*Schema         `protobuf:"bytes,1,rep,name=schemas,proto3" json:"schemas,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
-	Responses       map[string]*Response       `protobuf:"bytes,2,rep,name=responses,proto3" json:"responses,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
-	Parameters      map[string]*Parameter      `protobuf:"bytes,3,rep,name=parameters,proto3" json:"parameters,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
-	Examples        map[string]*Example        `protobuf:"bytes,4,rep,name=examples,proto3" json:"examples,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
-	RequestBodies   map[string]*RequestBody    `protobuf:"bytes,5,rep,name=request_bodies,json=requestBodies,proto3" json:"request_bodies,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
-	Headers         map[string]*Header         `protobuf:"bytes,6,rep,name=headers,proto3" json:"headers,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
-	SecuritySchemes map[string]*SecurityScheme `protobuf:"bytes,7,rep,name=security_schemes,json=securitySchemes,proto3" json:"security_schemes,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
-	Links           map[string]*Link           `protobuf:"bytes,8,rep,name=links,proto3" json:"links,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
-	// extensions that start with "x-" such as "x-foo" used to describe extra functionality that is not covered by
-	// standard OpenAPI specification.
+	Schemas         map[string]*Schema         `protobuf:"bytes,1,rep,name=schemas" json:"schemas,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	Responses       map[string]*Response       `protobuf:"bytes,2,rep,name=responses" json:"responses,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	Parameters      map[string]*Parameter      `protobuf:"bytes,3,rep,name=parameters" json:"parameters,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	Examples        map[string]*Example        `protobuf:"bytes,4,rep,name=examples" json:"examples,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	RequestBodies   map[string]*RequestBody    `protobuf:"bytes,5,rep,name=request_bodies,json=requestBodies" json:"request_bodies,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	Headers         map[string]*Header         `protobuf:"bytes,6,rep,name=headers" json:"headers,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	SecuritySchemes map[string]*SecurityScheme `protobuf:"bytes,7,rep,name=security_schemes,json=securitySchemes" json:"security_schemes,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	Links           map[string]*Link           `protobuf:"bytes,8,rep,name=links" json:"links,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	// items explicitly at the moment.
+	// extensions that start with "x-" such as "x-foo" used to describe extra
+	// functionality that is not covered by standard OpenAPI specification.
 	//
 	// See: https://spec.openapis.org/oas/latest.html#specification-extensions
-	Extensions    map[string]*structpb.Value `protobuf:"bytes,11,rep,name=extensions,proto3" json:"extensions,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	Extensions    map[string]*structpb.Value `protobuf:"bytes,11,rep,name=extensions" json:"extensions,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2899,8 +3022,9 @@ func (x *Components) GetExtensions() map[string]*structpb.Value {
 // DocumentConfiguration allows for controlling the default responses
 type DocumentConfiguration struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// default_responses is used to control the default responses generated in this OpenAPI document.
-	DefaultResponses map[string]*Response `protobuf:"bytes,1,rep,name=default_responses,json=defaultResponses,proto3" json:"default_responses,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	// default_responses is used to control the default responses generated in
+	// this OpenAPI document.
+	DefaultResponses map[string]*Response `protobuf:"bytes,1,rep,name=default_responses,json=defaultResponses" json:"default_responses,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	unknownFields    protoimpl.UnknownFields
 	sizeCache        protoimpl.SizeCache
 }
@@ -2946,48 +3070,55 @@ func (x *DocumentConfiguration) GetDefaultResponses() map[string]*Response {
 // See: https://spec.openapis.org/oas/v3.1.0#openapi-object
 type Document struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// REQUIRED. Provides metadata about the API. The metadata MAY be used by tooling as required.
-	// NOTE: A generated value will be used for the required fields if they are left empty.
+	// REQUIRED. Provides metadata about the API. The metadata MAY be used by
+	// tooling as required. NOTE: A generated value will be used for the required
+	// fields if they are left empty.
 	//
 	// See: https://spec.openapis.org/oas/v3.1.0#info-object
-	Info *Info `protobuf:"bytes,1,opt,name=info,proto3" json:"info,omitempty"`
-	// An array of Server Objects, which provide connectivity information to a target server.
-	// If the servers property is not provided, or is an empty array,
-	// the default value would be a Server Object with a url value of /.
+	Info *Info `protobuf:"bytes,1,opt,name=info" json:"info,omitempty"`
+	// An array of Server Objects, which provide connectivity information to a
+	// target server. If the servers property is not provided, or is an empty
+	// array, the default value would be a Server Object with a url value of /.
 	//
 	// See: https://spec.openapis.org/oas/latest.html#server-object
-	Servers []*Server `protobuf:"bytes,2,rep,name=servers,proto3" json:"servers,omitempty"`
-	// Holds a set of reusable objects for different aspects of the OAS. All objects defined within the
-	// components object will have no effect on the API unless they are explicitly referenced from properties
-	// outside the components object.
+	Servers []*Server `protobuf:"bytes,2,rep,name=servers" json:"servers,omitempty"`
+	// allowed.
+	// Holds a set of reusable objects for different aspects of the OAS. All
+	// objects defined within the components object will have no effect on the API
+	// unless they are explicitly referenced from properties outside the
+	// components object.
 	//
 	// See: https://spec.openapis.org/oas/latest.html#components-object
-	Components *Components `protobuf:"bytes,5,opt,name=components,proto3" json:"components,omitempty"`
-	// A declaration of which security mechanisms can be used across the API. The list of values includes
-	// alternative security requirement objects that can be used. Only one of the security requirement objects
-	// need to be satisfied to authorize a request. Individual operations can override this definition. To make
-	// security optional, an empty security requirement ({}) can be included in the array.
+	Components *Components `protobuf:"bytes,5,opt,name=components" json:"components,omitempty"`
+	// A declaration of which security mechanisms can be used across the API. The
+	// list of values includes alternative security requirement objects that can
+	// be used. Only one of the security requirement objects need to be satisfied
+	// to authorize a request. Individual operations can override this definition.
+	// To make security optional, an empty security requirement ({}) can be
+	// included in the array.
 	//
 	// See: https://spec.openapis.org/oas/v3.1.0#security-requirement-object
-	Security []*SecurityRequirement `protobuf:"bytes,6,rep,name=security,proto3" json:"security,omitempty"`
-	// A list of tags used by the document with additional metadata. The order of the tags can be used to
-	// reflect on their order by the parsing tools. Not all tags that are used by the Operation Object must
-	// be declared. The tags that are not declared MAY be organized randomly or based on the tools’ logic.
-	// Each tag name in the list MUST be unique.
+	Security []*SecurityRequirement `protobuf:"bytes,6,rep,name=security" json:"security,omitempty"`
+	// A list of tags used by the document with additional metadata. The order of
+	// the tags can be used to reflect on their order by the parsing tools. Not
+	// all tags that are used by the Operation Object must be declared. The tags
+	// that are not declared MAY be organized randomly or based on the tools’
+	// logic. Each tag name in the list MUST be unique.
 	//
 	// See: https://spec.openapis.org/oas/v3.1.0#tag-object
-	Tags []*Tag `protobuf:"bytes,7,rep,name=tags,proto3" json:"tags,omitempty"`
+	Tags []*Tag `protobuf:"bytes,7,rep,name=tags" json:"tags,omitempty"`
 	// Additional external documentation.
 	//
 	// See: https://spec.openapis.org/oas/v3.1.0#external-documentation-object
-	ExternalDocs *ExternalDocumentation `protobuf:"bytes,8,opt,name=external_docs,json=externalDocs,proto3" json:"external_docs,omitempty"`
-	// extensions that start with "x-" such as "x-foo" used to describe extra functionality that is not covered by
-	// standard OpenAPI specification.
+	ExternalDocs *ExternalDocumentation `protobuf:"bytes,8,opt,name=external_docs,json=externalDocs" json:"external_docs,omitempty"`
+	// extensions that start with "x-" such as "x-foo" used to describe extra
+	// functionality that is not covered by standard OpenAPI specification.
 	//
 	// See: https://spec.openapis.org/oas/latest.html#specification-extensions
-	Extensions map[string]*structpb.Value `protobuf:"bytes,9,rep,name=extensions,proto3" json:"extensions,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
-	// DocumentConfiguration is used to change the behavior of documentation generation such as default responses.
-	Config        *DocumentConfiguration `protobuf:"bytes,10,opt,name=config,proto3" json:"config,omitempty"`
+	Extensions map[string]*structpb.Value `protobuf:"bytes,9,rep,name=extensions" json:"extensions,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	// DocumentConfiguration is used to change the behavior of documentation
+	// generation such as default responses.
+	Config        *DocumentConfiguration `protobuf:"bytes,10,opt,name=config" json:"config,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -3081,7 +3212,7 @@ func (x *Document) GetConfig() *DocumentConfiguration {
 // Represents a list of schemas for array validation or for object properties.
 type Schema_SchemaList struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Items         []*Schema              `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
+	Items         []*Schema              `protobuf:"bytes,1,rep,name=items" json:"items,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -3123,7 +3254,8 @@ func (x *Schema_SchemaList) GetItems() []*Schema {
 	return nil
 }
 
-// Represents an item in a SchemaList, which can be a schema or another SchemaList.
+// Represents an item in a SchemaList, which can be a schema or another
+// SchemaList.
 type Schema_Item struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Types that are valid to be assigned to Value:
@@ -3195,11 +3327,11 @@ type isSchema_Item_Value interface {
 }
 
 type Schema_Item_Schema struct {
-	Schema *Schema `protobuf:"bytes,1,opt,name=schema,proto3,oneof"`
+	Schema *Schema `protobuf:"bytes,1,opt,name=schema,oneof"`
 }
 
 type Schema_Item_List struct {
-	List *Schema_SchemaList `protobuf:"bytes,2,opt,name=list,proto3,oneof"`
+	List *Schema_SchemaList `protobuf:"bytes,2,opt,name=list,oneof"`
 }
 
 func (*Schema_Item_Schema) isSchema_Item_Value() {}
@@ -3211,15 +3343,15 @@ func (*Schema_Item_List) isSchema_Item_Value() {}
 // See: https://spec.openapis.org/oas/latest.html#oauth-flow-object
 type SecurityScheme_OAuthFlow struct {
 	state            protoimpl.MessageState `protogen:"open.v1"`
-	AuthorizationUrl string                 `protobuf:"bytes,1,opt,name=authorization_url,json=authorizationUrl,proto3" json:"authorization_url,omitempty"`
-	TokenUrl         string                 `protobuf:"bytes,2,opt,name=token_url,json=tokenUrl,proto3" json:"token_url,omitempty"`
-	RefreshUrl       string                 `protobuf:"bytes,3,opt,name=refresh_url,json=refreshUrl,proto3" json:"refresh_url,omitempty"`
-	Scopes           map[string]string      `protobuf:"bytes,4,rep,name=scopes,proto3" json:"scopes,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
-	// extensions that start with "x-" such as "x-foo" used to describe extra functionality that is not covered by
-	// standard OpenAPI specification.
+	AuthorizationUrl *string                `protobuf:"bytes,1,opt,name=authorization_url,json=authorizationUrl" json:"authorization_url,omitempty"`
+	TokenUrl         *string                `protobuf:"bytes,2,opt,name=token_url,json=tokenUrl" json:"token_url,omitempty"`
+	RefreshUrl       *string                `protobuf:"bytes,3,opt,name=refresh_url,json=refreshUrl" json:"refresh_url,omitempty"`
+	Scopes           map[string]string      `protobuf:"bytes,4,rep,name=scopes" json:"scopes,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	// extensions that start with "x-" such as "x-foo" used to describe extra
+	// functionality that is not covered by standard OpenAPI specification.
 	//
 	// See: https://spec.openapis.org/oas/latest.html#specification-extensions
-	Extensions    map[string]*structpb.Value `protobuf:"bytes,5,rep,name=extensions,proto3" json:"extensions,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	Extensions    map[string]*structpb.Value `protobuf:"bytes,5,rep,name=extensions" json:"extensions,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -3255,22 +3387,22 @@ func (*SecurityScheme_OAuthFlow) Descriptor() ([]byte, []int) {
 }
 
 func (x *SecurityScheme_OAuthFlow) GetAuthorizationUrl() string {
-	if x != nil {
-		return x.AuthorizationUrl
+	if x != nil && x.AuthorizationUrl != nil {
+		return *x.AuthorizationUrl
 	}
 	return ""
 }
 
 func (x *SecurityScheme_OAuthFlow) GetTokenUrl() string {
-	if x != nil {
-		return x.TokenUrl
+	if x != nil && x.TokenUrl != nil {
+		return *x.TokenUrl
 	}
 	return ""
 }
 
 func (x *SecurityScheme_OAuthFlow) GetRefreshUrl() string {
-	if x != nil {
-		return x.RefreshUrl
+	if x != nil && x.RefreshUrl != nil {
+		return *x.RefreshUrl
 	}
 	return ""
 }
@@ -3293,18 +3425,20 @@ func (x *SecurityScheme_OAuthFlow) GetExtensions() map[string]*structpb.Value {
 type SecurityScheme_OAuthFlows struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Configuration for the OAuth Implicit flow
-	Implicit *SecurityScheme_OAuthFlow `protobuf:"bytes,1,opt,name=implicit,proto3" json:"implicit,omitempty"`
+	Implicit *SecurityScheme_OAuthFlow `protobuf:"bytes,1,opt,name=implicit" json:"implicit,omitempty"`
 	// Configuration for the OAuth Resource Owner Password flow
-	Password *SecurityScheme_OAuthFlow `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty"`
-	// Configuration for the OAuth Client Credentials flow. Previously called application in OpenAPI 2.0.
-	ClientCredentials *SecurityScheme_OAuthFlow `protobuf:"bytes,3,opt,name=client_credentials,json=clientCredentials,proto3" json:"client_credentials,omitempty"`
-	// Configuration for the OAuth Authorization Code flow. Previously called accessCode in OpenAPI 2.0.
-	AuthorizationCode *SecurityScheme_OAuthFlow `protobuf:"bytes,4,opt,name=authorization_code,json=authorizationCode,proto3" json:"authorization_code,omitempty"`
-	// extensions that start with "x-" such as "x-foo" used to describe extra functionality that is not covered by
-	// standard OpenAPI specification.
+	Password *SecurityScheme_OAuthFlow `protobuf:"bytes,2,opt,name=password" json:"password,omitempty"`
+	// Configuration for the OAuth Client Credentials flow. Previously called
+	// application in OpenAPI 2.0.
+	ClientCredentials *SecurityScheme_OAuthFlow `protobuf:"bytes,3,opt,name=client_credentials,json=clientCredentials" json:"client_credentials,omitempty"`
+	// Configuration for the OAuth Authorization Code flow. Previously called
+	// accessCode in OpenAPI 2.0.
+	AuthorizationCode *SecurityScheme_OAuthFlow `protobuf:"bytes,4,opt,name=authorization_code,json=authorizationCode" json:"authorization_code,omitempty"`
+	// extensions that start with "x-" such as "x-foo" used to describe extra
+	// functionality that is not covered by standard OpenAPI specification.
 	//
 	// See: https://spec.openapis.org/oas/latest.html#specification-extensions
-	Extensions    map[string]*structpb.Value `protobuf:"bytes,5,rep,name=extensions,proto3" json:"extensions,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	Extensions    map[string]*structpb.Value `protobuf:"bytes,5,rep,name=extensions" json:"extensions,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -3849,7 +3983,7 @@ const file_gopencloud_gateway_openapi_openapi_proto_rawDesc = "" +
 	"\n" +
 	"\x06OBJECT\x10\x06\x12\n" +
 	"\n" +
-	"\x06STRING\x10\aB4Z2github.com/gopencloud/grpc-api-gateway/api/openapib\x06proto3"
+	"\x06STRING\x10\aB4Z2github.com/gopencloud/grpc-api-gateway/api/openapib\beditionsp\xe8\a"
 
 var (
 	file_gopencloud_gateway_openapi_openapi_proto_rawDescOnce sync.Once

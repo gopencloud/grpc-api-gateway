@@ -25,7 +25,7 @@ const (
 type GatewaySpec struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// endpoints hold a series of endpoint binding specs.
-	Endpoints     []*EndpointBinding `protobuf:"bytes,1,rep,name=endpoints,proto3" json:"endpoints,omitempty"`
+	Endpoints     []*EndpointBinding `protobuf:"bytes,1,rep,name=endpoints" json:"endpoints,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -72,14 +72,17 @@ type EndpointBinding struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// selector is a dot-separated gRPC service method selector.
 	//
-	// If the selector begins with `~.`, the current proto package will be added to the beginning
-	// of the path. For instance: `~.MyService`. Since no proto package can be deduced in the global
-	// config file, this alias cannot be used in the global config file.
+	// If the selector begins with `~.`, the current proto package will be added
+	// to the beginning of the path. For instance: `~.MyService`. Since no proto
+	// package can be deduced in the global config file, this alias cannot be used
+	// in the global config file.
 	//
-	// If the selector does not begin with `~.`, it will be treated as a fully qualified method name (FQMN).
+	// If the selector does not begin with `~.`, it will be treated as a fully
+	// qualified method name (FQMN).
 	//
-	// NOTE: In proto annotations, this field gets automatically assigned, thus it is only applicable in configuration files.
-	Selector string `protobuf:"bytes,1,opt,name=selector,proto3" json:"selector,omitempty"`
+	// NOTE: In proto annotations, this field gets automatically assigned, thus it
+	// is only applicable in configuration files.
+	Selector *string `protobuf:"bytes,1,opt,name=selector" json:"selector,omitempty"`
 	// pattern specifies the HTTP method for this endpoint binding.
 	//
 	// Types that are valid to be assigned to Pattern:
@@ -94,31 +97,36 @@ type EndpointBinding struct {
 	// body is a request message field selector that will be read via HTTP body.
 	//
 	// `*` indicates that the entire request message gets decoded from the body.
-	// An empty string (default value) indicates that no part of the request gets decoded from the body.
+	// An empty string (default value) indicates that no part of the request gets
+	// decoded from the body.
 	//
 	// NOTE: Not all methods support HTTP body.
-	Body string `protobuf:"bytes,8,opt,name=body,proto3" json:"body,omitempty"`
-	// response_body is a response message field selector that will be written to HTTP response.
+	Body *string `protobuf:"bytes,8,opt,name=body" json:"body,omitempty"`
+	// response_body is a response message field selector that will be written to
+	// HTTP response.
 	//
-	// `*` or an empty string indicates that the entire response message gets encoded.
-	ResponseBody string `protobuf:"bytes,9,opt,name=response_body,json=responseBody,proto3" json:"response_body,omitempty"`
-	// query_params are explicit query parameter bindings that can be used to rename
-	// or ignore query parameters.
-	QueryParams []*QueryParameterBinding `protobuf:"bytes,10,rep,name=query_params,json=queryParams,proto3" json:"query_params,omitempty"`
-	// additional_bindings holds additional bindings for the same gRPC service method.
-	AdditionalBindings []*AdditionalEndpointBinding `protobuf:"bytes,11,rep,name=additional_bindings,json=additionalBindings,proto3" json:"additional_bindings,omitempty"`
-	// disable_query_param_discovery can be used to avoid auto binding query parameters.
+	// `*` or an empty string indicates that the entire response message gets
+	// encoded.
+	ResponseBody *string `protobuf:"bytes,9,opt,name=response_body,json=responseBody" json:"response_body,omitempty"`
+	// query_params are explicit query parameter bindings that can be used to
+	// rename or ignore query parameters.
+	QueryParams []*QueryParameterBinding `protobuf:"bytes,10,rep,name=query_params,json=queryParams" json:"query_params,omitempty"`
+	// additional_bindings holds additional bindings for the same gRPC service
+	// method.
+	AdditionalBindings []*AdditionalEndpointBinding `protobuf:"bytes,11,rep,name=additional_bindings,json=additionalBindings" json:"additional_bindings,omitempty"`
+	// disable_query_param_discovery can be used to avoid auto binding query
+	// parameters.
 	//
 	// Default: `false`
-	DisableQueryParamDiscovery bool `protobuf:"varint,12,opt,name=disable_query_param_discovery,json=disableQueryParamDiscovery,proto3" json:"disable_query_param_discovery,omitempty"`
+	DisableQueryParamDiscovery *bool `protobuf:"varint,12,opt,name=disable_query_param_discovery,json=disableQueryParamDiscovery" json:"disable_query_param_discovery,omitempty"`
 	// stream holds configurations for streaming methods.
-	Stream *StreamConfig `protobuf:"bytes,13,opt,name=stream,proto3" json:"stream,omitempty"`
+	Stream *StreamConfig `protobuf:"bytes,13,opt,name=stream" json:"stream,omitempty"`
 	// aliases are additional routes for this endpoint binding.
 	//
-	// This field translates to additional_bindings, inheriting all values from endpoint binding.
-	// Consider this a syntax sugar for additional_bindings.
-	// If additional binding with same route and method exists, alias will not work.
-	Aliases       []string `protobuf:"bytes,14,rep,name=aliases,proto3" json:"aliases,omitempty"`
+	// This field translates to additional_bindings, inheriting all values from
+	// endpoint binding. Consider this a syntax sugar for additional_bindings. If
+	// additional binding with same route and method exists, alias will not work.
+	Aliases       []string `protobuf:"bytes,14,rep,name=aliases" json:"aliases,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -154,8 +162,8 @@ func (*EndpointBinding) Descriptor() ([]byte, []int) {
 }
 
 func (x *EndpointBinding) GetSelector() string {
-	if x != nil {
-		return x.Selector
+	if x != nil && x.Selector != nil {
+		return *x.Selector
 	}
 	return ""
 }
@@ -222,15 +230,15 @@ func (x *EndpointBinding) GetCustom() *CustomPattern {
 }
 
 func (x *EndpointBinding) GetBody() string {
-	if x != nil {
-		return x.Body
+	if x != nil && x.Body != nil {
+		return *x.Body
 	}
 	return ""
 }
 
 func (x *EndpointBinding) GetResponseBody() string {
-	if x != nil {
-		return x.ResponseBody
+	if x != nil && x.ResponseBody != nil {
+		return *x.ResponseBody
 	}
 	return ""
 }
@@ -250,8 +258,8 @@ func (x *EndpointBinding) GetAdditionalBindings() []*AdditionalEndpointBinding {
 }
 
 func (x *EndpointBinding) GetDisableQueryParamDiscovery() bool {
-	if x != nil {
-		return x.DisableQueryParamDiscovery
+	if x != nil && x.DisableQueryParamDiscovery != nil {
+		return *x.DisableQueryParamDiscovery
 	}
 	return false
 }
@@ -276,35 +284,35 @@ type isEndpointBinding_Pattern interface {
 
 type EndpointBinding_Get struct {
 	// get defines route for a GET HTTP endpoint.
-	Get string `protobuf:"bytes,2,opt,name=get,proto3,oneof"`
+	Get string `protobuf:"bytes,2,opt,name=get,oneof"`
 }
 
 type EndpointBinding_Put struct {
 	// put defines route for a PUT HTTP endpoint.
-	Put string `protobuf:"bytes,3,opt,name=put,proto3,oneof"`
+	Put string `protobuf:"bytes,3,opt,name=put,oneof"`
 }
 
 type EndpointBinding_Post struct {
 	// post defines route for a POST HTTP endpoint.
-	Post string `protobuf:"bytes,4,opt,name=post,proto3,oneof"`
+	Post string `protobuf:"bytes,4,opt,name=post,oneof"`
 }
 
 type EndpointBinding_Delete struct {
 	// delete defines route for a DELETE HTTP endpoint.
-	Delete string `protobuf:"bytes,5,opt,name=delete,proto3,oneof"`
+	Delete string `protobuf:"bytes,5,opt,name=delete,oneof"`
 }
 
 type EndpointBinding_Patch struct {
 	// patch defines route for a PATCH HTTP endpoint.
-	Patch string `protobuf:"bytes,6,opt,name=patch,proto3,oneof"`
+	Patch string `protobuf:"bytes,6,opt,name=patch,oneof"`
 }
 
 type EndpointBinding_Custom struct {
 	// custom can be used for custom HTTP methods.
 	//
-	// Not all HTTP methods are supported in OpenAPI specification and will not be included in the
-	// generated OpenAPI document.
-	Custom *CustomPattern `protobuf:"bytes,7,opt,name=custom,proto3,oneof"`
+	// Not all HTTP methods are supported in OpenAPI specification and will not
+	// be included in the generated OpenAPI document.
+	Custom *CustomPattern `protobuf:"bytes,7,opt,name=custom,oneof"`
 }
 
 func (*EndpointBinding_Get) isEndpointBinding_Pattern() {}
@@ -319,7 +327,8 @@ func (*EndpointBinding_Patch) isEndpointBinding_Pattern() {}
 
 func (*EndpointBinding_Custom) isEndpointBinding_Pattern() {}
 
-// AdditionalEndpointBinding is an additional gRPC method - HTTP endpoint binding specification.
+// AdditionalEndpointBinding is an additional gRPC method - HTTP endpoint
+// binding specification.
 type AdditionalEndpointBinding struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// pattern specifies the HTTP method for this additional endpoint binding.
@@ -336,21 +345,25 @@ type AdditionalEndpointBinding struct {
 	// body is a request message field selector that will be read via HTTP body.
 	//
 	// '*' indicates that the entire request message gets decoded from the body.
-	// An empty string indicates that no part of the request gets decoded from the body.
+	// An empty string indicates that no part of the request gets decoded from the
+	// body.
 	//
 	// NOTE: Not all methods support HTTP body.
-	Body string `protobuf:"bytes,8,opt,name=body,proto3" json:"body,omitempty"`
-	// response_body is a response message field selector that will be written to HTTP response.
+	Body *string `protobuf:"bytes,8,opt,name=body" json:"body,omitempty"`
+	// response_body is a response message field selector that will be written to
+	// HTTP response.
 	//
-	// '*' or an empty string indicates that the entire response message gets encoded.
-	ResponseBody string `protobuf:"bytes,9,opt,name=response_body,json=responseBody,proto3" json:"response_body,omitempty"`
-	// query_params are explicit query parameter bindings that can be used to rename
-	// or ignore query parameters.
-	QueryParams []*QueryParameterBinding `protobuf:"bytes,10,rep,name=query_params,json=queryParams,proto3" json:"query_params,omitempty"`
-	// disable_query_param_discovery can be used to avoid auto binding query parameters.
-	DisableQueryParamDiscovery bool `protobuf:"varint,11,opt,name=disable_query_param_discovery,json=disableQueryParamDiscovery,proto3" json:"disable_query_param_discovery,omitempty"`
+	// '*' or an empty string indicates that the entire response message gets
+	// encoded.
+	ResponseBody *string `protobuf:"bytes,9,opt,name=response_body,json=responseBody" json:"response_body,omitempty"`
+	// query_params are explicit query parameter bindings that can be used to
+	// rename or ignore query parameters.
+	QueryParams []*QueryParameterBinding `protobuf:"bytes,10,rep,name=query_params,json=queryParams" json:"query_params,omitempty"`
+	// disable_query_param_discovery can be used to avoid auto binding query
+	// parameters.
+	DisableQueryParamDiscovery *bool `protobuf:"varint,11,opt,name=disable_query_param_discovery,json=disableQueryParamDiscovery" json:"disable_query_param_discovery,omitempty"`
 	// stream holds configurations for streaming methods.
-	Stream        *StreamConfig `protobuf:"bytes,12,opt,name=stream,proto3" json:"stream,omitempty"`
+	Stream        *StreamConfig `protobuf:"bytes,12,opt,name=stream" json:"stream,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -447,15 +460,15 @@ func (x *AdditionalEndpointBinding) GetCustom() *CustomPattern {
 }
 
 func (x *AdditionalEndpointBinding) GetBody() string {
-	if x != nil {
-		return x.Body
+	if x != nil && x.Body != nil {
+		return *x.Body
 	}
 	return ""
 }
 
 func (x *AdditionalEndpointBinding) GetResponseBody() string {
-	if x != nil {
-		return x.ResponseBody
+	if x != nil && x.ResponseBody != nil {
+		return *x.ResponseBody
 	}
 	return ""
 }
@@ -468,8 +481,8 @@ func (x *AdditionalEndpointBinding) GetQueryParams() []*QueryParameterBinding {
 }
 
 func (x *AdditionalEndpointBinding) GetDisableQueryParamDiscovery() bool {
-	if x != nil {
-		return x.DisableQueryParamDiscovery
+	if x != nil && x.DisableQueryParamDiscovery != nil {
+		return *x.DisableQueryParamDiscovery
 	}
 	return false
 }
@@ -486,31 +499,31 @@ type isAdditionalEndpointBinding_Pattern interface {
 }
 
 type AdditionalEndpointBinding_Get struct {
-	Get string `protobuf:"bytes,2,opt,name=get,proto3,oneof"`
+	Get string `protobuf:"bytes,2,opt,name=get,oneof"`
 }
 
 type AdditionalEndpointBinding_Put struct {
-	Put string `protobuf:"bytes,3,opt,name=put,proto3,oneof"`
+	Put string `protobuf:"bytes,3,opt,name=put,oneof"`
 }
 
 type AdditionalEndpointBinding_Post struct {
-	Post string `protobuf:"bytes,4,opt,name=post,proto3,oneof"`
+	Post string `protobuf:"bytes,4,opt,name=post,oneof"`
 }
 
 type AdditionalEndpointBinding_Delete struct {
-	Delete string `protobuf:"bytes,5,opt,name=delete,proto3,oneof"`
+	Delete string `protobuf:"bytes,5,opt,name=delete,oneof"`
 }
 
 type AdditionalEndpointBinding_Patch struct {
-	Patch string `protobuf:"bytes,6,opt,name=patch,proto3,oneof"`
+	Patch string `protobuf:"bytes,6,opt,name=patch,oneof"`
 }
 
 type AdditionalEndpointBinding_Custom struct {
 	// custom can be used for custom HTTP methods.
 	//
-	// Not all HTTP methods are supported in OpenAPI specification, however and will not be included in the
-	// generated OpenAPI document.
-	Custom *CustomPattern `protobuf:"bytes,7,opt,name=custom,proto3,oneof"`
+	// Not all HTTP methods are supported in OpenAPI specification, however and
+	// will not be included in the generated OpenAPI document.
+	Custom *CustomPattern `protobuf:"bytes,7,opt,name=custom,oneof"`
 }
 
 func (*AdditionalEndpointBinding_Get) isAdditionalEndpointBinding_Pattern() {}
@@ -529,9 +542,9 @@ func (*AdditionalEndpointBinding_Custom) isAdditionalEndpointBinding_Pattern() {
 type CustomPattern struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// method is the custom HTTP method.
-	Method string `protobuf:"bytes,1,opt,name=method,proto3" json:"method,omitempty"`
+	Method *string `protobuf:"bytes,1,opt,name=method" json:"method,omitempty"`
 	// path is the HTTP path pattern.
-	Path          string `protobuf:"bytes,2,opt,name=path,proto3" json:"path,omitempty"`
+	Path          *string `protobuf:"bytes,2,opt,name=path" json:"path,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -567,15 +580,15 @@ func (*CustomPattern) Descriptor() ([]byte, []int) {
 }
 
 func (x *CustomPattern) GetMethod() string {
-	if x != nil {
-		return x.Method
+	if x != nil && x.Method != nil {
+		return *x.Method
 	}
 	return ""
 }
 
 func (x *CustomPattern) GetPath() string {
-	if x != nil {
-		return x.Path
+	if x != nil && x.Path != nil {
+		return *x.Path
 	}
 	return ""
 }
@@ -584,11 +597,11 @@ func (x *CustomPattern) GetPath() string {
 type QueryParameterBinding struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// selector is a dot-separated path to the request message's field.
-	Selector string `protobuf:"bytes,1,opt,name=selector,proto3" json:"selector,omitempty"`
+	Selector *string `protobuf:"bytes,1,opt,name=selector" json:"selector,omitempty"`
 	// name is the name of the HTTP query parameter that will be used.
-	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Name *string `protobuf:"bytes,2,opt,name=name" json:"name,omitempty"`
 	// ignore avoids reading this query parameter altogether (default: false).
-	Ignore        bool `protobuf:"varint,3,opt,name=ignore,proto3" json:"ignore,omitempty"`
+	Ignore        *bool `protobuf:"varint,3,opt,name=ignore" json:"ignore,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -624,22 +637,22 @@ func (*QueryParameterBinding) Descriptor() ([]byte, []int) {
 }
 
 func (x *QueryParameterBinding) GetSelector() string {
-	if x != nil {
-		return x.Selector
+	if x != nil && x.Selector != nil {
+		return *x.Selector
 	}
 	return ""
 }
 
 func (x *QueryParameterBinding) GetName() string {
-	if x != nil {
-		return x.Name
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
 
 func (x *QueryParameterBinding) GetIgnore() bool {
-	if x != nil {
-		return x.Ignore
+	if x != nil && x.Ignore != nil {
+		return *x.Ignore
 	}
 	return false
 }
@@ -647,20 +660,23 @@ func (x *QueryParameterBinding) GetIgnore() bool {
 // StreamConfig sets the behavior of the HTTP server for gRPC streaming methods.
 type StreamConfig struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// disable_websockets indicates whether or not websockets are allowed for this method.
-	// The client must still ask for a connection upgrade.
-	DisableWebsockets bool `protobuf:"varint,1,opt,name=disable_websockets,json=disableWebsockets,proto3" json:"disable_websockets,omitempty"`
+	// disable_websockets indicates whether or not websockets are allowed for this
+	// method. The client must still ask for a connection upgrade.
+	DisableWebsockets *bool `protobuf:"varint,1,opt,name=disable_websockets,json=disableWebsockets" json:"disable_websockets,omitempty"`
 	// disable_sse indicates whether or not server-sent events are allowed.
 	//
-	// see: https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events
+	// see:
+	// https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events
 	//
-	// SSE is only used when Accept-Type from the request includes MIME type text/event-stream.
-	DisableSse bool `protobuf:"varint,2,opt,name=disable_sse,json=disableSse,proto3" json:"disable_sse,omitempty"`
-	// disable_chunked indicates whether or not chunked transfer encoding is allowed.
+	// SSE is only used when Accept-Type from the request includes MIME type
+	// text/event-stream.
+	DisableSse *bool `protobuf:"varint,2,opt,name=disable_sse,json=disableSse" json:"disable_sse,omitempty"`
+	// disable_chunked indicates whether or not chunked transfer encoding is
+	// allowed.
 	//
-	// NOTE: Chunked transfer encoding is disabled in HTTP/2 so this option will only be available if the request
-	// is HTTP/1.
-	DisableChunkedTransfer bool `protobuf:"varint,3,opt,name=disable_chunked_transfer,json=disableChunkedTransfer,proto3" json:"disable_chunked_transfer,omitempty"`
+	// NOTE: Chunked transfer encoding is disabled in HTTP/2 so this option will
+	// only be available if the request is HTTP/1.
+	DisableChunkedTransfer *bool `protobuf:"varint,3,opt,name=disable_chunked_transfer,json=disableChunkedTransfer" json:"disable_chunked_transfer,omitempty"`
 	unknownFields          protoimpl.UnknownFields
 	sizeCache              protoimpl.SizeCache
 }
@@ -696,22 +712,22 @@ func (*StreamConfig) Descriptor() ([]byte, []int) {
 }
 
 func (x *StreamConfig) GetDisableWebsockets() bool {
-	if x != nil {
-		return x.DisableWebsockets
+	if x != nil && x.DisableWebsockets != nil {
+		return *x.DisableWebsockets
 	}
 	return false
 }
 
 func (x *StreamConfig) GetDisableSse() bool {
-	if x != nil {
-		return x.DisableSse
+	if x != nil && x.DisableSse != nil {
+		return *x.DisableSse
 	}
 	return false
 }
 
 func (x *StreamConfig) GetDisableChunkedTransfer() bool {
-	if x != nil {
-		return x.DisableChunkedTransfer
+	if x != nil && x.DisableChunkedTransfer != nil {
+		return *x.DisableChunkedTransfer
 	}
 	return false
 }
@@ -765,7 +781,7 @@ const file_gopencloud_gateway_gateway_proto_rawDesc = "" +
 	"\x12disable_websockets\x18\x01 \x01(\bR\x11disableWebsockets\x12\x1f\n" +
 	"\vdisable_sse\x18\x02 \x01(\bR\n" +
 	"disableSse\x128\n" +
-	"\x18disable_chunked_transfer\x18\x03 \x01(\bR\x16disableChunkedTransferB,Z*github.com/gopencloud/grpc-api-gateway/apib\x06proto3"
+	"\x18disable_chunked_transfer\x18\x03 \x01(\bR\x16disableChunkedTransferB,Z*github.com/gopencloud/grpc-api-gateway/apib\beditionsp\xe8\a"
 
 var (
 	file_gopencloud_gateway_gateway_proto_rawDescOnce sync.Once

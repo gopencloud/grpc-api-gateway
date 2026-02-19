@@ -34,17 +34,17 @@ type ProtoEndpointBinding struct {
 	//	*ProtoEndpointBinding_Patch
 	//	*ProtoEndpointBinding_Custom
 	Pattern                    isProtoEndpointBinding_Pattern `protobuf_oneof:"pattern"`
-	Body                       string                         `protobuf:"bytes,8,opt,name=body,proto3" json:"body,omitempty"`
-	QueryParams                []*QueryParameterBinding       `protobuf:"bytes,9,rep,name=query_params,json=queryParams,proto3" json:"query_params,omitempty"`
-	AdditionalBindings         []*AdditionalEndpointBinding   `protobuf:"bytes,10,rep,name=additional_bindings,json=additionalBindings,proto3" json:"additional_bindings,omitempty"`
-	DisableQueryParamDiscovery bool                           `protobuf:"varint,11,opt,name=disable_query_param_discovery,json=disableQueryParamDiscovery,proto3" json:"disable_query_param_discovery,omitempty"`
-	Stream                     *StreamConfig                  `protobuf:"bytes,12,opt,name=stream,proto3" json:"stream,omitempty"`
+	Body                       *string                        `protobuf:"bytes,8,opt,name=body" json:"body,omitempty"`
+	QueryParams                []*QueryParameterBinding       `protobuf:"bytes,9,rep,name=query_params,json=queryParams" json:"query_params,omitempty"`
+	AdditionalBindings         []*AdditionalEndpointBinding   `protobuf:"bytes,10,rep,name=additional_bindings,json=additionalBindings" json:"additional_bindings,omitempty"`
+	DisableQueryParamDiscovery *bool                          `protobuf:"varint,11,opt,name=disable_query_param_discovery,json=disableQueryParamDiscovery" json:"disable_query_param_discovery,omitempty"`
+	Stream                     *StreamConfig                  `protobuf:"bytes,12,opt,name=stream" json:"stream,omitempty"`
 	// aliases are additional routes for this endpoint binding.
 	//
-	// This field translates to additional_bindings, inheriting all values from endpoint binding.
-	// Consider this a syntax sugar for additional_bindings.
-	// If additional binding with same route and method exists, alias will not work.
-	Aliases       []string `protobuf:"bytes,13,rep,name=aliases,proto3" json:"aliases,omitempty"`
+	// This field translates to additional_bindings, inheriting all values from
+	// endpoint binding. Consider this a syntax sugar for additional_bindings. If
+	// additional binding with same route and method exists, alias will not work.
+	Aliases       []string `protobuf:"bytes,13,rep,name=aliases" json:"aliases,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -141,8 +141,8 @@ func (x *ProtoEndpointBinding) GetCustom() *CustomPattern {
 }
 
 func (x *ProtoEndpointBinding) GetBody() string {
-	if x != nil {
-		return x.Body
+	if x != nil && x.Body != nil {
+		return *x.Body
 	}
 	return ""
 }
@@ -162,8 +162,8 @@ func (x *ProtoEndpointBinding) GetAdditionalBindings() []*AdditionalEndpointBind
 }
 
 func (x *ProtoEndpointBinding) GetDisableQueryParamDiscovery() bool {
-	if x != nil {
-		return x.DisableQueryParamDiscovery
+	if x != nil && x.DisableQueryParamDiscovery != nil {
+		return *x.DisableQueryParamDiscovery
 	}
 	return false
 }
@@ -187,28 +187,28 @@ type isProtoEndpointBinding_Pattern interface {
 }
 
 type ProtoEndpointBinding_Get struct {
-	Get string `protobuf:"bytes,2,opt,name=get,proto3,oneof"`
+	Get string `protobuf:"bytes,2,opt,name=get,oneof"`
 }
 
 type ProtoEndpointBinding_Put struct {
-	Put string `protobuf:"bytes,3,opt,name=put,proto3,oneof"`
+	Put string `protobuf:"bytes,3,opt,name=put,oneof"`
 }
 
 type ProtoEndpointBinding_Post struct {
-	Post string `protobuf:"bytes,4,opt,name=post,proto3,oneof"`
+	Post string `protobuf:"bytes,4,opt,name=post,oneof"`
 }
 
 type ProtoEndpointBinding_Delete struct {
-	Delete string `protobuf:"bytes,5,opt,name=delete,proto3,oneof"`
+	Delete string `protobuf:"bytes,5,opt,name=delete,oneof"`
 }
 
 type ProtoEndpointBinding_Patch struct {
-	Patch string `protobuf:"bytes,6,opt,name=patch,proto3,oneof"`
+	Patch string `protobuf:"bytes,6,opt,name=patch,oneof"`
 }
 
 type ProtoEndpointBinding_Custom struct {
 	// custom can be used for custom HTTP methods.
-	Custom *CustomPattern `protobuf:"bytes,7,opt,name=custom,proto3,oneof"`
+	Custom *CustomPattern `protobuf:"bytes,7,opt,name=custom,oneof"`
 }
 
 func (*ProtoEndpointBinding_Get) isProtoEndpointBinding_Pattern() {}
@@ -302,7 +302,8 @@ var (
 var (
 	// http holds HTTP endpoint binding configs.
 	//
-	// ID assigned by protobuf-global-extension-registry@google.com for gRPC-Gateway project.
+	// ID assigned by protobuf-global-extension-registry@google.com for
+	// gRPC-Gateway project.
 	//
 	// optional gopencloud.gateway.ProtoEndpointBinding http = 1190;
 	E_Http = &file_gopencloud_gateway_annotations_proto_extTypes[2]
@@ -357,7 +358,7 @@ const file_gopencloud_gateway_annotations_proto_rawDesc = "" +
 	"\x11openapi_operation\x12\x1e.google.protobuf.MethodOptions\x18\xa7\t \x01(\v2%.gopencloud.gateway.openapi.OperationR\x10openapiOperation:k\n" +
 	"\x0eopenapi_schema\x12\x1f.google.protobuf.MessageOptions\x18\xa7\t \x01(\v2\".gopencloud.gateway.openapi.SchemaR\ropenapiSchema:d\n" +
 	"\fopenapi_enum\x12\x1c.google.protobuf.EnumOptions\x18\xa7\t \x01(\v2\".gopencloud.gateway.openapi.SchemaR\vopenapiEnum:g\n" +
-	"\ropenapi_field\x12\x1d.google.protobuf.FieldOptions\x18\xa7\t \x01(\v2\".gopencloud.gateway.openapi.SchemaR\fopenapiFieldB,Z*github.com/gopencloud/grpc-api-gateway/apib\x06proto3"
+	"\ropenapi_field\x12\x1d.google.protobuf.FieldOptions\x18\xa7\t \x01(\v2\".gopencloud.gateway.openapi.SchemaR\fopenapiFieldB,Z*github.com/gopencloud/grpc-api-gateway/apib\beditionsp\xe8\a"
 
 var (
 	file_gopencloud_gateway_annotations_proto_rawDescOnce sync.Once
