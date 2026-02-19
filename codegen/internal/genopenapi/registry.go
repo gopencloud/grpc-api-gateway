@@ -177,27 +177,28 @@ func (g *Generator) loadFromDescriptorRegistry() error {
 func (g *Generator) addMessageConfigs(configs []*api.OpenAPIMessageSpec, src internal.SourceInfo) error {
 	for _, messageConfig := range configs {
 		// Resolve the selector to an absolute path.
-		if strings.HasPrefix(messageConfig.Selector, "~.") {
+		if strings.HasPrefix(messageConfig.GetSelector(), "~.") {
 			if src.ProtoPackage == "" {
-				return fmt.Errorf("no proto package context is available, cannot use relative selector: %s", messageConfig.Selector)
+				return fmt.Errorf("no proto package context is available, cannot use relative selector: %s", messageConfig.GetSelector())
 			}
 
-			messageConfig.Selector = "." + src.ProtoPackage + messageConfig.Selector[1:]
+			newSelector := "." + src.ProtoPackage + messageConfig.GetSelector()[1:]
+			messageConfig.Selector = &newSelector
 		}
 
 		// assert that selector resolves to a proto message.
-		msg, err := g.registry.LookupMessage(src.ProtoPackage, messageConfig.Selector)
+		msg, err := g.registry.LookupMessage(src.ProtoPackage, messageConfig.GetSelector())
 		if err != nil {
 			if g.WarnOnBrokenSelectors {
 				genlog.Log(
 					genlog.LevelWarning,
 					"could not find proto message %q referenced in file: %s",
-					messageConfig.Selector, src.Filename)
+					messageConfig.GetSelector(), src.Filename)
 				continue
 			}
 
 			return fmt.Errorf(
-				"could not find proto message %q referenced in file: %s", messageConfig.Selector, src.Filename)
+				"could not find proto message %q referenced in file: %s", messageConfig.GetSelector(), src.Filename)
 		}
 
 		if g.LocalPackageMode && src.ProtoPackage != "" && msg.File.GetPackage() != src.ProtoPackage {
@@ -211,7 +212,7 @@ func (g *Generator) addMessageConfigs(configs []*api.OpenAPIMessageSpec, src int
 		if existingConfig, exists := g.messages[msg.FQMN()]; exists && existingConfig.Filename != src.Filename {
 			return fmt.Errorf(
 				"multiple external OpenAPI configurations for message %q: both %q and %q contain bindings for this selector",
-				messageConfig.Selector, existingConfig.Filename, src.Filename)
+				messageConfig.GetSelector(), existingConfig.Filename, src.Filename)
 		}
 
 		g.messages[msg.FQMN()] = &internal.OpenAPIMessageSpec{
@@ -226,26 +227,27 @@ func (g *Generator) addMessageConfigs(configs []*api.OpenAPIMessageSpec, src int
 func (g *Generator) addEnumConfigs(configs []*api.OpenAPIEnumSpec, src internal.SourceInfo) error {
 	for _, enumConfig := range configs {
 		// Resolve the selector to an absolute path.
-		if strings.HasPrefix(enumConfig.Selector, "~.") {
+		if strings.HasPrefix(enumConfig.GetSelector(), "~.") {
 			if src.ProtoPackage == "" {
-				return fmt.Errorf("no proto package context is available, cannot use relative selector: %s", enumConfig.Selector)
+				return fmt.Errorf("no proto package context is available, cannot use relative selector: %s", enumConfig.GetSelector())
 			}
-			enumConfig.Selector = "." + src.ProtoPackage + enumConfig.Selector[1:]
+			newSelector := "." + src.ProtoPackage + enumConfig.GetSelector()[1:]
+			enumConfig.Selector = &newSelector
 		}
 
 		// assert that selector resolves to a proto enum.
-		enum, err := g.registry.LookupEnum(src.ProtoPackage, enumConfig.Selector)
+		enum, err := g.registry.LookupEnum(src.ProtoPackage, enumConfig.GetSelector())
 		if err != nil {
 			if g.WarnOnBrokenSelectors {
 				genlog.Log(
 					genlog.LevelWarning,
 					"could not find proto message %q referenced in file: %s",
-					enumConfig.Selector, src.Filename)
+					enumConfig.GetSelector(), src.Filename)
 				continue
 			}
 
 			return fmt.Errorf(
-				"could not find proto enum %q referenced in file: %s", enumConfig.Selector, src.Filename)
+				"could not find proto enum %q referenced in file: %s", enumConfig.GetSelector(), src.Filename)
 		}
 
 		if g.LocalPackageMode && src.ProtoPackage != "" && enum.File.GetPackage() != src.ProtoPackage {
@@ -259,7 +261,7 @@ func (g *Generator) addEnumConfigs(configs []*api.OpenAPIEnumSpec, src internal.
 		if existingConfig, exists := g.enums[enum.FQEN()]; exists && src.Filename != existingConfig.Filename {
 			return fmt.Errorf(
 				"multiple external OpenAPI configurations for enum %q: both %q and %q contain bindings for this selector",
-				enumConfig.Selector, existingConfig.Filename, src.Filename)
+				enumConfig.GetSelector(), existingConfig.Filename, src.Filename)
 		}
 
 		g.enums[enum.FQEN()] = &internal.OpenAPIEnumSpec{
@@ -274,24 +276,26 @@ func (g *Generator) addEnumConfigs(configs []*api.OpenAPIEnumSpec, src internal.
 func (g *Generator) addServiceConfigs(configs []*api.OpenAPIServiceSpec, src internal.SourceInfo) error {
 	for _, serviceConfig := range configs {
 		// Resolve the selector to an absolute path.
-		if strings.HasPrefix(serviceConfig.Selector, "~.") {
+		if strings.HasPrefix(serviceConfig.GetSelector(), "~.") {
 			if src.ProtoPackage == "" {
-				return fmt.Errorf("no proto package context is available, cannot use relative selector: %s", serviceConfig.Selector)
+				return fmt.Errorf("no proto package context is available, cannot use relative selector: %s", serviceConfig.GetSelector())
 			}
-			serviceConfig.Selector = src.ProtoPackage + serviceConfig.Selector[1:]
+			newSelector := src.ProtoPackage + serviceConfig.GetSelector()[1:]
+			serviceConfig.Selector = &newSelector
 		}
 
-		if !strings.HasPrefix(serviceConfig.Selector, ".") {
-			serviceConfig.Selector = "." + serviceConfig.Selector
+		if !strings.HasPrefix(serviceConfig.GetSelector(), ".") {
+			newSelector := "." + serviceConfig.GetSelector()
+			serviceConfig.Selector = &newSelector
 		}
 
-		if existingConfig, exists := g.services[serviceConfig.Selector]; exists && src.Filename != existingConfig.Filename {
+		if existingConfig, exists := g.services[serviceConfig.GetSelector()]; exists && src.Filename != existingConfig.Filename {
 			return fmt.Errorf(
 				"multiple external OpenAPI configurations for service %q: both %q and %q contain bindings for this selector",
-				serviceConfig.Selector, existingConfig.Filename, src.Filename)
+				serviceConfig.GetSelector(), existingConfig.Filename, src.Filename)
 		}
 
-		g.services[serviceConfig.Selector] = &internal.OpenAPIServiceSpec{
+		g.services[serviceConfig.GetSelector()] = &internal.OpenAPIServiceSpec{
 			OpenAPIServiceSpec: serviceConfig,
 			SourceInfo:         src,
 		}

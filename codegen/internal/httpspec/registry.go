@@ -83,9 +83,11 @@ func (r *Registry) LoadFromService(filePath, protoPackage string, service *descr
 			continue
 		}
 
+		selector := protoPackage + "." + service.GetName() + "." + method.GetName()
+		body := embeddedBinding.GetBody()
 		endpointBinding := &api.EndpointBinding{
-			Selector:                   protoPackage + "." + service.GetName() + "." + method.GetName(),
-			Body:                       embeddedBinding.GetBody(),
+			Selector:                   &selector,
+			Body:                       &body,
 			QueryParams:                embeddedBinding.GetQueryParams(),
 			AdditionalBindings:         embeddedBinding.GetAdditionalBindings(),
 			DisableQueryParamDiscovery: embeddedBinding.DisableQueryParamDiscovery,
@@ -156,11 +158,12 @@ func (r *Registry) processConfig(config *api.Config, src SourceInfo) error {
 
 	for _, endpoint := range config.Gateway.GetEndpoints() {
 		// If selector starts with '.', it indicates it is relative to the proto package.
-		if strings.HasPrefix(endpoint.Selector, "~.") {
+		if strings.HasPrefix(endpoint.GetSelector(), "~.") {
 			if src.ProtoPackage == "" {
-				return fmt.Errorf("no proto package context is available, cannot use relative selector: %s", endpoint.Selector)
+				return fmt.Errorf("no proto package context is available, cannot use relative selector: %s", endpoint.GetSelector())
 			}
-			endpoint.Selector = src.ProtoPackage + endpoint.Selector[1:]
+			newSelector := src.ProtoPackage + endpoint.GetSelector()[1:]
+			endpoint.Selector = &newSelector
 		}
 
 		endpoint.Aliases = filterAliases(
@@ -178,17 +181,18 @@ func (r *Registry) processConfig(config *api.Config, src SourceInfo) error {
 		}
 
 		// add a leading dot to the selector to make it easy to look up FQMNs.
-		if !strings.HasPrefix(endpoint.Selector, ".") {
-			endpoint.Selector = "." + endpoint.Selector
+		if !strings.HasPrefix(endpoint.GetSelector(), ".") {
+			newSelector := "." + endpoint.GetSelector()
+			endpoint.Selector = &newSelector
 		}
 
-		if existingBinding, ok := r.endpoints[endpoint.Selector]; ok {
+		if existingBinding, ok := r.endpoints[endpoint.GetSelector()]; ok {
 			return fmt.Errorf(
 				"conflicting binding for %q: both %q and %q contain bindings for this selector",
-				endpoint.Selector, src.Filename, existingBinding.SourceInfo.Filename)
+				endpoint.GetSelector(), src.Filename, existingBinding.SourceInfo.Filename)
 		}
 
-		r.endpoints[endpoint.Selector] = EndpointSpec{
+		r.endpoints[endpoint.GetSelector()] = EndpointSpec{
 			Binding:    endpoint,
 			SourceInfo: src,
 		}
@@ -204,17 +208,17 @@ func (r *Registry) LookupBinding(selector string) (EndpointSpec, bool) {
 }
 
 func validateBinding(endpoint *api.EndpointBinding) error {
-	if !selectorPattern.MatchString(endpoint.Selector) {
-		return fmt.Errorf("invalid selector: %q", endpoint.Selector)
+	if !selectorPattern.MatchString(endpoint.GetSelector()) {
+		return fmt.Errorf("invalid selector: %q", endpoint.GetSelector())
 	}
 
-	if endpoint.Body != "" && endpoint.Body != "*" && !selectorPattern.MatchString(endpoint.Selector) {
-		return fmt.Errorf("invalid body selector for %q: %s", endpoint.Selector, endpoint.Body)
+	if endpoint.GetBody() != "" && endpoint.GetBody() != "*" && !selectorPattern.MatchString(endpoint.GetSelector()) {
+		return fmt.Errorf("invalid body selector for %q: %s", endpoint.GetSelector(), endpoint.GetBody())
 	}
 
 	for _, binding := range endpoint.AdditionalBindings {
-		if binding.Body != "" && binding.Body != "*" && !selectorPattern.MatchString(endpoint.Selector) {
-			return fmt.Errorf("invalid body selector %q: %s", endpoint.Selector, endpoint.Body)
+		if binding.GetBody() != "" && binding.GetBody() != "*" && !selectorPattern.MatchString(endpoint.GetSelector()) {
+			return fmt.Errorf("invalid body selector %q: %s", endpoint.GetSelector(), endpoint.GetBody())
 		}
 	}
 
@@ -258,10 +262,11 @@ func aliasesToAdditionalBindings(e *api.EndpointBinding) []*api.AdditionalEndpoi
 				Patch: alias,
 			}
 		case *api.EndpointBinding_Custom:
+			a := alias
 			newBinding.Pattern = &api.AdditionalEndpointBinding_Custom{
 				Custom: &api.CustomPattern{
 					Method: p.Custom.Method,
-					Path:   alias,
+					Path:   &a,
 				},
 			}
 		default:
@@ -309,7 +314,7 @@ func filterAliases(abs []*api.AdditionalEndpointBinding, aliases []string) []str
 		case *api.AdditionalEndpointBinding_Patch:
 			path = p.Patch
 		case *api.AdditionalEndpointBinding_Custom:
-			path = p.Custom.Path
+			path = p.Custom.GetPath()
 		}
 		if path == "" {
 			continue

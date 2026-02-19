@@ -70,8 +70,8 @@ func ExternalDoc(doc *openapi.ExternalDocumentation) (*openapiv3.ExternalDocumen
 
 	return &openapiv3.ExternalDocumentation{
 		Object: openapiv3.ExternalDocumentationCore{
-			Description: doc.Description,
-			URL:         doc.Url,
+			Description: doc.GetDescription(),
+			URL:         doc.GetUrl(),
 		},
 		Extensions: extensions,
 	}, nil
@@ -105,11 +105,11 @@ func Info(info *openapi.Info) (*openapiv3.Info, error) {
 
 	result := &openapiv3.Info{
 		Object: openapiv3.InfoCore{
-			Title:          info.Title,
-			Summary:        info.Summary,
-			Description:    info.Description,
-			TermsOfService: info.TermsOfService,
-			Version:        info.Version,
+			Title:          info.GetTitle(),
+			Summary:        info.GetSummary(),
+			Description:    info.GetDescription(),
+			TermsOfService: info.GetTermsOfService(),
+			Version:        info.GetVersion(),
 		},
 		Extensions: extensions,
 	}
@@ -122,9 +122,9 @@ func Info(info *openapi.Info) (*openapiv3.Info, error) {
 
 		result.Object.Contact = &openapiv3.Contact{
 			Object: openapiv3.ContactCore{
-				Name:  info.Contact.Name,
-				URL:   info.Contact.Url,
-				Email: info.Contact.Email,
+				Name:  info.Contact.GetName(),
+				URL:   info.Contact.GetUrl(),
+				Email: info.Contact.GetEmail(),
 			},
 			Extensions: extensions,
 		}
@@ -138,9 +138,9 @@ func Info(info *openapi.Info) (*openapiv3.Info, error) {
 
 		result.Object.License = &openapiv3.License{
 			Object: openapiv3.LicenseCore{
-				Name:       info.License.Name,
-				Identifier: info.License.Identifier,
-				URL:        info.License.Url,
+				Name:       info.License.GetName(),
+				Identifier: info.License.GetIdentifier(),
+				URL:        info.License.GetUrl(),
 			},
 			Extensions: extensions,
 		}
@@ -173,8 +173,8 @@ func Tags(tags []*openapi.Tag) ([]*openapiv3.Tag, error) {
 
 		result[index] = &openapiv3.Tag{
 			Object: openapiv3.TagCore{
-				Name:         tag.Name,
-				Description:  tag.Description,
+				Name:         tag.GetName(),
+				Description:  tag.GetDescription(),
 				ExternalDocs: externalDocs,
 			},
 			Extensions: extensions,
@@ -206,8 +206,8 @@ func Server(server *openapi.Server) (*openapiv3.Server, error) {
 			vars[name] = openapiv3.ServerVariable{
 				Object: openapiv3.ServerVariableCore{
 					Enum:        serverVariable.EnumValues,
-					Default:     serverVariable.DefaultValue,
-					Description: serverVariable.Description,
+					Default:     serverVariable.GetDefaultValue(),
+					Description: serverVariable.GetDescription(),
 				},
 				Extensions: serverVarExtensions,
 			}
@@ -216,8 +216,8 @@ func Server(server *openapi.Server) (*openapiv3.Server, error) {
 
 	return &openapiv3.Server{
 		Object: openapiv3.ServerCore{
-			URL:         server.Url,
-			Description: server.Description,
+			URL:         server.GetUrl(),
+			Description: server.GetDescription(),
 			Variables:   vars,
 		},
 		Extensions: extensions,
@@ -248,31 +248,31 @@ func Schema(schema *openapi.Schema) (*openapiv3.Schema, error) {
 
 	result := &openapiv3.Schema{
 		Object: openapiv3.SchemaCore{
-			Ref:              schema.Ref,
-			Schema:           schema.Schema,
-			Title:            schema.Title,
-			Pattern:          schema.Pattern,
+			Ref:              schema.GetRef(),
+			Schema:           schema.GetSchema(),
+			Title:            schema.GetTitle(),
+			Pattern:          schema.GetPattern(),
 			Required:         schema.Required,
 			Enum:             schema.Enum,
-			MultipleOf:       schema.MultipleOf,
-			Maximum:          schema.Maximum,
-			ExclusiveMaximum: schema.ExclusiveMaximum,
-			Minimum:          schema.Minimum,
-			ExclusiveMinimum: schema.ExclusiveMinimum,
-			MaxLength:        schema.MaxLength,
-			MinLength:        schema.MinLength,
-			MaxItems:         schema.MaxItems,
-			MinItems:         schema.MinItems,
-			UniqueItems:      schema.UniqueItems,
-			MaxProperties:    schema.MaxProperties,
-			MinProperties:    schema.MinProperties,
+			MultipleOf:       schema.GetMultipleOf(),
+			Maximum:          schema.GetMaximum(),
+			ExclusiveMaximum: schema.GetExclusiveMaximum(),
+			Minimum:          schema.GetMinimum(),
+			ExclusiveMinimum: schema.GetExclusiveMinimum(),
+			MaxLength:        schema.GetMaxLength(),
+			MinLength:        schema.GetMinLength(),
+			MaxItems:         schema.GetMaxItems(),
+			MinItems:         schema.GetMinItems(),
+			UniqueItems:      schema.GetUniqueItems(),
+			MaxProperties:    schema.GetMaxProperties(),
+			MinProperties:    schema.GetMinProperties(),
 			Type:             Type(schema.Types),
-			Description:      schema.Description,
+			Description:      schema.GetDescription(),
 			Default:          schema.Default.AsInterface(),
-			ReadOnly:         schema.ReadOnly,
-			WriteOnly:        schema.WriteOnly,
-			Format:           schema.Format,
-			Deprecated:       schema.Deprecated,
+			ReadOnly:         schema.GetReadOnly(),
+			WriteOnly:        schema.GetWriteOnly(),
+			Format:           schema.GetFormat(),
+			Deprecated:       schema.GetDeprecated(),
 		},
 	}
 
@@ -348,7 +348,7 @@ func Discriminator(value *openapi.Discriminator) (*openapiv3.Discriminator, erro
 
 	return &openapiv3.Discriminator{
 		Object: openapiv3.DiscriminatorCore{
-			PropertyName: value.PropertyName,
+			PropertyName: value.GetPropertyName(),
 			Mapping:      value.Mapping,
 		},
 		Extensions: extensions,
@@ -474,9 +474,9 @@ func AnySlice(items []*structpb.Value) []any {
 func MakeReference[T any](ref *openapi.Reference) *openapiv3.Ref[T] {
 	return &openapiv3.Ref[T]{
 		Reference: &openapiv3.Reference{
-			Ref:         ref.Uri,
-			Summary:     ref.Summary,
-			Description: ref.Description,
+			Ref:         ref.GetUri(),
+			Summary:     ref.GetSummary(),
+			Description: ref.GetDescription(),
 		},
 	}
 }
@@ -495,10 +495,10 @@ func EncodingMap(encodings map[string]*openapi.Encoding) (map[string]*openapiv3.
 
 		encoding := &openapiv3.Encoding{
 			Object: openapiv3.EncodingCore{
-				ContentType:   encodingFromProto.ContentType,
-				Style:         encodingFromProto.Style,
-				Explode:       encodingFromProto.Explode,
-				AllowReserved: encodingFromProto.AllowReserved,
+				ContentType:   encodingFromProto.GetContentType(),
+				Style:         encodingFromProto.GetStyle(),
+				Explode:       encodingFromProto.GetExplode(),
+				AllowReserved: encodingFromProto.GetAllowReserved(),
 			},
 			Extensions: extensions,
 		}
@@ -574,12 +574,12 @@ func HeaderMap(headerMap map[string]*openapi.Header) (map[string]*openapiv3.Ref[
 		header := &openapiv3.Ref[openapiv3.Header]{
 			Data: openapiv3.Header{
 				Object: openapiv3.HeaderCore{
-					Description:     protoHeader.Description,
-					Required:        protoHeader.Required,
-					Deprecated:      protoHeader.Deprecated,
-					AllowEmptyValue: protoHeader.AllowEmptyValue,
-					Style:           protoHeader.Style,
-					Explode:         protoHeader.Explode,
+					Description:     protoHeader.GetDescription(),
+					Required:        protoHeader.GetRequired(),
+					Deprecated:      protoHeader.GetDeprecated(),
+					AllowEmptyValue: protoHeader.GetAllowEmptyValue(),
+					Style:           protoHeader.GetStyle(),
+					Explode:         protoHeader.GetExplode(),
 					Example:         protoHeader.Example.AsInterface(),
 				},
 				Extensions: extensions,
@@ -624,15 +624,15 @@ func Parameter(paramFromProto *openapi.Parameter) (*openapiv3.Ref[openapiv3.Para
 	result := &openapiv3.Ref[openapiv3.Parameter]{
 		Data: openapiv3.Parameter{
 			Object: openapiv3.ParameterCore{
-				Name:            paramFromProto.Name,
-				In:              paramFromProto.In,
-				Description:     paramFromProto.Description,
-				Required:        paramFromProto.Required,
-				Deprecated:      paramFromProto.Deprecated,
-				AllowEmptyValue: paramFromProto.AllowEmptyValue,
-				AllowReserved:   paramFromProto.AllowReserved,
-				Style:           paramFromProto.Style,
-				Explode:         paramFromProto.Explode,
+				Name:            paramFromProto.GetName(),
+				In:              paramFromProto.GetIn(),
+				Description:     paramFromProto.GetDescription(),
+				Required:        paramFromProto.GetRequired(),
+				Deprecated:      paramFromProto.GetDeprecated(),
+				AllowEmptyValue: paramFromProto.GetAllowEmptyValue(),
+				AllowReserved:   paramFromProto.GetAllowReserved(),
+				Style:           paramFromProto.GetStyle(),
+				Explode:         paramFromProto.GetExplode(),
 				Example:         paramFromProto.Example.AsInterface(),
 			},
 			Extensions: extensions,
@@ -727,10 +727,10 @@ func StructuredExample(example *openapi.Example) (*openapiv3.Ref[openapiv3.Examp
 	result := &openapiv3.Ref[openapiv3.Example]{
 		Data: openapiv3.Example{
 			Object: openapiv3.ExampleCore{
-				Summary:       example.Summary,
-				Description:   example.Description,
+				Summary:       example.GetSummary(),
+				Description:   example.GetDescription(),
 				Value:         example.Value.AsInterface(),
-				ExternalValue: example.ExternalValue,
+				ExternalValue: example.GetExternalValue(),
 			},
 			Extensions: extensions,
 		},
@@ -756,7 +756,7 @@ func Response(response *openapi.Response) (*openapiv3.Ref[openapiv3.Response], e
 	result := &openapiv3.Ref[openapiv3.Response]{
 		Data: openapiv3.Response{
 			Object: openapiv3.ResponseCore{
-				Description: response.Description,
+				Description: response.GetDescription(),
 			},
 			Extensions: extensions,
 		},
@@ -819,7 +819,7 @@ func LinksMap(links map[string]*openapi.Link) (map[string]*openapiv3.Ref[openapi
 				Object: openapiv3.LinkCore{
 					Parameters:  AnyMap(linkFromProto.Parameters),
 					RequestBody: linkFromProto.RequestBody.AsInterface(),
-					Description: linkFromProto.Description,
+					Description: linkFromProto.GetDescription(),
 				},
 				Extensions: extensions,
 			},
@@ -860,8 +860,8 @@ func RequestBody(requestBody *openapi.RequestBody) (*openapiv3.Ref[openapiv3.Req
 	result := &openapiv3.Ref[openapiv3.RequestBody]{
 		Data: openapiv3.RequestBody{
 			Object: openapiv3.RequestBodyCore{
-				Description: requestBody.Description,
-				Required:    requestBody.Required,
+				Description: requestBody.GetDescription(),
+				Required:    requestBody.GetRequired(),
 			},
 			Extensions: extensions,
 		},
@@ -907,9 +907,9 @@ func OAuthFlow(flow *openapi.SecurityScheme_OAuthFlow) (*openapiv3.OAuthFlow, er
 
 	return &openapiv3.OAuthFlow{
 		Object: openapiv3.OAuthFlowCore{
-			AuthorizationURL: flow.AuthorizationUrl,
-			TokenURL:         flow.TokenUrl,
-			RefreshURL:       flow.RefreshUrl,
+			AuthorizationURL: flow.GetAuthorizationUrl(),
+			TokenURL:         flow.GetTokenUrl(),
+			RefreshURL:       flow.GetRefreshUrl(),
 			Scopes:           flow.Scopes,
 		},
 		Extensions: extensions,
@@ -971,13 +971,13 @@ func SecurityScheme(scheme *openapi.SecurityScheme) (*openapiv3.Ref[openapiv3.Se
 	result := &openapiv3.Ref[openapiv3.SecurityScheme]{
 		Data: openapiv3.SecurityScheme{
 			Object: openapiv3.SecuritySchemeCore{
-				Type:             scheme.Type,
-				Description:      scheme.Description,
-				Name:             scheme.Name,
-				In:               scheme.In,
-				Scheme:           scheme.Scheme,
-				BearerFormat:     scheme.BearerFormat,
-				OpenIDConnectURL: scheme.OpenIdConnectUrl,
+				Type:             scheme.GetType(),
+				Description:      scheme.GetDescription(),
+				Name:             scheme.GetName(),
+				In:               scheme.GetIn(),
+				Scheme:           scheme.GetScheme(),
+				BearerFormat:     scheme.GetBearerFormat(),
+				OpenIDConnectURL: scheme.GetOpenIdConnectUrl(),
 			},
 			Extensions: extensions,
 		},
@@ -1077,10 +1077,10 @@ func Operation(operation *openapi.Operation) (*openapiv3.Operation, error) {
 	result := &openapiv3.Operation{
 		Object: openapiv3.OperationCore{
 			Tags:        operation.Tags,
-			Summary:     operation.Summary,
-			Description: operation.Description,
-			OperationID: operation.OperationId,
-			Deprecated:  operation.Deprecated,
+			Summary:     operation.GetSummary(),
+			Description: operation.GetDescription(),
+			OperationID: operation.GetOperationId(),
+			Deprecated:  operation.GetDeprecated(),
 			Security:    SecurityRequirementSlice(operation.Security),
 		},
 	}
@@ -1124,7 +1124,7 @@ func SecurityRequirementSlice(items []*openapi.SecurityRequirement) []map[string
 	result := make([]map[string][]string, len(items))
 	for index, security := range items {
 		result[index] = map[string][]string{
-			security.Name: security.Scopes,
+			security.GetName(): security.Scopes,
 		}
 	}
 

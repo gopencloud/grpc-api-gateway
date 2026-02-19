@@ -229,11 +229,11 @@ func (r *Registry) loadServices(file *File) error {
 			if !ok {
 				if r.GenerateUnboundMethods {
 					// add default binding.
+					defaultBody := "*"
 					binding = httpspec.EndpointSpec{
 						Binding: &api.EndpointBinding{
-							Selector: "",
 							Pattern:  &api.EndpointBinding_Post{Post: fmt.Sprintf("/%s/%s", service.FQSN()[1:], protoMethod.GetName())},
-							Body:     "*",
+							Body:     &defaultBody,
 						},
 						SourceInfo: httpspec.SourceInfo{
 							ProtoPackage: service.File.GetPackage(),
@@ -356,33 +356,34 @@ func (r *Registry) mapBindings(md *Method, spec httpspec.EndpointSpec) ([]*Bindi
 
 		queryParamFilter := binding.QueryParameterFilter()
 		for _, queryParam := range input.QueryParams {
-			fields, err := r.resolveFieldPath(md.RequestType, queryParam.GetSelector(), false)
+			selector := queryParam.GetSelector()
+			fields, err := r.resolveFieldPath(md.RequestType, selector, false)
 			if err != nil {
-				return fmt.Errorf("failed to resolve field at selector %q: %w", queryParam.GetSelector(), err)
+				return fmt.Errorf("failed to resolve field at selector %q: %w", selector, err)
 			}
 
 			// if query param is already used by another target, error out.
 			alreadyBound := (binding.Body != nil && len(binding.Body.FieldPath) == 0) ||
-				queryParamFilter.HasCommonPrefix(dotpath.Parse(&queryParam.Selector))
+				queryParamFilter.HasCommonPrefix(dotpath.Parse(&selector))
 			if alreadyBound {
 				return fmt.Errorf(
 					"cannot use selector %q for query parameter %q because it will already be read from payload/path params",
-					queryParam.Selector, queryParam.Name)
+					selector, queryParam.GetName())
 			}
 
 			if !fields[len(fields)-1].Target.IsScalarType() {
 				return fmt.Errorf(
 					"cannot use selector %q for query parameter %q because it points to a"+
 						" Protobuf message type, only scalar types can be used",
-					queryParam.Selector, queryParam.Name)
+						selector, queryParam.GetName())
 			}
 
-			if queryParam.Ignore {
+			if queryParam.GetIgnore() {
 				binding.QueryParameterCustomization.IgnoredFields = append(
 					binding.QueryParameterCustomization.IgnoredFields,
 					FieldPath(fields))
 			} else {
-				name := queryParam.Name
+				name := queryParam.GetName()
 				customName := true
 				if name == "" {
 					name = FieldPath(fields).String()
@@ -403,9 +404,9 @@ func (r *Registry) mapBindings(md *Method, spec httpspec.EndpointSpec) ([]*Bindi
 		if binding.Method.GetClientStreaming() || binding.Method.GetServerStreaming() {
 			if input.StreamConfig != nil {
 				binding.StreamConfig = StreamConfig{
-					AllowWebsocket:       !input.StreamConfig.DisableWebsockets,
-					AllowSSE:             !input.StreamConfig.DisableSse,
-					AllowChunkedTransfer: !input.StreamConfig.DisableChunkedTransfer,
+					AllowWebsocket:       !input.StreamConfig.GetDisableWebsockets(),
+					AllowSSE:             !input.StreamConfig.GetDisableSse(),
+					AllowChunkedTransfer: !input.StreamConfig.GetDisableChunkedTransfer(),
 				}
 			} else {
 				binding.StreamConfig = StreamConfig{
@@ -434,10 +435,10 @@ func (r *Registry) mapBindings(md *Method, spec httpspec.EndpointSpec) ([]*Bindi
 	input := BindingInput{
 		Method:                          method,
 		Path:                            path,
-		Body:                            spec.Binding.Body,
-		ResponseBody:                    spec.Binding.ResponseBody,
+		Body:                            spec.Binding.GetBody(),
+		ResponseBody:                    spec.Binding.GetResponseBody(),
 		Index:                           0,
-		DisableQueryParamsAutoDiscovery: spec.Binding.DisableQueryParamDiscovery,
+		DisableQueryParamsAutoDiscovery: spec.Binding.GetDisableQueryParamDiscovery(),
 		QueryParams:                     spec.Binding.GetQueryParams(),
 		StreamConfig:                    spec.Binding.Stream,
 	}
@@ -456,10 +457,10 @@ func (r *Registry) mapBindings(md *Method, spec httpspec.EndpointSpec) ([]*Bindi
 		input = BindingInput{
 			Method:                          method,
 			Path:                            path,
-			Body:                            additionalBinding.Body,
-			ResponseBody:                    additionalBinding.ResponseBody,
+			Body:                            additionalBinding.GetBody(),
+			ResponseBody:                    additionalBinding.GetResponseBody(),
 			Index:                           index + 1,
-			DisableQueryParamsAutoDiscovery: additionalBinding.DisableQueryParamDiscovery,
+			DisableQueryParamsAutoDiscovery: additionalBinding.GetDisableQueryParamDiscovery(),
 			QueryParams:                     additionalBinding.GetQueryParams(),
 			StreamConfig:                    additionalBinding.Stream,
 		}
@@ -701,7 +702,7 @@ func parseEndpointPattern(spec *api.EndpointBinding) (string, string, error) {
 
 	switch pattern := spec.Pattern.(type) {
 	case *api.EndpointBinding_Custom:
-		return strings.ToUpper(pattern.Custom.Method), pattern.Custom.Path, nil
+		return strings.ToUpper(pattern.Custom.GetMethod()), pattern.Custom.GetPath(), nil
 	case *api.EndpointBinding_Get:
 		return http.MethodGet, pattern.Get, nil
 	case *api.EndpointBinding_Patch:
@@ -725,7 +726,7 @@ func parseAdditionalEndpointPattern(spec *api.AdditionalEndpointBinding) (string
 
 	switch pattern := spec.Pattern.(type) {
 	case *api.AdditionalEndpointBinding_Custom:
-		return strings.ToUpper(pattern.Custom.Method), pattern.Custom.Path, nil
+		return strings.ToUpper(pattern.Custom.GetMethod()), pattern.Custom.GetPath(), nil
 	case *api.AdditionalEndpointBinding_Get:
 		return http.MethodGet, pattern.Get, nil
 	case *api.AdditionalEndpointBinding_Patch:

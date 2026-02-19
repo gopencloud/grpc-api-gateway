@@ -60,9 +60,10 @@ func (g *Generator) getCustomizedFieldSchema(
 
 			result.Schema = schemaFromConfig
 			if fieldSchema.Config != nil {
-				result.Required = fieldSchema.Config.Required
-				if fieldSchema.Config.PathParamName != "" {
-					result.PathParamName = &fieldSchema.Config.PathParamName
+				result.Required = fieldSchema.Config.GetRequired()
+				if fieldSchema.Config.GetPathParamName() != "" {
+					pathParamName := fieldSchema.Config.GetPathParamName()
+					result.PathParamName = &pathParamName
 				}
 			}
 		}
@@ -88,11 +89,12 @@ func (g *Generator) getCustomizedFieldSchema(
 		}
 
 		if protoSchema.Config != nil {
-			if protoSchema.Config.PathParamName != "" && result.PathParamName == nil {
-				result.PathParamName = &protoSchema.Config.PathParamName
+			if protoSchema.Config.GetPathParamName() != "" && result.PathParamName == nil {
+				newPathParamName := protoSchema.Config.GetPathParamName()
+				result.PathParamName = &newPathParamName
 			}
 
-			if protoSchema.Config.Required {
+			if protoSchema.Config.GetRequired() {
 				result.Required = true
 			}
 		}
